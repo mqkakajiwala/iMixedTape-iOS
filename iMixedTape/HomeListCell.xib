@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListCell" rowHeight="60" id="Fwd-q5-fMH" customClass="ListCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fwd-q5-fMH" id="rpA-ny-uQp">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PLd-ON-Ms9">
+                        <rect key="frame" x="20" y="0.0" width="335" height="50"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="images (11).jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="tZa-9W-UCd">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="tZa-9W-UCd" secondAttribute="height" multiplier="1:1" id="mRA-r2-o5G"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Christmas Music" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="csn-Cz-dxb">
+                                <rect key="frame" x="58" y="16" width="250" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GUH-gC-xDD">
+                                <rect key="frame" x="316" y="14" width="11" height="22"/>
+                                <state key="normal" image="dots"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.98823529409999999" green="0.2666666667" blue="0.50980392159999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="csn-Cz-dxb" firstAttribute="leading" secondItem="tZa-9W-UCd" secondAttribute="trailing" constant="8" id="4ok-Y3-cKs"/>
+                            <constraint firstItem="tZa-9W-UCd" firstAttribute="top" secondItem="PLd-ON-Ms9" secondAttribute="top" id="GND-aX-KpE"/>
+                            <constraint firstAttribute="trailing" secondItem="csn-Cz-dxb" secondAttribute="trailing" constant="27" id="HjL-Wc-ZCN"/>
+                            <constraint firstAttribute="trailing" secondItem="GUH-gC-xDD" secondAttribute="trailing" constant="8" id="UHF-Zj-HFT"/>
+                            <constraint firstItem="GUH-gC-xDD" firstAttribute="centerY" secondItem="PLd-ON-Ms9" secondAttribute="centerY" id="XwT-Gk-Cq2"/>
+                            <constraint firstItem="csn-Cz-dxb" firstAttribute="centerY" secondItem="PLd-ON-Ms9" secondAttribute="centerY" id="YVN-wd-YIq"/>
+                            <constraint firstItem="tZa-9W-UCd" firstAttribute="leading" secondItem="PLd-ON-Ms9" secondAttribute="leading" id="lO7-FY-P7B"/>
+                            <constraint firstAttribute="bottom" secondItem="tZa-9W-UCd" secondAttribute="bottom" id="o7r-2a-xlB"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="PLd-ON-Ms9" firstAttribute="leading" secondItem="rpA-ny-uQp" secondAttribute="leading" constant="20" id="NTb-7H-rC0"/>
+                    <constraint firstAttribute="trailing" secondItem="PLd-ON-Ms9" secondAttribute="trailing" constant="20" id="bxw-RK-Vwi"/>
+                    <constraint firstItem="PLd-ON-Ms9" firstAttribute="top" secondItem="rpA-ny-uQp" secondAttribute="top" id="jnz-De-we8"/>
+                    <constraint firstAttribute="bottom" secondItem="PLd-ON-Ms9" secondAttribute="bottom" constant="4" id="l1i-za-prC"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="addTracksButton" destination="GUH-gC-xDD" id="1rY-EF-vXB"/>
+                <outlet property="albumArtImageView" destination="tZa-9W-UCd" id="vQY-B6-TqD"/>
+                <outlet property="cardView" destination="PLd-ON-Ms9" id="UvQ-IC-Fzc"/>
+                <outlet property="titleTextLabel" destination="csn-Cz-dxb" id="Oqk-Sq-kJJ"/>
+            </connections>
+            <point key="canvasLocation" x="14.5" y="42.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="dots" width="11" height="3"/>
+        <image name="images (11).jpeg" width="284" height="177"/>
+    </resources>
+</document>
