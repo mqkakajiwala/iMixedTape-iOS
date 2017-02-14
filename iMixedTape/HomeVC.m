@@ -8,6 +8,7 @@
 
 #import "HomeVC.h"
 #import "PlayTapeVC.h"
+#import <Crashlytics/Crashlytics.h>
 
 
 @interface HomeVC (){
@@ -15,11 +16,11 @@
     UIViewController *vc;
     NSString *iTunesLink;
 }
-
-@end
+    
+    @end
 
 @implementation HomeVC
-
+    
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -28,79 +29,91 @@
     
     NSLog(@"HOME");
     
-  
+    
     [SharedHelper fetchGoogleAdds:self.adBannerView onViewController:self];
+    
+    UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = CGRectMake(20, 50, 100, 30);
+    [button setTitle:@"Crash" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(crashButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    
 }
-
-
+    
+- (IBAction)crashButtonTapped:(id)sender {
+    [[Crashlytics sharedInstance] crash];
+}
+    
+    
+    
 -(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    UserModel *userModel = [[UserModel alloc]init];
-    
-    if (userModel.firstName != nil) {
-        self.nameLabel.text = [NSString stringWithFormat:@"%@ %@",userModel.firstName,userModel.lastName];
-    }else{
-        self.nameLabel.text = @"";
+    {
+        [super viewWillAppear:animated];
+        
+        UserModel *userModel = [[UserModel alloc]init];
+        
+        if (userModel.firstName != nil) {
+            self.nameLabel.text = [NSString stringWithFormat:@"%@ %@",userModel.firstName,userModel.lastName];
+        }else{
+            self.nameLabel.text = @"";
+        }
     }
-}
-
+    
 #pragma mark - IBActions
 - (IBAction)gridButtonPressed:(UIButton *)sender
-{
+    {
+        
+        [self changeButtonImageUponSelection:sender buttonType:@"GRID"];
+        [self addViewControllerAsChildVC:@"GRID_VC"];
+    }
     
-    [self changeButtonImageUponSelection:sender buttonType:@"GRID"];
-    [self addViewControllerAsChildVC:@"GRID_VC"];
-}
-
 - (IBAction)listButtonPressed:(UIButton *)sender
-{
-    [self changeButtonImageUponSelection:sender buttonType:@"LIST"];
-    [self addViewControllerAsChildVC:@"LIST_VC"];
-}
-
+    {
+        [self changeButtonImageUponSelection:sender buttonType:@"LIST"];
+        [self addViewControllerAsChildVC:@"LIST_VC"];
+    }
+    
 - (IBAction)shareButtonPressed:(UIButton *)sender
-{
-//    [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@"sms:0412345678&body=testing"]];
-    UIViewController *vcc = [self.storyboard instantiateViewControllerWithIdentifier:@"SOCIAL_VC"];
-    [self presentViewController:vcc animated:YES completion:nil];
-}
-
+    {
+        //    [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@"sms:0412345678&body=testing"]];
+        UIViewController *vcc = [self.storyboard instantiateViewControllerWithIdentifier:@"SOCIAL_VC"];
+        [self presentViewController:vcc animated:YES completion:nil];
+    }
+    
 #pragma mark - Child ViewControllers
-
+    
 -(void)addViewControllerAsChildVC :(NSString *)identifier
-{
+    {
+        
+        vc = [self.storyboard instantiateViewControllerWithIdentifier:identifier];
+        
+        
+        [self addChildViewController:vc];
+        
+        [self.parentView addSubview:vc.view];
+        
+        
+        vc.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
+                                    UIViewAutoresizingFlexibleHeight);
+        vc.view.frame = self.parentView.bounds;
+    }
     
-    vc = [self.storyboard instantiateViewControllerWithIdentifier:identifier];
-    
-    
-    [self addChildViewController:vc];
-    
-    [self.parentView addSubview:vc.view];
-    
-    
-    vc.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
-                                UIViewAutoresizingFlexibleHeight);
-    vc.view.frame = self.parentView.bounds;
-}
-
 #pragma mark - change button image upon selection
-
+    
 -(void)changeButtonImageUponSelection :(UIButton *)sender buttonType:(NSString *)type
-{
-    if ([type isEqualToString:@"GRID"]) {
-        [self.gridButtonOutlet setImage:[UIImage imageNamed:@"gridactive"] forState:UIControlStateNormal];
+    {
+        if ([type isEqualToString:@"GRID"]) {
+            [self.gridButtonOutlet setImage:[UIImage imageNamed:@"gridactive"] forState:UIControlStateNormal];
+            
+            [self.listButtonOutlet setImage:[UIImage imageNamed:@"listinactive"] forState:UIControlStateNormal];
+        }else{
+            [self.gridButtonOutlet setImage:[UIImage imageNamed:@"gridinactive"] forState:UIControlStateNormal];
+            
+            [self.listButtonOutlet setImage:[UIImage imageNamed:@"listactive"] forState:UIControlStateNormal];
+        }
         
-        [self.listButtonOutlet setImage:[UIImage imageNamed:@"listinactive"] forState:UIControlStateNormal];
-    }else{
-        [self.gridButtonOutlet setImage:[UIImage imageNamed:@"gridinactive"] forState:UIControlStateNormal];
         
-        [self.listButtonOutlet setImage:[UIImage imageNamed:@"listactive"] forState:UIControlStateNormal];
     }
     
     
-}
-
-
-@end
+    @end

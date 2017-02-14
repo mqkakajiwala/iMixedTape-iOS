@@ -14,6 +14,9 @@
     NSString *imageUploadID;
     CNContactPickerViewController *contactPicker;
     BOOL ifEmail;
+    UIImagePickerController *imagePicker;
+    NSString *selectedContact;
+    
 }
 
 @end
@@ -25,11 +28,13 @@
     // Do any additional setup after loading the view.
     
     
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     
     if ([[NSUserDefaults standardUserDefaults]boolForKey:key_ifemail]) {
         [self.emailRadButton setSelected:YES];
@@ -63,25 +68,32 @@
     [self loadDefaultValues];
     
     
+    
+    
 }
 
 -(void)loadDefaultValues
 {
-    CreateTapeModel *createTapeModel = [[CreateTapeModel alloc]init];
     
-    self.titleTextField.text = createTapeModel.title;
-    self.messageTextView.text = createTapeModel.message;
-    self.sendToTextField.text = createTapeModel.sendTo;
-    self.emailORmobileTextField.text = createTapeModel.emailOrMobile;
-    self.fromTextField.text = createTapeModel.from;
-    if (createTapeModel.albumImage !=nil) {
-        self.albumArtImage.image = createTapeModel.albumImage;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    self.titleTextField.text = [defaults valueForKey:key_createTapeTitle];
+    self.messageTextView.text = [defaults valueForKey:key_createTapeMessage];
+    self.sendToTextField.text = [defaults valueForKey:key_createTapeSendTo];
+    NSLog(@"%@",[defaults valueForKey:key_createTapeEmailOrMobile]);
+    self.emailORmobileTextField.text = [defaults valueForKey:key_createTapeEmailOrMobile];
+    self.fromTextField.text = [defaults valueForKey:key_createTapeFrom];
+    NSData *imgData = [defaults objectForKey:key_createTapeImage];
+    
+    if (imgData !=nil) {
+        self.albumArtImage.image = [UIImage imageWithData:imgData];
     }else{
         self.albumArtImage.image = [UIImage imageNamed:@"imgicon"];
     }
     
     
-    imageUploadID = createTapeModel.uploadImageID;
+    imageUploadID = [defaults valueForKey:key_createTapeUploadImageID];
 }
 
 
@@ -110,50 +122,63 @@
 
 - (IBAction)openCamLibraryRollButton:(UIButton *)sender
 {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
-    imagePicker.delegate = self;
-    imagePicker.allowsEditing = YES;
-    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
-    [self presentViewController:imagePicker animated:YES completion:nil];
+    [self initiateImagePickerWithCamera:NO];
 }
 
 - (IBAction)openCamButton:(UIButton *)sender
 {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
-    imagePicker.delegate = self;
-    imagePicker.allowsEditing = YES;
-    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    
-    [self presentViewController:imagePicker animated:YES completion:nil];
+    [self initiateImagePickerWithCamera:YES];
     
 }
 
+-(void)initiateImagePickerWithCamera :(BOOL)ifCamera
+{
+    imagePicker = [[UIImagePickerController alloc]init];
+    imagePicker.delegate = self;
+    imagePicker.allowsEditing = YES;
+    
+    if (ifCamera) {
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }else{
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    
+    
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+#pragma mark - ImagePicker Delegate Method
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
+    
+    //load your data here.
+    
     UIImage *choosenImage = info[UIImagePickerControllerEditedImage];
+    [[NSUserDefaults standardUserDefaults]setObject:UIImagePNGRepresentation(choosenImage) forKey:key_createTapeImage];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.albumArtImage.image = choosenImage;
-    });
+     NSData *imgData = [[NSUserDefaults standardUserDefaults] objectForKey:key_createTapeImage];
+    self.albumArtImage.image = [UIImage imageWithData:imgData];
     
-    NSString *base64str = [self encodeToBase64String:choosenImage];
-    [CreateTapeModel uploadFileWithAttachnment:base64str callback:^(id callback) {
-        
-        if ([[callback objectForKey:@"error"]boolValue] == NO) {
-            imageUploadID = [[callback objectForKey:@"data"]objectForKey:@"id"];
-            [[NSUserDefaults standardUserDefaults]setValue:imageUploadID forKey:key_createTapeUploadImageID];
-            [[NSUserDefaults standardUserDefaults]setObject:UIImagePNGRepresentation(self.albumArtImage.image) forKey:key_createTapeImage];
-            
-            
-            NSLog(@"%@", base64str);
-            
-        }
-        else{
-            [SharedHelper AlertControllerWithTitle:@"Error" message:@"Image cannot be uploaded" viewController:self];
-        }
-        
-    }];
+   
+    
+        NSString *base64str = [self encodeToBase64String:choosenImage];
+        [CreateTapeModel uploadFileWithAttachnment:base64str callback:^(id callback) {
+    
+            if ([[callback objectForKey:@"error"]boolValue] == NO) {
+                imageUploadID = [[callback objectForKey:@"data"]objectForKey:@"id"];
+                [[NSUserDefaults standardUserDefaults]setValue:imageUploadID forKey:key_createTapeUploadImageID];
+                [[NSUserDefaults standardUserDefaults]setObject:UIImagePNGRepresentation(self.albumArtImage.image) forKey:key_createTapeImage];
+    
+    
+                NSLog(@"%@", base64str);
+    
+            }
+            else{
+                [SharedHelper AlertControllerWithTitle:@"Error" message:@"Image cannot be uploaded" viewController:self];
+            }
+    
+        }];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -178,6 +203,14 @@
     else {
         
         self.viewTopConstraint.constant = -350;
+    }
+    
+    if (textField == _emailORmobileTextField) {
+        if ([[NSUserDefaults standardUserDefaults]boolForKey:key_ifemail]) {
+            [textField setKeyboardType:UIKeyboardTypeDefault];
+        }else{
+            [textField setKeyboardType:UIKeyboardTypeNumberPad];
+        }
     }
     
     
@@ -205,6 +238,24 @@
     
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if (textField == _titleTextField) {
+        // Prevent crashing undo bug – see note below.
+        if(range.length + range.location > textField.text.length)
+        {
+            return NO;
+        }
+        
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        return newLength <= 6;
+    }
+    else
+    {
+        return YES;
+    }
+}
+
 
 
 #pragma mark - TextView Delegates
@@ -226,8 +277,26 @@
     }
 }
 
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if (textView == _messageTextView) {
+        // Prevent crashing undo bug – see note below.
+        if(range.length + range.location > textView.text.length)
+        {
+            return NO;
+        }
+        
+        NSUInteger newLength = [textView.text length] + [text length] - range.length;
+        return newLength <= 50;
+    }
+    else
+    {
+        return YES;
+    }
+}
 
 
+#pragma mark - Encode to base 64 string
 - (NSString *)encodeToBase64String:(UIImage *)image {
     return [UIImagePNGRepresentation(image) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 }
@@ -288,23 +357,22 @@
 
 -(void)contactPicker:(CNContactPickerViewController *)picker didSelectContact:(CNContact *)contact
 {
+    
     NSLog(@"%@",contact);
     NSLog(@"%@",contact.emailAddresses);
     
     
     
-    if (!ifEmail) {
+    if (![[NSUserDefaults standardUserDefaults]boolForKey:key_ifemail]) {
         if (contact.phoneNumbers > 0) {
             
             
             for (CNLabeledValue *pnum  in contact.phoneNumbers) {
                 CNPhoneNumber *pn = pnum.value;
                 
-                NSLog(@"%@",pn.stringValue);
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.emailORmobileTextField.text = pn.stringValue;
-                    
-                });
+                selectedContact = pn.stringValue;
+                
+                
                 
             }
         }else{
@@ -315,12 +383,8 @@
             
             
             for (CNLabeledValue *email  in contact.emailAddresses) {
+                selectedContact = email.value;
                 
-                
-                NSLog(@"%@",email.value);
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.emailORmobileTextField.text = email.value;
-                });
             }
         }else{
             self.emailORmobileTextField.placeholder = @"Email not available for this contact.";
@@ -328,12 +392,13 @@
         }
         
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"%@",self.emailORmobileTextField.text);
-        [[NSUserDefaults standardUserDefaults]setValue:self.emailORmobileTextField.text forKey:key_createTapeEmailOrMobile];
-        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile]);
-    });
-   
+    
+    NSLog(@"%@",self.emailORmobileTextField.text);
+    [[NSUserDefaults standardUserDefaults]setValue:selectedContact forKey:key_createTapeEmailOrMobile];
+    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile]);
+    self.emailORmobileTextField.text = [[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile];
+    
+    
 }
 
 @end

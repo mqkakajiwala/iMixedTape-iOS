@@ -137,7 +137,7 @@
        NSLog(@"%@",[[[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject]);
        NSLog(@"%lu",[[responseObject objectForKey:@"results"]count]);
        
-       if (![[[[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject] isKindOfClass:[NSNull class]]) {
+       if ([ [[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject] != nil) {
            
            
            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject]]];

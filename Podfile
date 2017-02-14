@@ -11,5 +11,7 @@ pod 'Google/SignIn'
 pod 'SDWebImage', '~>3.8'
 pod 'Firebase/Core'
 pod 'Firebase/AdMob'
+pod 'Fabric'
+pod 'Crashlytics'
 
 end

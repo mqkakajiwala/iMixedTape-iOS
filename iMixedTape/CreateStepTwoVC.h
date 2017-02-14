@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreateStepTwoVC : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface CreateStepTwoVC : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIButton *myTapesButtonOutlet;
@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *songsButtonOutlet;
 @property (strong, nonatomic) IBOutlet UIButton *streamingButtonOutlet;
 @property (strong, nonatomic) IBOutlet UIView *myView;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 //@property(strong,nonatomic) UISearchController *searchController;
 @end

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "6FCAE030926443936BC08DECFB2CC9A7BB2316E0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "2FA3993082E8425625FC5999FEA7153B8FE0A31F" : 9223372036854775807,
+    "6FCAE030926443936BC08DECFB2CC9A7BB2316E0" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2518FB66-3B5F-4D44-AB6B-010EB028046E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "2FA3993082E8425625FC5999FEA7153B8FE0A31F" : "iMixedTapeWithCrashLytics\/Pods\/",
+    "6FCAE030926443936BC08DECFB2CC9A7BB2316E0" : "iMixedTapeWithCrashLytics\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "iMixedTape",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "iMixedTape.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/bitbucket.org\/mqkakajiwala\/imixedtape-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2FA3993082E8425625FC5999FEA7153B8FE0A31F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/bitbucket.org\/mqkakajiwala\/imixedtape-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6FCAE030926443936BC08DECFB2CC9A7BB2316E0"
+    }
+  ]
+}

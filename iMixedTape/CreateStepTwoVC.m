@@ -15,11 +15,12 @@
 
 
 @interface CreateStepTwoVC (){
-    NSArray *searchResultsArray;
+    NSMutableArray *searchResultsArray;
     NSMutableArray *mediaArray;
     BOOL ifAlbums;
     BOOL ifMusicLib;
     BOOL ifMyTapes;
+    BOOL searchActive;
 //    UISearchBar *mySearchBar;
     MPMediaQuery *query;
     NSString *songTitle;
@@ -38,28 +39,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-//    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-//    self.searchController.searchResultsUpdater = self;
-//    self.searchController.dimsBackgroundDuringPresentation = NO;
-//    
-//    self.searchController.searchBar.delegate = self;
-////    mySearchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
-////    mySearchBar.delegate = self;
-//    self.tableView.tableHeaderView = self.searchController.searchBar;
-//    self.definesPresentationContext = YES;
-//    [self.searchController.searchBar sizeToFit];
-//    
-    searchResultsArray = [[NSArray alloc]init];
-    //    mediaArray = @[@"Mustafa",@"Mustee",@"MUTTUUU"];
-    
+
+    self.searchBar.delegate = self;
+    searchResultsArray = [[NSMutableArray alloc]init];
+   
     MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:MPMediaTypeMusic] forProperty:MPMediaItemPropertyMediaType];
     query = [[MPMediaQuery alloc]init];
     [query addFilterPredicate:predicate];
     
-    //    MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
-    //    mediaArray = [songsQuery items];
-    
-//    [self checkMediaLibraryPermissions];
+ 
     
     
     
@@ -72,14 +60,9 @@
         [self.myTapesButtonOutlet setBackgroundColor:[UIColor blackColor]];
     });
     
-//    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"runOnce"] == NO) {
+
         helper = [[SharedHelper alloc]init];
-//        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"runOnce"];
-//    }
-    
-    
-  
-//    songsAddedArray = [[NSUserDefaults standardUserDefaults]objectForKey:key_createTapeSongs];
+
     
     matchArray = [[[[NSUserDefaults standardUserDefaults]objectForKey:key_createTapeSongs]mutableCopy]valueForKey:@"title"];
     NSLog(@"%@",matchArray);
@@ -101,20 +84,48 @@
 {
 //    [mySearchBar resignFirstResponder];
 }
-#pragma mark - Search Results Updating Delegate
+#pragma mark - Search Delegate
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    searchActive = YES;
+}
 
-//- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
-//{
-//    NSString *searchString = searchController.searchBar.text;
-//    [self filterContentForSearchText:searchString];
-//    NSLog(@"%@",searchString);
-//    [self.tableView reloadData];
-//}
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    searchActive = NO;
+}
 
-//- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
-//{
-//    [self updateSearchResultsForSearchController:self.searchController];
-//}
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    searchActive = NO;
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    searchActive = NO;
+}
+
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    for (NSString* string in mediaArray)
+    {
+        NSRange nameRange = [string rangeOfString:searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch)];
+        
+        if(nameRange.location != NSNotFound)
+        {
+            [searchResultsArray addObject:string];
+        }
+        
+        if (searchResultsArray.count == 0) {
+            searchActive = NO;
+        }else{
+            searchActive = YES;
+        }
+    }
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark - TableView Datasource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -122,7 +133,12 @@
 //    if (self.searchController.isActive && self.searchController.searchBar.text.length > 0) {
 //        return searchResultsArray.count;
 //    }
+    
+    if (searchActive) {
+        return searchResultsArray.count;
+    }else{
     return mediaArray.count;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -185,8 +201,14 @@
                 
                 [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[mediaArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
                 
+                if (searchActive) {
+                 cell.songTitleLabel.text = [[mediaArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+                }else{
+                    cell.songTitleLabel.text = [[searchResultsArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+   
+                }
                 
-                cell.songTitleLabel.text = [[mediaArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+                
                 cell.songDecLabel.text = @"";
                 cell.songTimeLabel.text = @"";
                 
@@ -214,24 +236,24 @@
 
 #pragma mark - Search Methods
 
-- (void)filterContentForSearchText:(NSString*)searchText
-{
-    
-    NSPredicate *resultPredicate = [NSPredicate
-                                    predicateWithFormat:@"title contains[c] %@",
-                                    searchText];
-    
-    searchResultsArray = [mediaArray filteredArrayUsingPredicate:resultPredicate];
-    NSLog(@"%@",searchResultsArray);
-    
-    
-  
-}
+//- (void)filterContentForSearchText:(NSString*)searchText
+//{
+//    
+//    NSPredicate *resultPredicate = [NSPredicate
+//                                    predicateWithFormat:@"title contains[c] %@",
+//                                    searchText];
+//    
+//    searchResultsArray = [mediaArray filteredArrayUsingPredicate:resultPredicate];
+//    NSLog(@"%@",searchResultsArray);
+//    
+//    
+//  
+//}
 
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    [self filterContentForSearchText:searchBar.text];
-}
+//-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+//{
+//    [self filterContentForSearchText:searchBar.text];
+//}
 
 #pragma mark - IBActions
 

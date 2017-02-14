@@ -11,7 +11,6 @@
 		451721DE1DE95C8900A3A7E6 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 451721DD1DE95C8900A3A7E6 /* MediaPlayer.framework */; };
 		451ECF971DF88BBD0026A8FF /* AboutUs.m in Sources */ = {isa = PBXBuildFile; fileRef = 451ECF961DF88BBD0026A8FF /* AboutUs.m */; };
 		45212F881E0FB93D00059D7E /* CreateStepThreeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45212F871E0FB93D00059D7E /* CreateStepThreeVC.m */; };
-		4521745C1E33DF2B00E6343C /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4521745A1E33DCBA00E6343C /* UserNotifications.framework */; };
 		4521745F1E372DA900E6343C /* FetchTracksModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4521745E1E372DA900E6343C /* FetchTracksModel.m */; };
 		453C50C51E461A350037376A /* FaqView.m in Sources */ = {isa = PBXBuildFile; fileRef = 453C50C41E461A350037376A /* FaqView.m */; };
 		45434E8D1E3E407B00997D8E /* TriLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45434E8C1E3E407B00997D8E /* TriLabelView.swift */; };
@@ -60,6 +59,7 @@
 		45F73FC41E151FC900AB9AAF /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F73FC31E151FC900AB9AAF /* RadioButton.m */; };
 		45F73FC71E1526E200AB9AAF /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F73FC61E1526E200AB9AAF /* CustomCell.m */; };
 		45F73FCB1E15354500AB9AAF /* SocialVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F73FCA1E15354500AB9AAF /* SocialVC.m */; };
+		45F9888F1E52E44E003DFC1D /* HowItWorksView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F9888E1E52E44E003DFC1D /* HowItWorksView.m */; };
 		7F3920AF4C50DE9E5B0C07CD /* libPods-iMixedTape.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C3A1139244A6B9E23E311B9 /* libPods-iMixedTape.a */; };
 /* End PBXBuildFile section */
 
@@ -166,6 +166,8 @@
 		45F73FC61E1526E200AB9AAF /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
 		45F73FC91E15354500AB9AAF /* SocialVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialVC.h; sourceTree = "<group>"; };
 		45F73FCA1E15354500AB9AAF /* SocialVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialVC.m; sourceTree = "<group>"; };
+		45F9888D1E52E44E003DFC1D /* HowItWorksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowItWorksView.h; sourceTree = "<group>"; };
+		45F9888E1E52E44E003DFC1D /* HowItWorksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HowItWorksView.m; sourceTree = "<group>"; };
 		8C3A1139244A6B9E23E311B9 /* libPods-iMixedTape.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iMixedTape.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D12343BD834F47EF2C97CA67 /* Pods-iMixedTape.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMixedTape.release.xcconfig"; path = "Pods/Target Support Files/Pods-iMixedTape/Pods-iMixedTape.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -175,7 +177,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4521745C1E33DF2B00E6343C /* UserNotifications.framework in Frameworks */,
 				451721DE1DE95C8900A3A7E6 /* MediaPlayer.framework in Frameworks */,
 				45CD9B291E1153C100F31A4C /* FBSDKCoreKit.framework in Frameworks */,
 				45CD9B2A1E1153C100F31A4C /* FBSDKLoginKit.framework in Frameworks */,
@@ -260,6 +261,8 @@
 			children = (
 				455CF7A91DCCED5C00E2EE5A /* HelpVC.h */,
 				455CF7AA1DCCED5C00E2EE5A /* HelpVC.m */,
+				45F9888D1E52E44E003DFC1D /* HowItWorksView.h */,
+				45F9888E1E52E44E003DFC1D /* HowItWorksView.m */,
 				453C50C31E461A350037376A /* FaqView.h */,
 				453C50C41E461A350037376A /* FaqView.m */,
 				451ECF951DF88BBD0026A8FF /* AboutUs.h */,
@@ -510,6 +513,7 @@
 				456882821DB5475600EAE837 /* Resources */,
 				475015CF5D5DBFB002826194 /* [CP] Embed Pods Frameworks */,
 				7AFD986A1F02E0AEC18CA2D6 /* [CP] Copy Pods Resources */,
+				45E706711E533C99004281EB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -536,7 +540,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -592,6 +596,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		45E706711E533C99004281EB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 1c30990fc8e198e716c29ea7bcd54e085690fbff cb5c4147b9a5a18b8e33db07f5cea4dff48b2b3d835d7f5eed27ce68fde40289";
 		};
 		475015CF5D5DBFB002826194 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -669,6 +686,7 @@
 				45825FAC1E2A917D0058E5DA /* CreateTapeModel.m in Sources */,
 				459A86831E1BCEDF004C6C4B /* AFURLRequestSerialization.m in Sources */,
 				459A86821E1BCEDF004C6C4B /* AFSecurityPolicy.m in Sources */,
+				45F9888F1E52E44E003DFC1D /* HowItWorksView.m in Sources */,
 				459A86841E1BCEDF004C6C4B /* AFURLResponseSerialization.m in Sources */,
 				45CDF36F1E0F0566004B645F /* SignInVC.m in Sources */,
 			);
@@ -798,14 +816,14 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = iMixedTape/iMixedTape.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ZVDN92A33X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_PREFIX_HEADER = "/Volumes/Mustafa-USB/imixedtape 2/iMixedTape/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Volumes/Mustafa-USB/iMixedTapeWithCrashLytics/iMixedTape/PrefixHeader.pch";
 				INFOPLIST_FILE = iMixedTape/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -825,14 +843,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = iMixedTape/iMixedTape.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = ZVDN92A33X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_PREFIX_HEADER = "/Volumes/Mustafa-USB/imixedtape 2/iMixedTape/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Volumes/Mustafa-USB/iMixedTapeWithCrashLytics/iMixedTape/PrefixHeader.pch";
 				INFOPLIST_FILE = iMixedTape/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

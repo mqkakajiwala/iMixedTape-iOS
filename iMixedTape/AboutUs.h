@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AboutUs : UIView
+@interface AboutUs : UIView<UIWebViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
 @end

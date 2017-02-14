@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FaqView : UIView
+@interface FaqView : UIView<UIWebViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @end
