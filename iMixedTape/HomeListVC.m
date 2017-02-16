@@ -12,8 +12,8 @@
 #import "SelectSongVC.h"
 @interface HomeListVC (){
     FetchTapesModel *fetchTapesModel;
-    NSArray *myTapesArray;
-    NSArray *sharedTapesArray;
+//    NSArray *myTapesArray;
+//    NSArray *sharedTapesArray;
     
 }
 
@@ -25,8 +25,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    myTapesArray = [[NSArray alloc]init];
-    sharedTapesArray = [[NSArray alloc]init];
+//    myTapesArray = [[NSArray alloc]init];
+//    sharedTapesArray = [[NSArray alloc]init];
     
 }
 
@@ -34,69 +34,49 @@
 {
     [super viewWillAppear:animated];
     
-    UserModel *userModel = [[UserModel alloc]init];
-    NSLog(@"%@", userModel.userID);
-    if (userModel.isLoggedIn) {
-        [self webServiceToFetchTapes : userModel.userID];
-    }
-    else{
-        
-            [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:myTapesArray.mutableCopy tableView:self.myMixedTapeTableView view:self.view];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.myMixedTapeTableView reloadData];
-            });
-            
-            [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:sharedTapesArray.mutableCopy tableView:self.receivedTapeTableView view:self.view];
-        dispatch_async(dispatch_get_main_queue(), ^{
-
-            [self.receivedTapeTableView reloadData];
-        
-        });
-            
-        
-    }
+    [self emptyTableScreen];
 
 }
 
 #pragma mark - Webservice
--(void)webServiceToFetchTapes :(NSString *)userID
-{
-    [FetchTapesModel fetchUserTapesWithPagination:200 userID:userID :^(NSArray *callback) {
-        
-        fetchTapesModel = [[FetchTapesModel alloc]initWithArray:callback];
-        myTapesArray = fetchTapesModel.myTapesArray;
-        
-        //        myTapesArray = callback;
-        NSLog(@"%@",myTapesArray);
-        dispatch_async(dispatch_get_main_queue(), ^{
-             [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:myTapesArray.mutableCopy tableView:self.myMixedTapeTableView view:self.view];
-            [self.myMixedTapeTableView reloadData];
-        });
-    }];
-    
-    [FetchTapesModel mySharedTapesWihPagination:200 userID:userID :^(NSArray *callback) {
-        sharedTapesArray = callback;
-        
-        //        myTapesArray = callback;
-        NSLog(@"%@",sharedTapesArray);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:sharedTapesArray.mutableCopy tableView:self.receivedTapeTableView view:self.view];
-            
-            [self.receivedTapeTableView reloadData];
-        });
-    }];
-
-}
+//-(void)webServiceToFetchTapes :(NSString *)userID
+//{
+//    [FetchTapesModel fetchUserTapesWithPagination:200 userID:userID :^(NSArray *callback) {
+//        
+//        fetchTapesModel = [[FetchTapesModel alloc]initWithArray:callback];
+//        myTapesArray = fetchTapesModel.myTapesArray;
+//        
+//        //        myTapesArray = callback;
+//        NSLog(@"%@",myTapesArray);
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//             [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:myTapesArray.mutableCopy tableView:self.myMixedTapeTableView view:self.view];
+//            [self.myMixedTapeTableView reloadData];
+//        });
+//    }];
+//    
+//    [FetchTapesModel mySharedTapesWihPagination:200 userID:userID :^(NSArray *callback) {
+//        sharedTapesArray = callback;
+//        
+//        //        myTapesArray = callback;
+//        NSLog(@"%@",sharedTapesArray);
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            
+//            [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:sharedTapesArray.mutableCopy tableView:self.receivedTapeTableView view:self.view];
+//            
+//            [self.receivedTapeTableView reloadData];
+//        });
+//    }];
+//
+//}
 
 #pragma mark - UITableView DataSource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.myMixedTapeTableView) {
-        return myTapesArray.count;
+        return [FetchTapesModel sharedInstance].myCretedTapesArray.count;
     }else {
-        return sharedTapesArray.count;
+        return [FetchTapesModel sharedInstance].sharedTapesArray.count;
     }
 }
 
@@ -116,32 +96,32 @@
         if (tableView == self.myMixedTapeTableView) {
            
             
-            if (myTapesArray.count != 0) {
+            if ([FetchTapesModel sharedInstance].myCretedTapesArray.count != 0) {
                 
                 cell.albumArtImageView.contentMode = UIViewContentModeScaleAspectFit;
                 
-                [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[myTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+                [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
                 
                 
-                cell.titleTextLabel.text = [[myTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+                cell.titleTextLabel.text = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
             }else{
-                [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:myTapesArray.mutableCopy tableView:self.myMixedTapeTableView view:self.view];
+                [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy tableView:self.myMixedTapeTableView view:self.view];
                 
                 
             }
         }else{
 //            cell = (ListCell *)[tableView dequeueReusableCellWithIdentifier:@"ListCell" forIndexPath:indexPath];
             
-            if (sharedTapesArray.count != 0) {
+            if ([FetchTapesModel sharedInstance].sharedTapesArray.count != 0) {
                 
                 cell.albumArtImageView.contentMode = UIViewContentModeScaleAspectFit;
                 
-                [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[sharedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+                [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
                 
                 
-                cell.titleTextLabel.text = [[sharedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+                cell.titleTextLabel.text = [[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
             }else{
-            [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:sharedTapesArray.mutableCopy tableView:self.receivedTapeTableView view:self.view];
+            [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy tableView:self.receivedTapeTableView view:self.view];
             }
             
            
@@ -168,11 +148,11 @@
     SelectSongVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SELECT_SONG_VC"];
     
     if (tableView == self.myMixedTapeTableView) {
-        selectedTape = myTapesArray;
+        selectedTape = [FetchTapesModel sharedInstance].myCretedTapesArray;
         vc.tapeOwnerNameString = @"";
         vc.selectedTapeID = [[selectedTape valueForKey:@"id"]objectAtIndex:indexPath.row];
     }else{
-        selectedTape = sharedTapesArray;
+        selectedTape = [FetchTapesModel sharedInstance].sharedTapesArray;
         vc.tapeOwnerNameString = [[selectedTape valueForKey:@"full_name"]objectAtIndex:indexPath.row];
         vc.selectedTapeID = [[selectedTape valueForKey:@"imixed_tape_id"]objectAtIndex:indexPath.row];
     }
@@ -191,4 +171,29 @@
 
 }
 
+#pragma mark - Empty Table Screen
+-(void)emptyTableScreen
+{
+//    UserModel *userModel = [[UserModel alloc]init];
+//    NSLog(@"%@", userModel.userID);
+//    if (userModel.isLoggedIn) {
+//        [self webServiceToFetchTapes : userModel.userID];
+//    }
+//    else{
+    
+        [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy tableView:self.myMixedTapeTableView view:self.view];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myMixedTapeTableView reloadData];
+        });
+        
+        [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy tableView:self.receivedTapeTableView view:self.view];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.receivedTapeTableView reloadData];
+            
+        });
+        
+        
+//    }
+}
 @end

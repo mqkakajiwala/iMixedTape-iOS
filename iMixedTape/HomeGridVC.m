@@ -20,8 +20,8 @@
 @end
 
 @implementation HomeGridVC
-@synthesize myTapesArray;
-@synthesize sharedTapesArray;
+//@synthesize myTapesArray;
+//@synthesize sharedTapesArray;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,8 +29,7 @@
     
     
     
-    myTapesArray = [[NSArray alloc]init];
-    sharedTapesArray = [[NSArray alloc]init];
+    
     
     //    [self reloadTableData];
     
@@ -42,27 +41,7 @@
 {
     [super viewWillAppear:animated];
     
-    UserModel *userModel = [[UserModel alloc]init];
-    NSLog(@"%@", userModel.userID);
-    if (userModel.isLoggedIn) {
-        [self webServiceToFetchTapes : userModel.userID];
-    }else{
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-        [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:myTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
-        
-        
-            [self.collectionView reloadData];
-        });
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-        [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:myTapesArray.mutableCopy collectionView:self.receivedTapesCollectionView view:self.view];
-        
-            [self.receivedTapesCollectionView reloadData];
-        });
-        
-        
-    }
+    [self emptyCollectionViewScreen];
     
     
 }
@@ -73,24 +52,24 @@
     [FetchTapesModel fetchUserTapesWithPagination:200 userID:userID :^(NSArray *callback) {
         
         
-        myTapesArray = callback;
+        [FetchTapesModel sharedInstance].myCretedTapesArray = callback.mutableCopy;
         
         //        myTapesArray = callback;
-        NSLog(@"%@",myTapesArray);
+        NSLog(@"%@",[FetchTapesModel sharedInstance].myCretedTapesArray);
         
-        [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:myTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
+        [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.collectionView reloadData];
         });
     }];
     
     [FetchTapesModel mySharedTapesWihPagination:200 userID:userID :^(NSArray *callback) {
-        sharedTapesArray = callback;
+        [FetchTapesModel sharedInstance].sharedTapesArray = callback.mutableCopy;
         
         //        myTapesArray = callback;
-        NSLog(@"%@",sharedTapesArray);
+        NSLog(@"%@",[FetchTapesModel sharedInstance].sharedTapesArray);
         
-        [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:sharedTapesArray.mutableCopy collectionView:self.receivedTapesCollectionView view:self.view];
+        [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy collectionView:self.receivedTapesCollectionView view:self.view];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.receivedTapesCollectionView reloadData];
         });
@@ -101,10 +80,10 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     if (collectionView == self.collectionView) {
-        return myTapesArray.count;
+        return [FetchTapesModel sharedInstance].myCretedTapesArray.count;
     }
     else{
-        return sharedTapesArray.count;
+        return [FetchTapesModel sharedInstance].sharedTapesArray.count;
     }
 }
 
@@ -122,19 +101,19 @@
             TriLabelView *triView = (TriLabelView *)[cell viewWithTag:1000];
             
             
-            if (myTapesArray.count != 0) {
+            if ([FetchTapesModel sharedInstance].myCretedTapesArray.count != 0) {
                 
                 albumArtworkImage.contentMode = UIViewContentModeScaleAspectFit;
                 
-                [albumArtworkImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[myTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+                [albumArtworkImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
                 
                 
-                messageLabel.text = [[myTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
-                triView.labelText = [SharedHelper truncatedLabelString:[[[myTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:5];
+                messageLabel.text = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+                triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:5];
                 triView.fontSize = 8;
                 
             }else{
-                [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:myTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
+                [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
             }
             
         }else {
@@ -147,18 +126,18 @@
             
             
             
-            if (sharedTapesArray.count !=0) {
+            if ([FetchTapesModel sharedInstance].sharedTapesArray.count !=0) {
                 
                 albumArtworkImage.contentMode = UIViewContentModeScaleAspectFit;
                 
-                [albumArtworkImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[sharedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+                [albumArtworkImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
                 
                 
-                messageLabel.text = [[sharedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
-                triView.labelText = [SharedHelper truncatedLabelString:[[[myTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:5];
+                messageLabel.text = [[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+                triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:5];
                 triView.fontSize = 8;
             }else{
-                [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:myTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
+                [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
             }
             
         }
@@ -189,11 +168,11 @@
     SelectSongVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SELECT_SONG_VC"];
     
     if (collectionView == self.collectionView) {
-        selectedTape = myTapesArray;
+        selectedTape = [FetchTapesModel sharedInstance].myCretedTapesArray;
         vc.tapeOwnerNameString = @"";
         vc.selectedTapeID = [[selectedTape valueForKey:@"id"]objectAtIndex:indexPath.row];
     }else{
-        selectedTape = sharedTapesArray;
+        selectedTape = [FetchTapesModel sharedInstance].sharedTapesArray;
         vc.tapeOwnerNameString = [[selectedTape valueForKey:@"full_name"]objectAtIndex:indexPath.row];
         vc.selectedTapeID = [[selectedTape valueForKey:@"imixed_tape_id"]objectAtIndex:indexPath.row];
     }
@@ -212,9 +191,51 @@
 }
 
 
+-(void)getWebserviceDataOnLoad
+{
+    
+//    myTapesArray = [[NSArray alloc]init];
+//    sharedTapesArray = [[NSArray alloc]init];
+    
+    
+    
+    UserModel *userModel = [[UserModel alloc]init];
+    NSLog(@"%@", userModel.userID);
+    if (userModel.isLoggedIn) {
+        [self webServiceToFetchTapes : userModel.userID];
+    }else{
+        [self emptyCollectionViewScreen];
+        
+    }
+}
 
+#pragma mark - Empty Collection Screen Message
+-(void)emptyCollectionViewScreen
+{
+    
+   
+        [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    
 
+         [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy collectionView:self.receivedTapesCollectionView view:self.view];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.receivedTapesCollectionView reloadData];
+        });
+    
 
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+            [self.receivedTapesCollectionView reloadData];
+        });
+    
+    
+  
+    
+}
 
 
 @end

@@ -8,7 +8,7 @@
 
 #import "SettingsVC.h"
 #import "SignInVC.h"
-#import "HomeGridVC.h"
+#import "FetchTapesModel.h"
 
 
 @interface SettingsVC (){
@@ -61,11 +61,12 @@
     
     
     
-    HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
+//    HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
     
  
-    hg.myTapesArray = [[NSArray alloc]init];
-    hg.sharedTapesArray = [[NSArray alloc]init];
+    [FetchTapesModel sharedInstance].myCretedTapesArray = [[NSMutableArray alloc]init];
+    [FetchTapesModel sharedInstance].sharedTapesArray = [[NSMutableArray alloc]init];
+    
     [sender setEnabled:NO];
     
     [self.signInButtonOutlet setEnabled:YES];

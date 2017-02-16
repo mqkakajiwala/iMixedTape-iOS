@@ -12,8 +12,9 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *receivedTapesCollectionView;
-@property (strong,nonatomic) NSArray *myTapesArray;
-@property (strong,nonatomic) NSArray *sharedTapesArray;
+//@property (strong,nonatomic) NSArray *myTapesArray;
+//@property (strong,nonatomic) NSArray *sharedTapesArray;
 
 -(void)webServiceToFetchTapes :(NSString *)userID;
+-(void)getWebserviceDataOnLoad;
 @end

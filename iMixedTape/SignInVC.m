@@ -8,6 +8,7 @@
 
 #import "SignInVC.h"
 #import "ResetPasswordVC.h"
+#import "HomeGridVC.h"
 
 
 
@@ -91,6 +92,8 @@
                                             [[NSUserDefaults standardUserDefaults]setObject:encodedData forKey:key_userData];
                                             [self.navigationController popViewControllerAnimated:YES];
                                             
+                                            HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
+                                            [hg getWebserviceDataOnLoad];
                                             self.tabBarController.selectedIndex = 0;
                                         }
                                         else{
@@ -108,60 +111,7 @@
         [SharedHelper AlertControllerWithTitle:@"" message:errMsg viewController:self];
     }
     
-//    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-//        textField.placeholder = @"Enter reset token here";
-//        textField.textColor = [UIColor blueColor];
-//        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-//        textField.borderStyle = UITextBorderStyleRoundedRect;
-//        textField.secureTextEntry = YES;
-//    }];
-//    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-//        textField.placeholder = @"Enter new password here";
-//        textField.textColor = [UIColor blueColor];
-//        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-//        textField.borderStyle = UITextBorderStyleRoundedRect;
-//        textField.secureTextEntry = YES;
-//    }];
-//    
-//    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-//        textField.placeholder = @"Enter cofirm password here";
-//        textField.textColor = [UIColor blueColor];
-//        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-//        textField.borderStyle = UITextBorderStyleRoundedRect;
-//        textField.secureTextEntry = YES;
-//    }];
-//    
-//    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-//        NSArray * textfields = alertController.textFields;
-//        UITextField * resetTokenTF = textfields[0];
-//        UITextField * passwordTF = textfields[1];
-//        UITextField * confirmPassTF = textfields[2];
-//        
-//        
-//        if ([resetTokenTF.text isEqualToString:@""]) {
-//            [SVProgressHUD showImage:nil status:@"Please enter valid reset token."];
-//        }
-//        else if ([passwordTF.text isEqualToString:@""]) {
-//            [SVProgressHUD showImage:nil status:@"Please enter valid password."];
-//        }
-//        else if (![passwordTF.text isEqualToString:confirmPassTF.text]) {
-//            [SVProgressHUD showImage:nil status:@"Your password doesn't match with the confirm password."];
-//        }
-//        else if ([confirmPassTF.text isEqualToString:@""]) {
-//            [SVProgressHUD showImage:nil status:@"Please enter valid confirm password."];
-//        }
-//        else{
-//            [UserModel resetPasswordForEmail:self.emailTextField.text resetToken:resetTokenTF.text password:passwordTF.text confirmPass:confirmPassTF.text callback:^(id callback) {
-//                if ([callback boolValue] == YES) {
-//                    [SVProgressHUD showImage:nil status:@"Your password has been changed successfully. Please login to continue."];
-//                }
-//            }];
-//        }
-//        
-//    }]];
-//    
-//    [self presentViewController:alertController animated:YES completion:nil];
-//    
+   
     
 }
 

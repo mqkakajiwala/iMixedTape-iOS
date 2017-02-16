@@ -9,25 +9,58 @@
 #import "CreateTapeModel.h"
 
 @implementation CreateTapeModel
+@synthesize title;
+@synthesize uploadImageID;
+@synthesize message;
+@synthesize sendTo;
+@synthesize emailOrMobile;
+@synthesize from;
+@synthesize albumImage;
+@synthesize isEmail;
+@synthesize songsAddedArray;
+@synthesize imageData;
 
--(instancetype)init
+static CreateTapeModel *instance = nil;
+
++(CreateTapeModel *)sharedInstance
+{
+    @synchronized (self) {
+        if (instance == nil) {
+            instance = [CreateTapeModel new];
+            
+        }
+    }
+    
+    return instance;
+}
+
+-(id)init
 {
     if (self) {
         self = [super init];
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        self.title = [defaults valueForKey:key_createTapeTitle];
-        self.uploadImageID = [defaults valueForKey:key_createTapeUploadImageID];
-        self.message = [defaults valueForKey:key_createTapeMessage];
-        self.sendTo = [defaults valueForKey:key_createTapeSendTo];
-        self.emailOrMobile = [defaults valueForKey:key_createTapeEmailOrMobile];
-        self.from = [defaults valueForKey:key_createTapeFrom];
-        NSData *imgData = [defaults objectForKey:key_createTapeImage];
-        self.albumImage = [UIImage imageWithData:imgData];
-        self.isEmail = [defaults boolForKey:key_createTapeIfEmailMobileBOOL];
-        self.songsAddedArray = [defaults objectForKey:key_createTapeSongs];
+        
+        self.albumImage = [UIImage imageNamed:@"imgicon"];
+        self.uploadImageID = @"";
+        self.songsAddedArray = [[NSMutableArray alloc]init];
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        self.title = [defaults valueForKey:key_createTapeTitle];
+//        self.uploadImageID = [defaults valueForKey:key_createTapeUploadImageID];
+//        self.message = [defaults valueForKey:key_createTapeMessage];
+//        self.sendTo = [defaults valueForKey:key_createTapeSendTo];
+//        self.emailOrMobile = [defaults valueForKey:key_createTapeEmailOrMobile];
+//        self.from = [defaults valueForKey:key_createTapeFrom];
+//        NSData *imgData = [defaults objectForKey:key_createTapeImage];
+//        self.albumImage = [UIImage imageWithData:imgData];
+//        self.isEmail = [defaults boolForKey:key_createTapeIfEmailMobileBOOL];
+//        self.songsAddedArray = [defaults objectForKey:key_createTapeSongs];
     }
     
     return self;
+}
+
++(void)resetCreateTapeModel
+{
+    instance = nil;
 }
 +(void)uploadFileWithAttachnment :(NSString *)base64String callback :(void (^)(id))callback
 {
@@ -114,17 +147,18 @@
     
 }
 
--(void)postFinalTapeToServer :(NSString *)title message:(NSString *)message userID:(NSString *)userID uploadImageID:(NSString *)uploadID savedSongsArray:(NSMutableArray *)savedSongsArray callback:(void (^)(id))callback
+-(void)postFinalTapeToServer :(NSString *)tapeTitle message:(NSString *)tapeMessage userID:(NSString *)userID uploadImageID:(NSString *)uploadID savedSongsArray:(NSMutableArray *)savedSongsArray callback:(void (^)(id))callback
 {
     [SVProgressHUD show];
     NSString *url = @"http://staging.imixedtape.com/api/tape/create";
     
+    NSLog(@"%@",userID);    
     NSLog(@"%@",url);
     
     
     
     
-    NSDictionary *params = @{@"title" : title,
+    NSDictionary *params = @{@"title" : tapeTitle,
                              @"message" : message,
                              @"user_id" : userID,
                              @"upload_id" : uploadID
@@ -152,19 +186,19 @@
         NSLog(@"%@",url);
         
         NSString *key;
-        if ([[NSUserDefaults standardUserDefaults]boolForKey:key_ifemail]) {
+        if (self.isEmail) {
             key = @"to_user_email";
         }else{
             key = @"to_user_phone";
         }
         
-        CreateTapeModel *cModel = [[CreateTapeModel alloc]init];
-        NSLog(@"%@", cModel.emailOrMobile);
         
-         NSLog(@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile]);
+        
+        
+        
         NSDictionary *params = @{@"imixed_tape_id" : [[responseObject objectForKey:@"data"]objectForKey:@"id"],
                                  @"user_id" : userID,
-                                 key : [[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile]
+                                 key : self.emailOrMobile
                                  };
         
         NSLog(@"%@",params);
@@ -222,6 +256,8 @@
                                                             NSLog(@"%@",responseObject);
                                                             callback(responseObject);
                                                         }
+                                                        
+                                                        
                                                     }];
         [dataTask resume];
 

@@ -174,7 +174,7 @@
         vc.tapeMessageStr = self.tapeMessageString;
         vc.artistStr = [[songsArray valueForKey:@"artist"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
         vc.songID = [[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
-        vc.tapeTitleStr = self.tapeTitle.text;
+        vc.tapeTitleStr = self.tapeTitleString;
         
         
         

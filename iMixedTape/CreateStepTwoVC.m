@@ -27,7 +27,7 @@
 //    NSMutableArray *songsAddedArray;
     NSMutableArray *matchArray;
     NSString *songDuration;
-    CreateTapeModel *cTModel;
+    CreateTapeModel *tapeModel;
     SharedHelper *helper;
 }
 
@@ -39,7 +39,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-
+    
     self.searchBar.delegate = self;
     searchResultsArray = [[NSMutableArray alloc]init];
    
@@ -71,7 +71,11 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    helper = [SharedHelper sharedInstance];
+    
+    tapeModel = [CreateTapeModel sharedInstance];
+//    helper = [SharedHelper sharedInstance];
+//    helper.tapeSongsArray = [[[NSUserDefaults standardUserDefaults]objectForKey:key_createTapeSongs]mutableCopy];
+    
     
     MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:MPMediaTypeMusic] forProperty:MPMediaItemPropertyMediaType];
     query = [[MPMediaQuery alloc]init];
@@ -107,8 +111,13 @@
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    for (NSString* string in mediaArray)
+    if (searchResultsArray.count != 0) {
+        [searchResultsArray removeAllObjects];
+    }
+    
+    for (int i =0; i< mediaArray.count; i++)
     {
+        NSString *string = [[mediaArray objectAtIndex:i] valueForKey:@"message"];
         NSRange nameRange = [string rangeOfString:searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch)];
         
         if(nameRange.location != NSNotFound)
@@ -121,9 +130,10 @@
         }else{
             searchActive = YES;
         }
+        [self.tableView reloadData];
     }
     
-    [self.tableView reloadData];
+    
 }
 
 #pragma mark - TableView Datasource
@@ -201,12 +211,12 @@
                 
                 [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[mediaArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
                 
-                if (searchActive) {
+                //if (!searchActive) {
                  cell.songTitleLabel.text = [[mediaArray valueForKey:@"message"]objectAtIndex:indexPath.row];
-                }else{
-                    cell.songTitleLabel.text = [[searchResultsArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+               // }else{
+                    //cell.songTitleLabel.text = [[searchResultsArray valueForKey:@"message"]objectAtIndex:indexPath.row];
    
-                }
+                //}
                 
                 
                 cell.songDecLabel.text = @"";
@@ -292,14 +302,15 @@
         
         
         mediaArray = callback.mutableCopy;
-        
-        //        myTapesArray = callback;
+
         NSLog(@"%@",mediaArray);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [SharedHelper emptyTableScreenText:@"You have not created tapes" Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
-            
-            [self.tableView reloadData];
-        });
+        if (mediaArray.count == 0) {
+            [SharedHelper emptyTableScreenText:@"You have not created mixed tapes." Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
+        }else{
+            [SharedHelper emptyTableScreenText:@"" Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
+        }
+        
+        [self.tableView reloadData];
     }];
 }
 
@@ -315,6 +326,8 @@
     
     if (mediaArray.count == 0) {
         [SharedHelper emptyTableScreenText:@"You have no albums to show." Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
+    }else{
+        [SharedHelper emptyTableScreenText:@"" Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
     }
     
     
@@ -337,8 +350,8 @@
     }
  
     
-    for (int i=0; i<helper.tapeSongsArray.count; i++) {
-        NSString *addedSongsTitle = [[helper.tapeSongsArray objectAtIndex:i]objectForKey:@"title"];
+    for (int i=0; i<tapeModel.songsAddedArray.count; i++) {
+        NSString *addedSongsTitle = [[tapeModel.songsAddedArray objectAtIndex:i]objectForKey:@"title"];
 //        int j = 0;
         for (int j=0; j<mediaArray.count; j++) {
             MPMediaItem *rowItem = [mediaArray objectAtIndex:j];
@@ -519,10 +532,10 @@
                                  };
           
           NSLog(@"%@",dict);
-          [helper.tapeSongsArray addObject:dict];
-          
-          [[NSUserDefaults standardUserDefaults]setObject:helper.tapeSongsArray forKey:key_createTapeSongs];
-          NSLog(@"%@",helper.tapeSongsArray);
+ 
+              [tapeModel.songsAddedArray addObject:dict];
+//          [[NSUserDefaults standardUserDefaults]setObject:helper.tapeSongsArray forKey:key_createTapeSongs];
+          NSLog(@"%@",tapeModel.songsAddedArray);
               
           }
           [SVProgressHUD dismiss];

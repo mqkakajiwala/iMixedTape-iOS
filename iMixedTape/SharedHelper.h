@@ -30,6 +30,7 @@
 +(void)fetchGoogleAdds :(GADBannerView *)adBannerView onViewController:(UIViewController *)vc;
 +(void)removeTapeDefaults;
 +(NSString *)truncatedLabelString :(NSString *)temp charactersToLimit:(int)index;
++(UIImage*)imageWithImage: (UIImage*) sourceImage scaledToWidth: (float) i_width;
 @end
 
 

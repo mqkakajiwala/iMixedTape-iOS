@@ -26,7 +26,7 @@
             [defaults setBool:YES forKey:key_isLoggedIn];
             [defaults setObject:dict[@"first"] forKey:key_firstName];
             [defaults setObject:dict[@"last"] forKey:key_lastName];
-            [defaults setObject:dict[@"id"] forKey:key_userID];
+            [defaults setObject:[[dict objectForKey:@"id"]stringValue] forKey:key_userID];
             
             self.isLoggedIn = [defaults boolForKey:key_isLoggedIn];
             self.userData = [defaults objectForKey:key_userData];

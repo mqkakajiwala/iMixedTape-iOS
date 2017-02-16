@@ -8,11 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FetchTapesModel : NSObject
+@interface FetchTapesModel : NSObject{
+    NSMutableArray *myCretedTapesArray;
+    NSMutableArray *sharedTapesArray;
+}
 
-@property (strong,nonatomic) NSMutableArray *myTapesArray;
++(FetchTapesModel *)sharedInstance;
 
--(instancetype)initWithArray :(NSArray *)tapesArray;
+
+@property (strong,nonatomic) NSMutableArray *myCretedTapesArray;
+@property (strong,nonatomic) NSMutableArray *sharedTapesArray;
+
+
 +(void)fetchUserTapesWithPagination :(int)offset userID:(NSString *)userID :(void (^)(NSArray *))callback;
 +(void)mySharedTapesWihPagination :(int)offset userID:(NSString *)userID :(void (^)(NSArray *))callback;
 @end

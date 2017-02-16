@@ -8,7 +8,7 @@
 
 #import "HomeVC.h"
 #import "PlayTapeVC.h"
-#import <Crashlytics/Crashlytics.h>
+#import "HomeGridVC.h"
 
 
 @interface HomeVC (){
@@ -32,20 +32,18 @@
     
     [SharedHelper fetchGoogleAdds:self.adBannerView onViewController:self];
     
-    UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.frame = CGRectMake(20, 50, 100, 30);
-    [button setTitle:@"Crash" forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(crashButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
+        [hg getWebserviceDataOnLoad];
+    });
     
 }
-    
-- (IBAction)crashButtonTapped:(id)sender {
-    [[Crashlytics sharedInstance] crash];
-}
-    
-    
-    
+
+
+
+
+
 -(void)viewWillAppear:(BOOL)animated
     {
         [super viewWillAppear:animated];

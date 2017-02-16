@@ -16,7 +16,7 @@
     BOOL ifEmail;
     UIImagePickerController *imagePicker;
     NSString *selectedContact;
-    
+    CreateTapeModel *tapeModel;
 }
 
 @end
@@ -26,17 +26,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    NSLog(@"LOADING");
     
     
     
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     
+    tapeModel = [CreateTapeModel sharedInstance];
     
-    if ([[NSUserDefaults standardUserDefaults]boolForKey:key_ifemail]) {
+    if (tapeModel.isEmail) {
         [self.emailRadButton setSelected:YES];
     }else{
         [self.phoneRadButton setSelected:YES];
@@ -64,36 +61,32 @@
     [self.view addGestureRecognizer:tap];
     
     
-    
     [self loadDefaultValues];
-    
-    
-    
-    
 }
+
 
 -(void)loadDefaultValues
 {
     
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    self.titleTextField.text = [defaults valueForKey:key_createTapeTitle];
-    self.messageTextView.text = [defaults valueForKey:key_createTapeMessage];
-    self.sendToTextField.text = [defaults valueForKey:key_createTapeSendTo];
-    NSLog(@"%@",[defaults valueForKey:key_createTapeEmailOrMobile]);
-    self.emailORmobileTextField.text = [defaults valueForKey:key_createTapeEmailOrMobile];
-    self.fromTextField.text = [defaults valueForKey:key_createTapeFrom];
-    NSData *imgData = [defaults objectForKey:key_createTapeImage];
+    self.titleTextField.text = tapeModel.title;//[defaults valueForKey:key_createTapeTitle];
+    self.messageTextView.text = tapeModel.message;// [defaults valueForKey:key_createTapeMessage];
+    self.sendToTextField.text = tapeModel.sendTo;//[defaults valueForKey:key_createTapeSendTo];
+//    NSLog(@"%@",[defaults valueForKey:key_createTapeEmailOrMobile]);
+    self.emailORmobileTextField.text = tapeModel.emailOrMobile;//[defaults valueForKey:key_createTapeEmailOrMobile];
+    self.fromTextField.text = tapeModel.from;//[defaults valueForKey:key_createTapeFrom];
+    NSData *imgData = tapeModel.imageData;//[defaults objectForKey:key_createTapeImage];
     
     if (imgData !=nil) {
         self.albumArtImage.image = [UIImage imageWithData:imgData];
     }else{
         self.albumArtImage.image = [UIImage imageNamed:@"imgicon"];
     }
+//
     
-    
-    imageUploadID = [defaults valueForKey:key_createTapeUploadImageID];
+    imageUploadID = tapeModel.uploadImageID;//[defaults valueForKey:key_createTapeUploadImageID];
 }
 
 
@@ -155,20 +148,28 @@
     //load your data here.
     
     UIImage *choosenImage = info[UIImagePickerControllerEditedImage];
-    [[NSUserDefaults standardUserDefaults]setObject:UIImagePNGRepresentation(choosenImage) forKey:key_createTapeImage];
+//    tapeModel.albumImage = choosenImage;
+    tapeModel.imageData = UIImagePNGRepresentation(choosenImage);
+    //[[NSUserDefaults standardUserDefaults]setObject:UIImagePNGRepresentation(choosenImage) forKey:key_createTapeImage];
     
-     NSData *imgData = [[NSUserDefaults standardUserDefaults] objectForKey:key_createTapeImage];
-    self.albumArtImage.image = [UIImage imageWithData:imgData];
+     //NSData *imgData = [[NSUserDefaults standardUserDefaults] objectForKey:key_createTapeImage];
+    self.albumArtImage.image = [UIImage imageWithData:tapeModel.imageData];
     
-   
+    UIImage *resizedImage =[SharedHelper imageWithImage:choosenImage scaledToWidth:self.albumArtImage.frame.size.width];
     
-        NSString *base64str = [self encodeToBase64String:choosenImage];
+        NSString *base64str = [self encodeToBase64String:resizedImage];
         [CreateTapeModel uploadFileWithAttachnment:base64str callback:^(id callback) {
     
             if ([[callback objectForKey:@"error"]boolValue] == NO) {
                 imageUploadID = [[callback objectForKey:@"data"]objectForKey:@"id"];
-                [[NSUserDefaults standardUserDefaults]setValue:imageUploadID forKey:key_createTapeUploadImageID];
-                [[NSUserDefaults standardUserDefaults]setObject:UIImagePNGRepresentation(self.albumArtImage.image) forKey:key_createTapeImage];
+                
+                tapeModel.uploadImageID = imageUploadID;
+//                [[NSUserDefaults standardUserDefaults]setValue:imageUploadID forKey:key_createTapeUploadImageID];
+                
+                tapeModel.albumImage = self.albumArtImage.image;
+                NSLog(@"%@",tapeModel.albumImage);
+//                self.albumArtImage.image = tapeModel.albumImage;
+//                [[NSUserDefaults standardUserDefaults]setObject:UIImagePNGRepresentation(self.albumArtImage.image) forKey:key_createTapeImage];
     
     
                 NSLog(@"%@", base64str);
@@ -206,7 +207,7 @@
     }
     
     if (textField == _emailORmobileTextField) {
-        if ([[NSUserDefaults standardUserDefaults]boolForKey:key_ifemail]) {
+        if (tapeModel.isEmail) {
             [textField setKeyboardType:UIKeyboardTypeDefault];
         }else{
             [textField setKeyboardType:UIKeyboardTypeNumberPad];
@@ -222,17 +223,21 @@
     self.viewTopConstraint.constant = 0;
     
     if (textField == _titleTextField) {
-        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeTitle];
+        tapeModel.title = textField.text;
+//        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeTitle];
     }
     else if (textField == _sendToTextField){
-        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeSendTo];
+        tapeModel.sendTo = textField.text;
+//        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeSendTo];
         
     }
     else if (textField == _fromTextField){
-        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeFrom];
+        tapeModel.from = textField.text;
+//        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeFrom];
         
     }else if (textField == _emailORmobileTextField){
-        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeEmailOrMobile];
+        tapeModel.emailOrMobile = textField.text;
+//        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeEmailOrMobile];
         
     }
     
@@ -273,7 +278,8 @@
     
     self.viewTopConstraint.constant = 0;
     if (textView == _messageTextView) {
-        [[NSUserDefaults standardUserDefaults]setValue:textView.text forKey:key_createTapeMessage];
+        tapeModel.message = textView.text;
+//        [[NSUserDefaults standardUserDefaults]setValue:textView.text forKey:key_createTapeMessage];
     }
 }
 
@@ -313,8 +319,9 @@
         ifEmail = NO;
         NSLog(@"PHONE");
     }
-    [[NSUserDefaults standardUserDefaults]setBool:ifEmail forKey:key_ifemail];
-    NSLog(@"%d",[[NSUserDefaults standardUserDefaults]boolForKey:key_ifemail]);
+    tapeModel.isEmail = ifEmail;
+//    [[NSUserDefaults standardUserDefaults]setBool:ifEmail forKey:key_ifemail];
+//    NSLog(@"%d",[[NSUserDefaults standardUserDefaults]boolForKey:key_ifemail]);
     
 }
 
@@ -363,7 +370,7 @@
     
     
     
-    if (![[NSUserDefaults standardUserDefaults]boolForKey:key_ifemail]) {
+    if (!tapeModel.isEmail) {
         if (contact.phoneNumbers > 0) {
             
             
@@ -394,9 +401,10 @@
     }
     
     NSLog(@"%@",self.emailORmobileTextField.text);
-    [[NSUserDefaults standardUserDefaults]setValue:selectedContact forKey:key_createTapeEmailOrMobile];
-    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile]);
-    self.emailORmobileTextField.text = [[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile];
+//    [[NSUserDefaults standardUserDefaults]setValue:selectedContact forKey:key_createTapeEmailOrMobile];
+    tapeModel.emailOrMobile = selectedContact;
+//    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile]);
+    self.emailORmobileTextField.text = tapeModel.emailOrMobile;//[[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile];
     
     
 }

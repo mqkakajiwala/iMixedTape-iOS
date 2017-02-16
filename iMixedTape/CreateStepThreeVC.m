@@ -12,6 +12,7 @@
 
 @interface CreateStepThreeVC (){
     NSMutableArray *previewArray;
+    CreateTapeModel *tapeModel;
 }
 
 @end
@@ -23,7 +24,7 @@
     // Do any additional setup after loading the view.
     
     
-   
+    
     
 }
 
@@ -33,28 +34,26 @@
     
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        previewArray = [[NSMutableArray alloc]init];
-        CreateTapeModel *cModel = [[CreateTapeModel alloc]init];
-        NSLog(@"%@",cModel.songsAddedArray);
-        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:key_createTapeSongs]);
-        previewArray = [[[NSUserDefaults standardUserDefaults]objectForKey:key_createTapeSongs]mutableCopy];
-        NSLog(@"%@",previewArray);
-        
-        if (previewArray.count == 0) {
-            [SharedHelper emptyTableScreenText:@"No songs added." Array:previewArray tableView:self.tableView view:self.view];
-        }
-        [self.tableView reloadData];
-    });
+    
+    previewArray = [[NSMutableArray alloc]init];
+    tapeModel = [CreateTapeModel sharedInstance];
+    NSLog(@"%@",tapeModel.songsAddedArray);
+//    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:key_createTapeSongs]);
+    previewArray = tapeModel.songsAddedArray;//[[[NSUserDefaults standardUserDefaults]objectForKey:key_createTapeSongs]mutableCopy];
+    NSLog(@"%@",previewArray);
+    
+    if (previewArray.count == 0) {
+        [SharedHelper emptyTableScreenText:@"No songs added." Array:previewArray tableView:self.tableView view:self.view];
+    }
+    [self.tableView reloadData];
     
     
     
-    CreateTapeModel *model = [[CreateTapeModel alloc]init];
-    self.tapeMainImage.image = model.albumImage;
-    self.titleView.labelText = model.title;
-    self.messageLabel.text = model.message;
+    self.tapeMainImage.image = tapeModel.albumImage;
+    self.titleView.labelText = tapeModel.title;
+    self.messageLabel.text = tapeModel.message;
     
- 
+    
     
 }
 #pragma mark - TableView Datasource
@@ -68,19 +67,19 @@
 {
     CustomCell *cell = (CustomCell *) [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-//    cell.albumArtImageView;
-   
+    //    cell.albumArtImageView;
+    
     NSLog(@"%@",[[previewArray objectAtIndex:indexPath.row] objectForKey:@"albumArt"]);
     
     [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[[previewArray objectAtIndex:indexPath.row] objectForKey:@"albumArt"]]];
     
     cell.songTitleLabel.text = [[previewArray objectAtIndex:indexPath.row] objectForKey:@"title"];
-//
+    //
     cell.songDecLabel.text = [[previewArray objectAtIndex:indexPath.row] objectForKey:@"artist"];
-//
+    //
     cell.songTimeLabel.text = [[previewArray objectAtIndex:indexPath.row] objectForKey:@"duration"];
     
-        
+    
     return cell;
 }
 
@@ -99,7 +98,9 @@
         [previewArray removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         
-        [[NSUserDefaults standardUserDefaults]setObject:previewArray forKey:key_createTapeSongs];
+        tapeModel.songsAddedArray = previewArray;
+        NSLog(@"%@",previewArray);
+        //[[NSUserDefaults standardUserDefaults]setObject:previewArray forKey:key_createTapeSongs];
     }
 }
 

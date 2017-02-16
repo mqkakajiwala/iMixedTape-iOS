@@ -9,17 +9,27 @@
 #import "FetchTapesModel.h"
 
 @implementation FetchTapesModel
+@synthesize myCretedTapesArray;
+@synthesize sharedTapesArray;
 
--(instancetype)initWithArray :(NSArray *)tapesArray
+static FetchTapesModel *instance = nil;
+
++(FetchTapesModel *)sharedInstance
 {
-    if (self = [super init]) {
+    @synchronized (self) {
         
-        self.myTapesArray = tapesArray.mutableCopy;
-        NSLog(@"%@",self.myTapesArray);
+        if (instance == nil) {
+            instance = [FetchTapesModel new];
+            NSLog(@"%@",instance.myCretedTapesArray);
+        }
+        
     }
     
-    return self;
+    return instance;
+    
 }
+
+
 +(void)fetchUserTapesWithPagination :(int)offset userID:(NSString *)userID :(void (^)(NSArray *))callback
 {
     [SVProgressHUD show];
