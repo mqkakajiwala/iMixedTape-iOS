@@ -12,14 +12,24 @@
 #import "SharedHelper.h"
 #import "NewUserModel.h"
 #import "UserModel.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <SVProgressHUD/SVProgressHUD.h>
+#import "CreateTapeModel.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "iMixedTape-Swift.h"
+@import Contacts;
+@import ContactsUI;
+@import GoogleMobileAds;
+
 
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
 
-
-
+#define key_adBanner @"ca-app-pub-4849448462646581/2864552556"
+#define DBNAME @"savedTapes.sqlite"
 
 #define key_deviceToken @"key_deviceToken"
 #define key_isLoggedIn @"is_LoggedIn"
@@ -27,6 +37,19 @@
 #define key_firstName @"key_firstName"
 #define key_lastName @"key_lastName"
 #define key_userID @"key_userID"
+#define key_createTapeTitle @"key_createTapeTitle"
+#define key_createTapeUploadImageID @"key_imageUploadID"
+#define key_createTapeMessage @"key_createTapeMessage"
+#define key_createTapeSendTo @"key_sendTo"
+#define key_createTapeEmailOrMobile @"key_emailOrMobile"
+#define key_createTapeFrom @"key_Frome"
+#define key_createTapeImage @"key_image"
+#define key_createTapeSongs @"tapeSongs"
+#define key_createTapeIfEmailMobileBOOL @"key_ifEmailMobile"
+#define key_ifemail @"key_ifEmail"
+#define key_savedTapesArray @"savedTapesKey"
+
+
 
 #define kOFFSET_FOR_KEYBOARD 80.0
 
@@ -53,6 +76,12 @@
 #define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 
 #define IS_RETINA ([[UIScreen mainScreen] scale] >= 2.0)
+
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 #endif /* PrefixHeader_pch */
 

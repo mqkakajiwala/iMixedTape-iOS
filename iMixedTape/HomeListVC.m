@@ -103,7 +103,7 @@
                 [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
                 
                 
-                cell.titleTextLabel.text = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+                cell.titleTextLabel.text = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row];
             }else{
                 [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy tableView:self.myMixedTapeTableView view:self.view];
                 
@@ -144,9 +144,13 @@
 #pragma mark - TableView delegate method
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [CreateTapeModel resetCreateTapeModel];
+    
     NSArray *selectedTape = [[NSArray alloc]init];
     SelectSongVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SELECT_SONG_VC"];
     
+    if (![[[[FetchTapesModel sharedInstance].myCretedTapesArray objectAtIndex:indexPath.row] valueForKey:@"saved"]boolValue]) {
+        
     if (tableView == self.myMixedTapeTableView) {
         selectedTape = [FetchTapesModel sharedInstance].myCretedTapesArray;
         vc.tapeOwnerNameString = @"";
@@ -165,22 +169,37 @@
     vc.selectedTapeSharedID =[[selectedTape valueForKey:@"shared_id"]objectAtIndex:indexPath.row];
     NSLog(@"%@",vc.tapeStatus);
     NSLog(@"%@",vc.selectedTapeID);
+        
+        [self presentViewController:vc animated:YES completion:nil];
+    }
+    else{
+        CreateTapeModel *tapeModel = [CreateTapeModel sharedInstance];
+        NSLog(@"%@",[FetchTapesModel sharedInstance].myCretedTapesArray);
+        
+        tapeModel.selectedTapeIndex = indexPath.row;
+        tapeModel.tapeID = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"tapeID"]objectAtIndex:indexPath.row];
+        tapeModel.title = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row];
+        tapeModel.message = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+        tapeModel.sendTo = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"sendto"]objectAtIndex:indexPath.row];
+        tapeModel.emailOrMobile = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"sendVia"]objectAtIndex:indexPath.row];
+        tapeModel.from = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"signed"]objectAtIndex:indexPath.row];
+        tapeModel.uploadImageAccessToken = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row];
+        tapeModel.songsAddedArray = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"tapeSongs"]objectAtIndex:indexPath.row];
+        tapeModel.uploadImageID = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"tapeImageUploadId"]objectAtIndex:indexPath.row];
+        
+        
+        
+        self.tabBarController.selectedIndex = 1;
+    }
     
     
-    [self presentViewController:vc animated:YES completion:nil];
 
 }
 
 #pragma mark - Empty Table Screen
 -(void)emptyTableScreen
 {
-//    UserModel *userModel = [[UserModel alloc]init];
-//    NSLog(@"%@", userModel.userID);
-//    if (userModel.isLoggedIn) {
-//        [self webServiceToFetchTapes : userModel.userID];
-//    }
-//    else{
-    
+
         [SharedHelper emptyTableScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy tableView:self.myMixedTapeTableView view:self.view];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.myMixedTapeTableView reloadData];

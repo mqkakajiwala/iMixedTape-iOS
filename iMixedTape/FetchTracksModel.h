@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface FetchTracksModel : NSObject
-+(void)fetchTracksForTapeID :(NSString *)tapeID offset:(int)offset callback:(void (^)(id))callback;
++(void)fetchTracksForTapeID :(NSString *)tapeID offset:(int)offset viewController:(UIViewController *)vc callback:(void (^)(id))callback;
 
-+(void)hitLikeOnTrackWithID :(NSString *)trackID userID:(NSString *)userID callback:(void(^)(id))callback;
++(void)hitLikeOnTrackWithID :(NSString *)trackID userID:(NSString *)userID viewController:(UIViewController *)vc callback:(void(^)(id))callback;
 @end

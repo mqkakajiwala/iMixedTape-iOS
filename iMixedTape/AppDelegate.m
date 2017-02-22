@@ -22,6 +22,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    //copy Database file
+    [self copyDataBaseIfNeeded];
+    
     //integrate FABRIC.IO
     [Fabric with:@[[Crashlytics class]]];
     
@@ -75,7 +78,29 @@
     
     return YES;
 }
+
+#pragma mark - Copy Data Base Method
+-(void)copyDataBaseIfNeeded
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
     
+
+    
+    BOOL success = [fileManager fileExistsAtPath:[SharedHelper databaseWithPath]];
+    NSLog(@"%@",[SharedHelper databaseWithPath]);
+    
+    if (!success) {
+        NSString *defaultDBPath = [[[NSBundle mainBundle]resourcePath]stringByAppendingPathComponent:DBNAME];
+        success = [fileManager copyItemAtPath:defaultDBPath toPath:[SharedHelper databaseWithPath] error:&error];
+        
+        if (!success) {
+        NSAssert1(0, @"Failed to create writable database file with message %@", [error localizedDescription]);
+        }
+    }
+    
+}
+
 #pragma mark - Google signin methods
 -(void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error
     {
@@ -164,7 +189,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     
-    [SharedHelper removeTapeDefaults];
+    [CreateTapeModel resetCreateTapeModel];
     
 }
     

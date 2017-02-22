@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface CreateTapeModel : NSObject{
+    
+    NSString *tapeID;
+    NSInteger selectedTapeIndex;
     NSString *title;
+    NSString *uploadImageAccessToken;
     NSString *uploadImageID;
     NSString *message;
     NSString *sendTo;
@@ -23,10 +27,12 @@
 
 +(CreateTapeModel *)sharedInstance;
 
-
+@property (strong,nonatomic) NSString *tapeID;
+@property (nonatomic) NSInteger selectedTapeIndex;
 @property (strong,nonatomic) NSString *title;
 @property (strong,nonatomic) NSData *imageData;
 @property (strong,nonatomic) NSString *uploadImageID;
+@property (strong,nonatomic) NSString *uploadImageAccessToken;
 @property (strong,nonatomic) NSString *message;
 @property (strong,nonatomic) NSString *sendTo;
 @property (strong,nonatomic) NSString *emailOrMobile;
@@ -37,7 +43,6 @@
 
 
 +(void)resetCreateTapeModel;
-+(void)uploadFileWithAttachnment :(NSString *)base64String callback :(void (^)(id))callback;
-+(void)createTapeWithTitle :(NSString *)title message:(NSString *)message userID :(NSString *)userID imageUploadedID :(NSString *)imageID uploadType:(NSString *)uploadType;
--(void)postFinalTapeToServer :(NSString *)tapeTitle message:(NSString *)tapeMessage userID:(NSString *)userID uploadImageID:(NSString *)uploadID savedSongsArray:(NSMutableArray *)savedSongsArray callback:(void (^)(id))callback;
++(void)uploadFileWithAttachnment :(NSString *)base64String viewController:(UIViewController *)vc callback :(void (^)(id))callback;
+-(void)postFinalTapeToServer :(NSString *)tapeTitle message:(NSString *)tapeMessage userID:(NSString *)userID uploadImageID:(NSString *)uploadID savedSongsArray:(NSMutableArray *)savedSongsArray viewController:(UIViewController *)vc callback:(void (^)(id))callback;
 @end

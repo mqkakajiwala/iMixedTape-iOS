@@ -10,12 +10,16 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "FetchTapesModel.h"
 #import "SelectSongVC.h"
+#import "CreateStepOneVC.h"
+#import "CreateStepThreeVC.h"
+#import "CreateTapeModel.h"
+#import "CreateTapeVC.h"
 
 
-@interface HomeGridVC (){
+@interface HomeGridVC ()
 
-    FetchTapesModel *fetchTapesModel;
-}
+
+
 
 @end
 
@@ -49,10 +53,18 @@
 -(void)webServiceToFetchTapes :(NSString *)userID
 {
     
-    [FetchTapesModel fetchUserTapesWithPagination:200 userID:userID :^(NSArray *callback) {
+    
+    
+    [FetchTapesModel fetchUserTapesWithPagination:200 userID:userID viewController:self                                              :^(NSArray *callback) {
         
         
         [FetchTapesModel sharedInstance].myCretedTapesArray = callback.mutableCopy;
+        
+        FMDatabase *database = [FMDatabase databaseWithPath:[SharedHelper databaseWithPath]];
+        [database open];
+        
+        NSLog(@"%@",[SharedHelper getSavedTaoesFromDB:database]);
+        [FetchTapesModel sharedInstance].myCretedTapesArray = [[FetchTapesModel sharedInstance].myCretedTapesArray arrayByAddingObjectsFromArray:[SharedHelper getSavedTaoesFromDB:database]].mutableCopy;
         
         //        myTapesArray = callback;
         NSLog(@"%@",[FetchTapesModel sharedInstance].myCretedTapesArray);
@@ -63,7 +75,7 @@
         });
     }];
     
-    [FetchTapesModel mySharedTapesWihPagination:200 userID:userID :^(NSArray *callback) {
+    [FetchTapesModel mySharedTapesWihPagination:200 userID:userID viewController:self :^(NSArray *callback) {
         [FetchTapesModel sharedInstance].sharedTapesArray = callback.mutableCopy;
         
         //        myTapesArray = callback;
@@ -79,6 +91,7 @@
 #pragma mark - CollectionView Data Source
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    
     if (collectionView == self.collectionView) {
         return [FetchTapesModel sharedInstance].myCretedTapesArray.count;
     }
@@ -106,11 +119,18 @@
                 albumArtworkImage.contentMode = UIViewContentModeScaleAspectFit;
                 
                 [albumArtworkImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
-                
+             
                 
                 messageLabel.text = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
                 triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:5];
                 triView.fontSize = 8;
+                
+                if ([[[[FetchTapesModel sharedInstance].myCretedTapesArray objectAtIndex:indexPath.row] valueForKey:@"saved"]boolValue]) {
+                    triView.viewColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
+                    triView.textColor = [UIColor colorWithRed:120.0/255.0 green:3.0/255.0 blue:10.0/255.0 alpha:0.8];
+                }else{
+                    triView.viewColor = [UIColor colorWithRed:120.0/255.0 green:3.0/255.0 blue:10.0/255.0 alpha:0.8];
+                }
                 
             }else{
                 [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
@@ -164,40 +184,64 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     NSArray *selectedTape = [[NSArray alloc]init];
     SelectSongVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SELECT_SONG_VC"];
     
-    if (collectionView == self.collectionView) {
-        selectedTape = [FetchTapesModel sharedInstance].myCretedTapesArray;
-        vc.tapeOwnerNameString = @"";
-        vc.selectedTapeID = [[selectedTape valueForKey:@"id"]objectAtIndex:indexPath.row];
-    }else{
-        selectedTape = [FetchTapesModel sharedInstance].sharedTapesArray;
-        vc.tapeOwnerNameString = [[selectedTape valueForKey:@"full_name"]objectAtIndex:indexPath.row];
-        vc.selectedTapeID = [[selectedTape valueForKey:@"imixed_tape_id"]objectAtIndex:indexPath.row];
+    
+    
+    if (![[[[FetchTapesModel sharedInstance].myCretedTapesArray objectAtIndex:indexPath.row] valueForKey:@"saved"]boolValue]) {
+        
+        if (collectionView == self.collectionView) {
+            selectedTape = [FetchTapesModel sharedInstance].myCretedTapesArray;
+            vc.tapeOwnerNameString = @"";
+            vc.selectedTapeID = [[selectedTape valueForKey:@"id"]objectAtIndex:indexPath.row];
+        }else{
+            selectedTape = [FetchTapesModel sharedInstance].sharedTapesArray;
+            vc.tapeOwnerNameString = [[selectedTape valueForKey:@"full_name"]objectAtIndex:indexPath.row];
+            vc.selectedTapeID = [[selectedTape valueForKey:@"imixed_tape_id"]objectAtIndex:indexPath.row];
+        }
+        
+        
+        vc.tapeTitleString = [[selectedTape valueForKey:@"title"]objectAtIndex:indexPath.row];
+        vc.tapeMessageString = [[selectedTape valueForKey:@"message"]objectAtIndex:indexPath.row];
+        vc.imageToken =  [[selectedTape valueForKey:@"image_token"]objectAtIndex:indexPath.row];
+        vc.tapeStatus = [[selectedTape valueForKey:@"status"]objectAtIndex:indexPath.row];
+        vc.selectedTapeSharedID =[[selectedTape valueForKey:@"shared_id"]objectAtIndex:indexPath.row];
+        NSLog(@"%@",vc.tapeStatus);
+        NSLog(@"%@",vc.selectedTapeID);
+        
+        
+        [self presentViewController:vc animated:YES completion:nil];
+        
     }
-    
-    
-    vc.tapeTitleString = [[selectedTape valueForKey:@"title"]objectAtIndex:indexPath.row];
-    vc.tapeMessageString = [[selectedTape valueForKey:@"message"]objectAtIndex:indexPath.row];
-    vc.imageToken =  [[selectedTape valueForKey:@"image_token"]objectAtIndex:indexPath.row];
-    vc.tapeStatus = [[selectedTape valueForKey:@"status"]objectAtIndex:indexPath.row];
-    vc.selectedTapeSharedID =[[selectedTape valueForKey:@"shared_id"]objectAtIndex:indexPath.row];
-    NSLog(@"%@",vc.tapeStatus);
-    NSLog(@"%@",vc.selectedTapeID);
-    
-    
-    [self presentViewController:vc animated:YES completion:nil];
+    else{
+        CreateTapeModel *tapeModel = [CreateTapeModel sharedInstance];
+        
+        NSLog(@"%@",[FetchTapesModel sharedInstance].myCretedTapesArray);
+        
+        tapeModel.selectedTapeIndex = indexPath.row;
+        tapeModel.tapeID = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"tapeID"]objectAtIndex:indexPath.row];
+        tapeModel.title = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row];
+        tapeModel.message = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+        tapeModel.sendTo = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"sendto"]objectAtIndex:indexPath.row];
+        tapeModel.emailOrMobile = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"sendVia"]objectAtIndex:indexPath.row];
+        tapeModel.from = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"signed"]objectAtIndex:indexPath.row];
+        tapeModel.uploadImageAccessToken = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row];
+        tapeModel.songsAddedArray = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"tapeSongs"]objectAtIndex:indexPath.row];
+          tapeModel.uploadImageID = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"tapeImageUploadId"]objectAtIndex:indexPath.row];
+        
+        
+        
+        
+        self.tabBarController.selectedIndex = 1;
+    }
 }
 
 
 -(void)getWebserviceDataOnLoad
 {
-    
-//    myTapesArray = [[NSArray alloc]init];
-//    sharedTapesArray = [[NSArray alloc]init];
-    
-    
     
     UserModel *userModel = [[UserModel alloc]init];
     NSLog(@"%@", userModel.userID);
@@ -213,27 +257,27 @@
 -(void)emptyCollectionViewScreen
 {
     
-   
-        [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadData];
-        });
     
-
-         [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy collectionView:self.receivedTapesCollectionView view:self.view];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.receivedTapesCollectionView reloadData];
-        });
-    
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadData];
-            [self.receivedTapesCollectionView reloadData];
-        });
+    [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadData];
+    });
     
     
-  
+    [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy collectionView:self.receivedTapesCollectionView view:self.view];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.receivedTapesCollectionView reloadData];
+    });
+    
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadData];
+        [self.receivedTapesCollectionView reloadData];
+    });
+    
+    
+    
     
 }
 

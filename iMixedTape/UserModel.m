@@ -55,16 +55,15 @@
     
 }
 
-+(void)postUserSessionWithEmail :(NSString *)email password :(NSString *)password success : (void (^)(id responseArray))success
++(void)postUserSessionWithEmail :(NSString *)email password :(NSString *)password viewController:(UIViewController *)vc success : (void (^)(id responseArray))success
 {
     [SVProgressHUD show];
     NSString *url = @"http://staging.imixedtape.com/api/users/login";//[NSString stringWithFormat:getReportListURL, offset, name, orderBy, search];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    //    manager.securityPolicy.allowInvalidCertificates = YES;
-    //    manager.securityPolicy.validatesDomainName = NO;
+    
     [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
-    [manager.requestSerializer setTimeoutInterval:10];
+    [manager.requestSerializer setTimeoutInterval:20];
     
     NSDictionary *params = @{@"email" : email,
                              @"password" : password
@@ -79,20 +78,19 @@
         [SVProgressHUD dismiss];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error.localizedDescription);
+        [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
         [SVProgressHUD dismiss];
     }];
 }
 
-+(void)forgotPasswordAPIForEmail :(NSString *)email callback :(void (^)(id))callback
++(void)forgotPasswordAPIForEmail :(NSString *)email viewController:(UIViewController *)vc callback :(void (^)(id))callback
 {
     [SVProgressHUD show];
     NSString *url = @"http://staging.imixedtape.com/api/forgot_password";
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    //    manager.securityPolicy.allowInvalidCertificates = YES;
-    //    manager.securityPolicy.validatesDomainName = NO;
     [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
-    [manager.requestSerializer setTimeoutInterval:10];
+    [manager.requestSerializer setTimeoutInterval:20];
     
     NSDictionary *params = @{@"email" : email,
                              };
@@ -106,20 +104,19 @@
         [SVProgressHUD dismiss];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error.localizedDescription);
+        [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
         [SVProgressHUD dismiss];
     }];
 }
 
-+(void)resetPasswordForEmail :(NSString *)email resetToken :(NSString *)resetToken password:(NSString *)pass confirmPass :(NSString *)confirmPass callback :(void (^)(id))callback
++(void)resetPasswordForEmail :(NSString *)email resetToken :(NSString *)resetToken password:(NSString *)pass confirmPass :(NSString *)confirmPass viewController:(UIViewController *)vc callback :(void (^)(id))callback
 {
     [SVProgressHUD show];
     NSString *url = @"http://staging.imixedtape.com/api/reset_password";
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    //    manager.securityPolicy.allowInvalidCertificates = YES;
-    //    manager.securityPolicy.validatesDomainName = NO;
     [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
-    [manager.requestSerializer setTimeoutInterval:10];
+    [manager.requestSerializer setTimeoutInterval:20];
     
     NSDictionary *params = @{@"email" : email,
                              @"password" : pass,
@@ -136,12 +133,13 @@
         [SVProgressHUD dismiss];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error.localizedDescription);
+        [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
         [SVProgressHUD dismiss];
     }];
 
 }
 
-+(void)changeUserPassword : (NSString *)pass confirmPass :(NSString *)confirmPass callback :(void (^)(id))callback
++(void)changeUserPassword : (NSString *)pass confirmPass :(NSString *)confirmPass viewController:(UIViewController *)vc callback :(void (^)(id))callback
 {
     [SVProgressHUD show];
     NSString *url = @"http://staging.imixedtape.com/api/users/update";
@@ -150,7 +148,7 @@
     //    manager.securityPolicy.allowInvalidCertificates = YES;
     //    manager.securityPolicy.validatesDomainName = NO;
     [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
-    [manager.requestSerializer setTimeoutInterval:10];
+    [manager.requestSerializer setTimeoutInterval:20];
     
     UserModel *model = [[UserModel alloc]init];
     NSDictionary *params = @{
@@ -168,6 +166,7 @@
         [SVProgressHUD dismiss];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error.localizedDescription);
+        [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
         [SVProgressHUD dismiss];
     }];
     

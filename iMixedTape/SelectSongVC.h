@@ -30,6 +30,7 @@
 
 - (IBAction)acceptTapeButton:(UIButton *)sender;
 - (IBAction)rejectTapeButton:(UIButton *)sender;
+- (IBAction)cloneTapeButton:(UIButton *)sender;
 
 
 @end

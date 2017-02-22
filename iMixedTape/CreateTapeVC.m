@@ -8,12 +8,14 @@
 
 #import "CreateTapeVC.h"
 #import "HomeGridVC.h"
-
+#import "FetchTapesModel.h"
 
 @interface CreateTapeVC (){
     NSString *childVCIdentifier;
     int vcIndexCount;
     CreateTapeModel *tapeModel;
+    FetchTapesModel *fetchTapeModel;
+    
 }
 
 @end
@@ -40,6 +42,7 @@
     [super viewWillAppear:animated];
     
     tapeModel = [CreateTapeModel sharedInstance];
+    fetchTapeModel = [FetchTapesModel sharedInstance];
     
     vcIndexCount = 0;
     self.prevButtonOutlet.hidden = YES;
@@ -122,7 +125,7 @@
 #pragma mark - IBActions
 - (IBAction)nextButton:(UIButton *)sender
 {
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     //UserModel *userModel = [[UserModel alloc]init];
     
     
@@ -130,65 +133,65 @@
     
     
     
-    if (tapeModel.title == nil || tapeModel.message == nil || tapeModel.sendTo == nil || tapeModel.emailOrMobile == nil) {
-        
-        [SharedHelper AlertControllerWithTitle:@"" message:@"Please fill the required fields to continue." viewController:self];
-        NSLog(@"EMPTY");
-    }else{
-        
-        if (tapeModel.isEmail) {
-            NSString *email = [tapeModel.emailOrMobile stringByTrimmingCharactersInSet : [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            
-            BOOL emailValid = [SharedHelper validateEmail : email
-                                                 required : YES
-                                                 minChars : 1
-                                                 maxChars : 100];
-            if (emailValid) {
-                self.prevButtonOutlet.hidden = NO;
-                vcIndexCount++;
-                
-                if (vcIndexCount == 2) {
-                    self.createButtonOutlet.hidden = NO;
-                    self.nextButtonOutlet.hidden = YES;
-                }
-                [self childVCAtIndex];
-            }else{
-                [SharedHelper AlertControllerWithTitle:@"" message:@"Please enter a valid email." viewController:self];
-            }
-            
-            
-            
-        }else{
-            NSString *phone = [tapeModel.emailOrMobile stringByTrimmingCharactersInSet : [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            
-            BOOL phoneValid = [SharedHelper validatePhone:phone];
-            
-            if (phoneValid) {
-                self.prevButtonOutlet.hidden = NO;
-                vcIndexCount++;
-                
-                if (vcIndexCount == 2) {
-                    self.createButtonOutlet.hidden = NO;
-                    self.nextButtonOutlet.hidden = YES;
-                }
-                [self childVCAtIndex];
-            }else{
-                [SharedHelper AlertControllerWithTitle:@"" message:@"Please enter a valid phone number." viewController:self];
-            }
-        }
-        // Validating username
-    }
+    //    if (tapeModel.title == nil || tapeModel.message == nil || tapeModel.sendTo == nil || tapeModel.emailOrMobile == nil) {
+    //
+    //        [SharedHelper AlertControllerWithTitle:@"" message:@"Please fill the required fields to continue." viewController:self];
+    //        NSLog(@"EMPTY");
+    //    }else{
+    //
+    //        if (tapeModel.isEmail) {
+    //            NSString *email = [tapeModel.emailOrMobile stringByTrimmingCharactersInSet : [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    //
+    //            BOOL emailValid = [SharedHelper validateEmail : email
+    //                                                 required : YES
+    //                                                 minChars : 1
+    //                                                 maxChars : 100];
+    //            if (emailValid) {
+    //                self.prevButtonOutlet.hidden = NO;
+    //                vcIndexCount++;
+    //
+    //                if (vcIndexCount == 2) {
+    //                    self.createButtonOutlet.hidden = NO;
+    //                    self.nextButtonOutlet.hidden = YES;
+    //                }
+    //                [self childVCAtIndex];
+    //            }else{
+    //                [SharedHelper AlertControllerWithTitle:@"" message:@"Please enter a valid email." viewController:self];
+    //            }
+    //
+    //
+    //
+    //        }else{
+    //            NSString *phone = [tapeModel.emailOrMobile stringByTrimmingCharactersInSet : [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    //
+    //            BOOL phoneValid = [SharedHelper validatePhone:phone];
+    //
+    //            if (phoneValid) {
+    //                self.prevButtonOutlet.hidden = NO;
+    //                vcIndexCount++;
+    //
+    //                if (vcIndexCount == 2) {
+    //                    self.createButtonOutlet.hidden = NO;
+    //                    self.nextButtonOutlet.hidden = YES;
+    //                }
+    //                [self childVCAtIndex];
+    //            }else{
+    //                [SharedHelper AlertControllerWithTitle:@"" message:@"Please enter a valid phone number." viewController:self];
+    //            }
+    //        }
+    //        // Validating username
+    //    }
     
     
     //        }else{
-    //            self.prevButtonOutlet.hidden = NO;
-    //            vcIndexCount++;
-    //
-    //            if (vcIndexCount == 2) {
-    //                self.createButtonOutlet.hidden = NO;
-    //                self.nextButtonOutlet.hidden = YES;
-    //            }
-    //            [self childVCAtIndex];
+    self.prevButtonOutlet.hidden = NO;
+    vcIndexCount++;
+    
+    if (vcIndexCount == 2) {
+        self.createButtonOutlet.hidden = NO;
+        self.nextButtonOutlet.hidden = YES;
+    }
+    [self childVCAtIndex];
     //        }
     //    }
     
@@ -214,24 +217,28 @@
 
 - (IBAction)cancelButtonPressed:(UIButton *)sender
 {
-    UIAlertController *discardTapeAlert = [UIAlertController alertControllerWithTitle:@"" message:@"Do you want to discard?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *discardTapeAlert = [UIAlertController alertControllerWithTitle:@"" message:@"Are you sure you want to discard the tape? " preferredStyle:UIAlertControllerStyleAlert];
     
-    [discardTapeAlert addAction:[UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault  handler:^(UIAlertAction * _Nonnull action) {
+    [discardTapeAlert addAction:[UIAlertAction actionWithTitle:@"DISCARD" style:UIAlertActionStyleDestructive  handler:^(UIAlertAction * _Nonnull action) {
+        
+        if (tapeModel.selectedTapeIndex > 0) {
+            
+            [fetchTapeModel.myCretedTapesArray removeObjectAtIndex:tapeModel.selectedTapeIndex];
+            HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
+            
+            FMDatabase *database = [FMDatabase databaseWithPath:[SharedHelper databaseWithPath]];
+            [database open];
+            
+         BOOL b = [database executeUpdate:@"delete from saved_tapes_table WHERE id=?",tapeModel.tapeID];
+            NSLog(@"%d",b);
+            
+            [hg.collectionView reloadData];
+        }
         vcIndexCount = 0;
         [self childVCAtIndex];
         
         [CreateTapeModel resetCreateTapeModel];
         
-//        [SharedHelper removeTapeDefaults];
-        //        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        //        [defaults removeObjectForKey:key_createTapeTitle];
-        //        [defaults removeObjectForKey:key_createTapeUploadImageID];
-        //        [defaults removeObjectForKey:key_createTapeMessage];
-        //        [defaults removeObjectForKey:key_createTapeSendTo];
-        //        [defaults removeObjectForKey:key_createTapeEmailOrMobile];
-        //        [defaults removeObjectForKey:key_createTapeFrom];
-        //        [defaults removeObjectForKey:key_createTapeImage];
-        //        [defaults removeObjectForKey:key_createTapeSongs];
         
         self.tabBarController.selectedIndex = 0;
         
@@ -248,15 +255,15 @@
 {
     
     UserModel *userModel = [[UserModel alloc]init];
-//    SharedHelper *helper = [[SharedHelper alloc]init];
-//    NSMutableArray *tempArr = helper.tapeSongsArray;
+    //    SharedHelper *helper = [[SharedHelper alloc]init];
+    //    NSMutableArray *tempArr = helper.tapeSongsArray;
     
     
     if (!userModel.isLoggedIn) {
         [SharedHelper AlertControllerWithTitle:@"" message:@"You need to login to create tape." viewController:self];
     }
     else if (tapeModel.songsAddedArray.count == 0){
-        [SharedHelper AlertControllerWithTitle:@"" message:@"Please add songs to the mixedtape." viewController:self];
+        [SharedHelper AlertControllerWithTitle:@"" message:@"Please add atleast 1 song to the mixedtape." viewController:self];
     }
     else{
         
@@ -271,53 +278,135 @@
         NSLog(@"%@",tapeModel.songsAddedArray);
         
         [tapeModel postFinalTapeToServer:tapeModel.title
-                                       message:tapeModel.message
-                                        userID:userModel.userID
-                                 uploadImageID:tapeModel.uploadImageID
-                               savedSongsArray:tapeModel.songsAddedArray
-                                      callback:^(id callback) {
-                                          NSLog(@"%@",callback);
-                                          if ([callback isKindOfClass:[NSDictionary class]]) {
-                                              if ([[callback valueForKey:@"error"]boolValue] == NO) {
-                                                  
-                                                  
-                                                  tapeModel.albumImage = nil;
-                                                  [SharedHelper sharedInstance].tapeSongsArray = [[NSMutableArray alloc]init];
-                                                  
-                                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                                      [self addViewControllerAsChildVC:@"createStep1VC"];
-                                                  });
-                                                  
-                                                  
-                                                  [SharedHelper removeTapeDefaults];
-                                                  
-                                                  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                                      self.tabBarController.selectedIndex = 0;
-                                                      vcIndexCount = 0;
-                                                      
-                                                  });
-                                                  
-                                                  HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
-                                                  [hg getWebserviceDataOnLoad];
-                                                  
-                                                  [SharedHelper AlertControllerWithTitle:@"" message:@"Mixed tape sent successfully" viewController:self];
-                                                  
-                                              }
-                                          }
-                                      }];
+                                 message:tapeModel.message
+                                  userID:userModel.userID
+                           uploadImageID:tapeModel.uploadImageID
+                         savedSongsArray:tapeModel.songsAddedArray
+                          viewController:self
+                                callback:^(id callback) {
+                                    NSLog(@"%@",callback);
+                                    if ([callback isKindOfClass:[NSDictionary class]]) {
+                                        if ([[callback valueForKey:@"error"]boolValue] == NO) {
+                                            
+                                            
+                                            if (tapeModel.selectedTapeIndex > 0) {
+                                                
+                                                [fetchTapeModel.myCretedTapesArray removeObjectAtIndex:tapeModel.selectedTapeIndex];
+                                                HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
+                                                
+                                                FMDatabase *database = [FMDatabase databaseWithPath:[SharedHelper databaseWithPath]];
+                                                [database open];
+                                                
+                                                BOOL b = [database executeUpdate:@"delete from saved_tapes_table WHERE id=?",tapeModel.tapeID];
+                                                NSLog(@"%d",b);
+                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                    [hg getWebserviceDataOnLoad];
+                                                    [hg.collectionView reloadData];
+                                                });
+                                                
+                                            }
+                                            
+                                            
+                                            tapeModel.albumImage = nil;
+                                            
+                                            
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                [self addViewControllerAsChildVC:@"createStep1VC"];
+                                            });
+                                            
+                                            
+                                            [CreateTapeModel resetCreateTapeModel];
+                                            
+                                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                self.tabBarController.selectedIndex = 0;
+                                                vcIndexCount = 0;
+                                                
+                                            });
+                                            
+                                            [SharedHelper AlertControllerWithTitle:@"" message:@"Mixed tape sent successfully" viewController:self];
+                                            
+                                        }
+                                    }
+                                    
+                                    
+                                    
+                                }];
         
     }
 }
 - (IBAction)saveTapeButton:(UIButton *)sender
 {
+    UserModel *userModel = [[UserModel alloc]init];
+    //    SharedHelper *helper = [[SharedHelper alloc]init];
+    //    NSMutableArray *tempArr = helper.tapeSongsArray;
+    
+    
+    if (userModel.isLoggedIn) {
+    fetchTapeModel = [FetchTapesModel sharedInstance];
+    
     UIAlertController *discardTapeAlert = [UIAlertController alertControllerWithTitle:@"" message:@"Your changes have been saved." preferredStyle:UIAlertControllerStyleAlert];
     
-    NSDictionary *dict = [[NSDictionary alloc]init];
+    //    NSMutableArray *ArrayOfDicts = [[NSMutableArray alloc]init];
     
-    dict = @{
-             
-             };
     
+    
+    
+    //    [ArrayOfDicts addObject:dict];
+    
+    FMDatabase *database = [FMDatabase databaseWithPath:[SharedHelper databaseWithPath]];
+    [database open];
+    
+    //    BOOL b = [database executeUpdate:@"insert into saved_tapes_table(title,image_token,imageUploadID,message,sendto,sendvia,from,tapeSongs,saved) values (?,?,?,?,?,?,?,?,?)",tapeModel.title,tapeModel.albumImage,tapeModel.uploadImageID,tapeModel.message,tapeModel.sendTo,tapeModel.emailOrMobile,tapeModel.from,tapeModel.songsAddedArray,YES];
+    
+    @try {
+        NSLog(@"%@",tapeModel.songsAddedArray);
+        
+        NSData *sOngsData = [NSKeyedArchiver archivedDataWithRootObject:tapeModel.songsAddedArray];
+//        NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:sOngsData];
+//        NSLog(@"%@",arr);
+        
+        BOOL b;
+        NSLog(@"%@",tapeModel.tapeID);
+        NSLog(@"%@",tapeModel.title);
+        if (![tapeModel.tapeID isEqualToString:@""]) {
+            b = [database executeUpdate:@"update saved_tapes_table SET title=?, image_token=?, imageUploadID=?, message=?, sendto=?, sendvia=?, tapeSongs=?, saved=?, sendFrom=? WHERE id=?",tapeModel.title,tapeModel.uploadImageAccessToken,tapeModel.uploadImageID,tapeModel.message,tapeModel.sendTo,tapeModel.emailOrMobile,sOngsData,0,tapeModel.from,tapeModel.tapeID];
+            
+            for (int i =0; i < [SharedHelper getSavedTaoesFromDB:database].count; i++) {
+                if ([[[[SharedHelper getSavedTaoesFromDB:database]valueForKey:@"tapeID"]objectAtIndex:i] isEqualToString:tapeModel.tapeID]) {
+                    
+                    [fetchTapeModel.myCretedTapesArray replaceObjectAtIndex:tapeModel.selectedTapeIndex withObject:[[SharedHelper getSavedTaoesFromDB:database]objectAtIndex:i]];
+                }
+            }
+            
+        }else{
+            
+            
+            b = [database executeUpdate:@"insert into saved_tapes_table(title,image_token,imageUploadID,message,sendto,sendvia,tapeSongs,saved,sendFrom) VALUES (?,?,?,?,?,?,?,?,?)",tapeModel.title,tapeModel.uploadImageAccessToken,tapeModel.uploadImageID,tapeModel.message,tapeModel.sendTo,tapeModel.emailOrMobile,sOngsData,[NSNumber numberWithInt:1],tapeModel.from];
+            
+            [fetchTapeModel.myCretedTapesArray addObject:[[SharedHelper getSavedTaoesFromDB:database]lastObject]];
+            
+            NSLog(@"%d",b);
+            
+        }
+        
+        
+    } @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    } @finally {
+        
+    }
+    
+    
+    
+    
+    
+    
+    NSLog(@"%@",[SharedHelper getSavedTaoesFromDB:database]);
+    
+    
+    
+    HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
+    [hg.collectionView reloadData];
     
     
     [discardTapeAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -328,7 +417,11 @@
         [self childVCAtIndex];
     }]];
     
+    [CreateTapeModel resetCreateTapeModel];
+    
     [self presentViewController:discardTapeAlert animated:YES completion:nil];
+        
+    }
     
 }
 #pragma mark - Create Step Child VC's at index
@@ -355,19 +448,19 @@
 
 - (IBAction)step1MelodyButton:(UIButton *)sender
 {
-    vcIndexCount = 0;
-    [self childVCAtIndex];
+//    vcIndexCount = 0;
+//    [self childVCAtIndex];
 }
 
 - (IBAction)step2MelodyButton:(UIButton *)sender
 {
-    vcIndexCount = 1;
-    [self childVCAtIndex];
+//    vcIndexCount = 1;
+//    [self childVCAtIndex];
 }
 
 - (IBAction)step3MelodyButton:(UIButton *)sender
 {
-    vcIndexCount = 2;
-    [self childVCAtIndex];
+//    vcIndexCount = 2;
+//    [self childVCAtIndex];
 }
 @end

@@ -21,10 +21,8 @@
     BOOL ifMusicLib;
     BOOL ifMyTapes;
     BOOL searchActive;
-//    UISearchBar *mySearchBar;
     MPMediaQuery *query;
     NSString *songTitle;
-//    NSMutableArray *songsAddedArray;
     NSMutableArray *matchArray;
     NSString *songDuration;
     CreateTapeModel *tapeModel;
@@ -46,10 +44,6 @@
     MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:MPMediaTypeMusic] forProperty:MPMediaItemPropertyMediaType];
     query = [[MPMediaQuery alloc]init];
     [query addFilterPredicate:predicate];
-    
- 
-    
-    
     
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboardOnTap)];
@@ -73,10 +67,7 @@
     [super viewWillAppear:animated];
     
     tapeModel = [CreateTapeModel sharedInstance];
-//    helper = [SharedHelper sharedInstance];
-//    helper.tapeSongsArray = [[[NSUserDefaults standardUserDefaults]objectForKey:key_createTapeSongs]mutableCopy];
-    
-    
+   
     MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:MPMediaTypeMusic] forProperty:MPMediaItemPropertyMediaType];
     query = [[MPMediaQuery alloc]init];
     [query addFilterPredicate:predicate];
@@ -88,53 +79,53 @@
 {
 //    [mySearchBar resignFirstResponder];
 }
-#pragma mark - Search Delegate
--(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
-{
-    searchActive = YES;
-}
-
--(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-    searchActive = NO;
-}
-
--(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    searchActive = NO;
-}
-
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    searchActive = NO;
-}
-
--(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    if (searchResultsArray.count != 0) {
-        [searchResultsArray removeAllObjects];
-    }
-    
-    for (int i =0; i< mediaArray.count; i++)
-    {
-        NSString *string = [[mediaArray objectAtIndex:i] valueForKey:@"message"];
-        NSRange nameRange = [string rangeOfString:searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch)];
-        
-        if(nameRange.location != NSNotFound)
-        {
-            [searchResultsArray addObject:string];
-        }
-        
-        if (searchResultsArray.count == 0) {
-            searchActive = NO;
-        }else{
-            searchActive = YES;
-        }
-        [self.tableView reloadData];
-    }
-    
-    
-}
+//#pragma mark - Search Delegate
+//-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+//{
+//    searchActive = YES;
+//}
+//
+//-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+//{
+//    searchActive = NO;
+//}
+//
+//-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+//{
+//    searchActive = NO;
+//}
+//
+//-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+//{
+//    searchActive = NO;
+//}
+//
+//-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+//{
+//    if (searchResultsArray.count != 0) {
+//        [searchResultsArray removeAllObjects];
+//    }
+//    
+//    for (int i =0; i< mediaArray.count; i++)
+//    {
+//        NSString *string = [[mediaArray objectAtIndex:i] valueForKey:@"message"];
+//        NSRange nameRange = [string rangeOfString:searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch)];
+//        
+//        if(nameRange.location != NSNotFound)
+//        {
+//            [searchResultsArray addObject:string];
+//        }
+//        
+//        if (searchResultsArray.count == 0) {
+//            searchActive = NO;
+//        }else{
+//            searchActive = YES;
+//        }
+//        [self.tableView reloadData];
+//    }
+//    
+//    
+//}
 
 #pragma mark - TableView Datasource
 
@@ -298,7 +289,7 @@
 -(void)webServiceToFetchTapes :(NSString *)userID
 {
     
-    [FetchTapesModel fetchUserTapesWithPagination:200 userID:userID :^(NSArray *callback) {
+    [FetchTapesModel fetchUserTapesWithPagination:200 userID:userID viewController:self :^(NSArray *callback) {
         
         
         mediaArray = callback.mutableCopy;
@@ -397,10 +388,10 @@
     NSLog(@"%@",mediaArray[selectedIndex.row]);
     
     if (ifMyTapes== YES) {
-        [FetchTracksModel fetchTracksForTapeID:[[mediaArray valueForKey:@"id"]objectAtIndex:selectedIndex.row] offset:200 callback:^(id callback) {
+        [FetchTracksModel fetchTracksForTapeID:[[mediaArray valueForKey:@"id"]objectAtIndex:selectedIndex.row] offset:200 viewController:self  callback:^(id callback) {
             NSLog(@"%@",callback);
             for (int i=0; i<[callback count]; i++) {
-                [self iTunesSearchAPI:[[callback valueForKey:@"title"]objectAtIndex:i]];
+                [SharedHelper iTunesSearchAPI:[[callback valueForKey:@"title"]objectAtIndex:i]];
             }
             
             
@@ -431,7 +422,7 @@
             NSLog(@"%@",[[dic objectForKey:@"Song"]firstObject]);
             for(int i=0; i<[[dic objectForKey:@"Song"]count]; i++){
                 NSLog(@"%@",[[dic objectForKey:@"Song"]objectAtIndex:i]);
-            [self iTunesSearchAPI:[[dic objectForKey:@"Song"]objectAtIndex:i]];
+            [SharedHelper iTunesSearchAPI:[[dic objectForKey:@"Song"]objectAtIndex:i]];
              }
         }
         
@@ -450,7 +441,7 @@
         
         NSLog(@"%@",mediaArray[selectedIndex.row]);
         
-        [self iTunesSearchAPI:songTitle];
+        [SharedHelper iTunesSearchAPI:songTitle];
         
         
        
@@ -501,49 +492,7 @@
     }];
 }
 
--(void)iTunesSearchAPI :(NSString *)mySongtitle
-{
-    [SVProgressHUD showWithStatus:@"Song Adding .."];
-    NSString *url = [NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&limit=1",mySongtitle];
-//    NSString *url = [link stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
-    
-     NSString *encoded = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@",url);
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
-    [manager GET:encoded
-      parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-          
-      } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-          NSLog(@"%@",responseObject);
-          
-          if ([[responseObject objectForKey:@"resultCount"]intValue] == 1) {
-              
-          
-          NSDictionary *dict = @{@"title"  : mySongtitle,
-                                 @"song_id": [[[responseObject objectForKey:@"results"]valueForKey:@"trackId"]firstObject],
-                                 @"genre"  : [[[responseObject objectForKey:@"results"]valueForKey:@"primaryGenreName"]firstObject],
-                                 @"album"  : @"",
-                                 @"artist" : [[[responseObject objectForKey:@"results"]valueForKey:@"artistName"]firstObject],
-                                 @"language" : @"English",
-                                 @"albumArt" : [[[responseObject objectForKey:@"results"]valueForKey:@"artworkUrl60"]firstObject]
-                                 };
-          
-          NSLog(@"%@",dict);
- 
-              [tapeModel.songsAddedArray addObject:dict];
-//          [[NSUserDefaults standardUserDefaults]setObject:helper.tapeSongsArray forKey:key_createTapeSongs];
-          NSLog(@"%@",tapeModel.songsAddedArray);
-              
-          }
-          [SVProgressHUD dismiss];
-      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-          NSLog(@"%@",error.localizedDescription);
-          [SVProgressHUD dismiss];
-      }];
-}
+
 
 
 @end

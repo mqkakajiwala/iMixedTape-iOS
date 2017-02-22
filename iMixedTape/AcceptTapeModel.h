@@ -10,5 +10,5 @@
 
 @interface AcceptTapeModel : NSObject
 
-+(void)acceptSharedTapeWithID :(NSString *)tapeID status:(NSString *)tapeStatus callback:(void(^)(id))callback;
++(void)acceptSharedTapeWithID :(NSString *)tapeID status:(NSString *)tapeStatus viewController:(UIViewController *)vc callback:(void(^)(id))callback;
 @end

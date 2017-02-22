@@ -10,7 +10,7 @@
 
 @implementation FetchTracksModel
 
-+(void)fetchTracksForTapeID :(NSString *)tapeID offset:(int)offset callback:(void (^)(id))callback;
++(void)fetchTracksForTapeID :(NSString *)tapeID offset:(int)offset viewController:(UIViewController *)vc callback:(void (^)(id))callback;
 {
     [SVProgressHUD show];
     NSString *url = [NSString stringWithFormat:@"http://staging.imixedtape.com/api/tape/tracks/paginate/%d/%@",offset,tapeID];
@@ -20,6 +20,7 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
+    [manager.requestSerializer setTimeoutInterval:20];
     
     
     [manager GET:url
@@ -32,19 +33,18 @@
       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
           NSLog(@"%@",error.localizedDescription);
           [SVProgressHUD dismiss];
+          [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
       }];
 }
 
-+(void)hitLikeOnTrackWithID :(NSString *)trackID userID:(NSString *)userID callback:(void(^)(id))callback
++(void)hitLikeOnTrackWithID :(NSString *)trackID userID:(NSString *)userID viewController:(UIViewController *)vc callback:(void(^)(id))callback
 {
     [SVProgressHUD show];
     NSString *url = @"http://staging.imixedtape.com/api/tape/like";//[NSString stringWithFormat:getReportListURL, offset, name, orderBy, search];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    //    manager.securityPolicy.allowInvalidCertificates = YES;
-    //    manager.securityPolicy.validatesDomainName = NO;
     [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
-    [manager.requestSerializer setTimeoutInterval:10];
+    [manager.requestSerializer setTimeoutInterval:20];
     
     NSDictionary *params = @{@"track_id" : trackID,
                              @"user_id" : userID
@@ -59,6 +59,7 @@
         [SVProgressHUD dismiss];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error.localizedDescription);
+        [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
         [SVProgressHUD dismiss];
     }];
 }

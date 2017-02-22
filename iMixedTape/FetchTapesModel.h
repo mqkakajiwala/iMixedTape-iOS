@@ -11,6 +11,7 @@
 @interface FetchTapesModel : NSObject{
     NSMutableArray *myCretedTapesArray;
     NSMutableArray *sharedTapesArray;
+    
 }
 
 +(FetchTapesModel *)sharedInstance;
@@ -20,6 +21,6 @@
 @property (strong,nonatomic) NSMutableArray *sharedTapesArray;
 
 
-+(void)fetchUserTapesWithPagination :(int)offset userID:(NSString *)userID :(void (^)(NSArray *))callback;
-+(void)mySharedTapesWihPagination :(int)offset userID:(NSString *)userID :(void (^)(NSArray *))callback;
++(void)fetchUserTapesWithPagination :(int)offset userID:(NSString *)userID viewController:(UIViewController *)vc :(void (^)(NSArray *))callback;
++(void)mySharedTapesWihPagination :(int)offset userID:(NSString *)userID viewController:(UIViewController *)vc :(void (^)(NSArray *))callback;
 @end

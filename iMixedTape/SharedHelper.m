@@ -9,7 +9,7 @@
 #import "SharedHelper.h"
 
 @implementation SharedHelper
-@synthesize tapeSongsArray;
+@synthesize savedTapesArray;
 #pragma mark - empty table screen
 
 +(SharedHelper *)sharedInstance
@@ -18,7 +18,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         shared = [[self alloc]init];
-        shared.tapeSongsArray = [[NSMutableArray alloc]init];
+        shared.savedTapesArray = [[NSMutableArray alloc]init];
     });
     
     return shared;
@@ -28,8 +28,10 @@
     
     if (self = [super init]) {
         
-        self.tapeSongsArray = [[[NSUserDefaults standardUserDefaults]objectForKey:key_createTapeSongs]mutableCopy];
-        NSLog(@"%@",self.tapeSongsArray);
+        NSData *data = [[NSUserDefaults standardUserDefaults]objectForKey:key_savedTapesArray];
+        
+        self.savedTapesArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        NSLog(@"%@",self.savedTapesArray);
     }
     
     return self;
@@ -76,7 +78,7 @@
         
         if (arr.count <= 0) {
             label.hidden = NO;
-//            collectionView.separatorColor = [UIColor clearColor];
+            //            collectionView.separatorColor = [UIColor clearColor];
         }else{
             label.hidden = YES;
             
@@ -145,7 +147,7 @@
 
 
 + (BOOL) validatePassword : (NSString *) pass required : (BOOL) isRequired minChars : (NSInteger) min maxChars : (NSInteger) max
-{ 
+{
     // If password is required
     if (isRequired && ![pass length])
         return NO;
@@ -191,20 +193,20 @@
 }
 +(void)customBezierPath :(UIView *)view position:(int)x
 {
-//    UIBezierPath *path = [UIBezierPath new];
-//    [path moveToPoint:(CGPoint){0, 0}];
-//    [path addLineToPoint:(CGPoint){0, x}];
-//    [path addLineToPoint:(CGPoint){x, 0}];
-//    [path addLineToPoint:(CGPoint){0, 0}];
-//    
-//    // Create a CAShapeLayer with this triangular path
-//    // Same size as the original imageView
-//    CAShapeLayer *mask = [CAShapeLayer new];
-//    mask.frame = view.bounds;
-//    mask.path = path.CGPath;
-//    
-//    // Mask the imageView's layer with this shape
-//    view.layer.mask = mask;
+    //    UIBezierPath *path = [UIBezierPath new];
+    //    [path moveToPoint:(CGPoint){0, 0}];
+    //    [path addLineToPoint:(CGPoint){0, x}];
+    //    [path addLineToPoint:(CGPoint){x, 0}];
+    //    [path addLineToPoint:(CGPoint){0, 0}];
+    //
+    //    // Create a CAShapeLayer with this triangular path
+    //    // Same size as the original imageView
+    //    CAShapeLayer *mask = [CAShapeLayer new];
+    //    mask.frame = view.bounds;
+    //    mask.path = path.CGPath;
+    //
+    //    // Mask the imageView's layer with this shape
+    //    view.layer.mask = mask;
     
     
     
@@ -274,6 +276,123 @@
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return newImage;
+}
+
++(NSString *)databaseWithPath
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = paths[0];
+    
+    NSString *dbPath = [documentsDirectory stringByAppendingString:DBNAME];
+    
+    return dbPath;
+}
+
++(NSMutableArray *)getSavedTaoesFromDB :(FMDatabase *)database
+{
+    FMResultSet *results = [database executeQuery:@"select id as tapeID, title as title, image_token as image, imageUploadID as imageID, message as message, sendto as sendto, sendvia as emailORmobile, sendFrom as sendFrom, tapeSongs as songs, saved as isSaved from saved_tapes_table"];
+    
+    NSMutableArray *savedTapeTempArray = [[NSMutableArray alloc]init];
+    NSDictionary *dict = [[NSDictionary alloc]init];
+    
+    while ([results next]) {
+        NSLog(@"%@",results);
+        
+        NSString *tapeID = [NSString stringWithFormat:@"%@",[results stringForColumn:@"tapeID"]];
+        NSString *tapeTitle = [NSString stringWithFormat:@"%@",[results stringForColumn:@"title"]];
+        
+        NSString *image_token = [NSString stringWithFormat:@"%@",[results stringForColumn:@"image"]];
+        
+        NSString *imageID = [NSString stringWithFormat:@"%@",[results stringForColumn:@"imageID"]];
+        
+        NSString *tapeMessage = [NSString stringWithFormat:@"%@",[results stringForColumn:@"message"]];
+        
+        NSString *tapeSendto = [NSString stringWithFormat:@"%@",[results stringForColumn:@"sendto"]];
+        
+        NSString *tapeSendVia = [NSString stringWithFormat:@"%@",[results stringForColumn:@"emailORmobile"]];
+        
+        NSString *tapeFrom = [NSString stringWithFormat:@"%@",[results stringForColumn:@"sendFrom"]];
+        
+        NSArray *tapeSongs = [NSKeyedUnarchiver unarchiveObjectWithData:[results dataForColumn:@"songs"]];
+        
+        if (tapeSongs == nil) {
+            tapeSongs = [[NSArray alloc]init];
+        }
+        
+        BOOL isSaved = [[NSString stringWithFormat:@"%@",[results stringForColumn:@"isSaved"]]boolValue];
+                
+                      NSLog(@"%ld",(long)tapeID);
+        NSLog(@"%d",isSaved);
+        
+        dict = @{@"title" : tapeTitle,
+                 @"image_token" : image_token,
+                 @"tapeImageUploadId" : imageID,
+                 @"message" : tapeMessage,
+                 @"sendto" : tapeSendto,
+                 @"sendVia" : tapeSendVia,
+                 @"signed" : tapeFrom,
+                 @"tapeSongs" : tapeSongs,
+                 @"saved" : @"YES",
+                 @"tapeID" : tapeID
+                 };
+        
+        NSLog(@"%@",dict);
+        
+        [savedTapeTempArray addObject:dict];
+    }
+    
+    
+    NSLog(@"%@",savedTapeTempArray);
+    
+    if (savedTapeTempArray == nil) {
+        savedTapeTempArray = [[NSMutableArray alloc]init];
+    }
+
+    return savedTapeTempArray;
+}
+
++(void)iTunesSearchAPI :(NSString *)mySongtitle
+{
+    [SVProgressHUD showWithStatus:@"Song Adding .."];
+    NSString *url = [NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&limit=1",mySongtitle];
+    //    NSString *url = [link stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    
+    NSString *encoded = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%@",url);
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
+    [manager GET:encoded
+      parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+          
+      } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+          NSLog(@"%@",responseObject);
+          
+          if ([[responseObject objectForKey:@"resultCount"]intValue] == 1) {
+              
+              
+              NSDictionary *dict = @{@"title"  : mySongtitle,
+                                     @"song_id": [[[responseObject objectForKey:@"results"]valueForKey:@"trackId"]firstObject],
+                                     @"genre"  : [[[responseObject objectForKey:@"results"]valueForKey:@"primaryGenreName"]firstObject],
+                                     @"album"  : @"",
+                                     @"artist" : [[[responseObject objectForKey:@"results"]valueForKey:@"artistName"]firstObject],
+                                     @"language" : @"English",
+                                     @"albumArt" : [[[responseObject objectForKey:@"results"]valueForKey:@"artworkUrl60"]firstObject]
+                                     };
+              
+              NSLog(@"%@",dict);
+              
+              [[CreateTapeModel sharedInstance].songsAddedArray addObject:dict];
+              //          [[NSUserDefaults standardUserDefaults]setObject:helper.tapeSongsArray forKey:key_createTapeSongs];
+              NSLog(@"%@",[CreateTapeModel sharedInstance].songsAddedArray);
+              
+          }
+          [SVProgressHUD dismiss];
+      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+          NSLog(@"%@",error.localizedDescription);
+          [SVProgressHUD dismiss];
+      }];
 }
 
 @end

@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <FMDB/FMDatabase.h>
 @import GoogleMobileAds;
 
 @interface SharedHelper : NSObject{
-    NSMutableArray *tapeSongsArray;
+    NSMutableArray *savedTapesArray;
 }
-@property (strong,nonatomic) NSMutableArray *tapeSongsArray;
+@property (strong,nonatomic) NSMutableArray *savedTapesArray;
 
 +(SharedHelper *)sharedInstance;
 
@@ -31,6 +32,9 @@
 +(void)removeTapeDefaults;
 +(NSString *)truncatedLabelString :(NSString *)temp charactersToLimit:(int)index;
 +(UIImage*)imageWithImage: (UIImage*) sourceImage scaledToWidth: (float) i_width;
++(NSString *)databaseWithPath;
++(NSMutableArray *)getSavedTaoesFromDB :(FMDatabase *)database;
++(void)iTunesSearchAPI :(NSString *)mySongtitle;
 @end
 
 

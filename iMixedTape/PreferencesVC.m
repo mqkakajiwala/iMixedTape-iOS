@@ -47,7 +47,7 @@
         [SharedHelper AlertControllerWithTitle:@"" message:errMsg viewController:self];
     }
     else{
-        [UserModel changeUserPassword:self.passwordTF.text confirmPass:self.confirmPassTF.text callback:^(id callback) {
+        [UserModel changeUserPassword:self.passwordTF.text confirmPass:self.confirmPassTF.text viewController:self callback:^(id callback) {
             NSLog(@"%@",callback);
             if ([callback boolValue] == YES) {
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Password changed successfully." preferredStyle:UIAlertControllerStyleAlert];

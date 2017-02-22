@@ -23,6 +23,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *scrollConstraint;
 @property (weak, nonatomic) IBOutlet RadioButton *emailRadButton;
 @property (weak, nonatomic) IBOutlet RadioButton *phoneRadButton;
+//@property (nonatomic) BOOL isSaved;
 
 
 - (IBAction)openCamButton:(UIButton *)sender;

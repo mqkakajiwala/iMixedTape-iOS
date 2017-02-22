@@ -18,6 +18,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "iMixedTape-Swift.h"
+#import <FMDB/FMDatabase.h>
 @import Contacts;
 @import ContactsUI;
 @import GoogleMobileAds;
@@ -29,7 +30,7 @@
 
 
 #define key_adBanner @"ca-app-pub-4849448462646581/2864552556"
-
+#define DBNAME @"savedTapes.sqlite"
 
 #define key_deviceToken @"key_deviceToken"
 #define key_isLoggedIn @"is_LoggedIn"
@@ -47,6 +48,8 @@
 #define key_createTapeSongs @"tapeSongs"
 #define key_createTapeIfEmailMobileBOOL @"key_ifEmailMobile"
 #define key_ifemail @"key_ifEmail"
+#define key_savedTapesArray @"savedTapesKey"
+
 
 
 #define kOFFSET_FOR_KEYBOARD 80.0

@@ -10,11 +10,11 @@
 
 @implementation PreviewBuyModel
 
-+(void)iTunesAPiForPreviewBuyForSongID :(NSString *)songID callback:(void(^)(id))callback
++(void)iTunesAPiForPreviewBuyForSongID :(NSString *)songID viewController:(UIViewController *)vc callback:(void(^)(id))callback
 {
     [SVProgressHUD showWithStatus:@"Please Wait .."];
     NSString *url = [NSString stringWithFormat:@"https://itunes.apple.com/lookup?id=%@",songID];
-    //    NSString *url = [link stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    
     
     NSString *encoded = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
@@ -22,6 +22,8 @@
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
+    [manager.requestSerializer setTimeoutInterval:20];
+    
     [manager GET:encoded
       parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
           
@@ -31,6 +33,7 @@
           [SVProgressHUD dismiss];
       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
           NSLog(@"%@",error.localizedDescription);
+          [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
           [SVProgressHUD dismiss];
       }];
 }

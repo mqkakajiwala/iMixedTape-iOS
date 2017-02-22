@@ -75,7 +75,7 @@
 
     [FBSDKAccessToken setCurrentAccessToken:nil];
     
-    [SharedHelper removeTapeDefaults];
+    [CreateTapeModel resetCreateTapeModel];
     
 }
 

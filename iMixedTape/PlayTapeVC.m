@@ -309,7 +309,7 @@
     if (self.songID != nil) {
         
         
-        [FetchTracksModel hitLikeOnTrackWithID:self.songID userID:[[NSUserDefaults standardUserDefaults]objectForKey:key_userID] callback:^(id callback) {
+        [FetchTracksModel hitLikeOnTrackWithID:self.songID userID:[[NSUserDefaults standardUserDefaults]objectForKey:key_userID] viewController:self callback:^(id callback) {
             NSLog(@"%@",callback);
             if ([callback boolValue] == YES) {
                 NSLog(@"LIKED");

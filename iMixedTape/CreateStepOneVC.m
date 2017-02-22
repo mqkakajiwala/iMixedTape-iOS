@@ -67,26 +67,26 @@
 
 -(void)loadDefaultValues
 {
+    self.titleTextField.text = tapeModel.title;
+    self.messageTextView.text = tapeModel.message;
+    self.sendToTextField.text = tapeModel.sendTo;
+    self.emailORmobileTextField.text = tapeModel.emailOrMobile;
+    self.fromTextField.text = tapeModel.from;
+    NSData *imgData = tapeModel.imageData;
     
     
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    self.titleTextField.text = tapeModel.title;//[defaults valueForKey:key_createTapeTitle];
-    self.messageTextView.text = tapeModel.message;// [defaults valueForKey:key_createTapeMessage];
-    self.sendToTextField.text = tapeModel.sendTo;//[defaults valueForKey:key_createTapeSendTo];
-//    NSLog(@"%@",[defaults valueForKey:key_createTapeEmailOrMobile]);
-    self.emailORmobileTextField.text = tapeModel.emailOrMobile;//[defaults valueForKey:key_createTapeEmailOrMobile];
-    self.fromTextField.text = tapeModel.from;//[defaults valueForKey:key_createTapeFrom];
-    NSData *imgData = tapeModel.imageData;//[defaults objectForKey:key_createTapeImage];
-    
-    if (imgData !=nil) {
-        self.albumArtImage.image = [UIImage imageWithData:imgData];
-    }else{
-        self.albumArtImage.image = [UIImage imageNamed:@"imgicon"];
+    if (![tapeModel.uploadImageAccessToken isEqualToString:@""]) {
+        [self.albumArtImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",tapeModel.uploadImageAccessToken,100,100]] placeholderImage:[UIImage imageNamed:@"imgicon"]];
     }
-//
+    else{
+        if (imgData !=nil) {
+            self.albumArtImage.image = [UIImage imageWithData:imgData];
+        }else{
+            self.albumArtImage.image = [UIImage imageNamed:@"imgicon"] ;
+        }
+    }
     
-    imageUploadID = tapeModel.uploadImageID;//[defaults valueForKey:key_createTapeUploadImageID];
+    imageUploadID = tapeModel.uploadImageID;
 }
 
 
@@ -148,38 +148,37 @@
     //load your data here.
     
     UIImage *choosenImage = info[UIImagePickerControllerEditedImage];
-//    tapeModel.albumImage = choosenImage;
+    //    tapeModel.albumImage = choosenImage;
     tapeModel.imageData = UIImagePNGRepresentation(choosenImage);
-    //[[NSUserDefaults standardUserDefaults]setObject:UIImagePNGRepresentation(choosenImage) forKey:key_createTapeImage];
-    
-     //NSData *imgData = [[NSUserDefaults standardUserDefaults] objectForKey:key_createTapeImage];
+ 
     self.albumArtImage.image = [UIImage imageWithData:tapeModel.imageData];
     
     UIImage *resizedImage =[SharedHelper imageWithImage:choosenImage scaledToWidth:self.albumArtImage.frame.size.width];
     
-        NSString *base64str = [self encodeToBase64String:resizedImage];
-        [CreateTapeModel uploadFileWithAttachnment:base64str callback:^(id callback) {
-    
-            if ([[callback objectForKey:@"error"]boolValue] == NO) {
-                imageUploadID = [[callback objectForKey:@"data"]objectForKey:@"id"];
-                
-                tapeModel.uploadImageID = imageUploadID;
-//                [[NSUserDefaults standardUserDefaults]setValue:imageUploadID forKey:key_createTapeUploadImageID];
-                
-                tapeModel.albumImage = self.albumArtImage.image;
-                NSLog(@"%@",tapeModel.albumImage);
-//                self.albumArtImage.image = tapeModel.albumImage;
-//                [[NSUserDefaults standardUserDefaults]setObject:UIImagePNGRepresentation(self.albumArtImage.image) forKey:key_createTapeImage];
-    
-    
-                NSLog(@"%@", base64str);
-    
-            }
-            else{
-                [SharedHelper AlertControllerWithTitle:@"Error" message:@"Image cannot be uploaded" viewController:self];
-            }
-    
-        }];
+    NSString *base64str = [self encodeToBase64String:resizedImage];
+    [CreateTapeModel uploadFileWithAttachnment:base64str viewController:self callback:^(id callback) {
+        
+        if ([[callback objectForKey:@"error"]boolValue] == NO) {
+            imageUploadID = [[callback objectForKey:@"data"]objectForKey:@"id"];
+            
+            tapeModel.uploadImageID = imageUploadID;
+            tapeModel.uploadImageAccessToken = [[callback objectForKey:@"data"]objectForKey:@"access_token"];
+            //                [[NSUserDefaults standardUserDefaults]setValue:imageUploadID forKey:key_createTapeUploadImageID];
+            
+            tapeModel.albumImage = self.albumArtImage.image;
+            NSLog(@"%@",tapeModel.albumImage);
+            //                self.albumArtImage.image = tapeModel.albumImage;
+            //                [[NSUserDefaults standardUserDefaults]setObject:UIImagePNGRepresentation(self.albumArtImage.image) forKey:key_createTapeImage];
+            
+            
+            NSLog(@"%@", base64str);
+            
+        }
+        else{
+            [SharedHelper AlertControllerWithTitle:@"Error" message:@"Image cannot be uploaded" viewController:self];
+        }
+        
+    }];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -224,20 +223,20 @@
     
     if (textField == _titleTextField) {
         tapeModel.title = textField.text;
-//        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeTitle];
+        //        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeTitle];
     }
     else if (textField == _sendToTextField){
         tapeModel.sendTo = textField.text;
-//        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeSendTo];
+        //        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeSendTo];
         
     }
     else if (textField == _fromTextField){
         tapeModel.from = textField.text;
-//        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeFrom];
+        //        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeFrom];
         
     }else if (textField == _emailORmobileTextField){
         tapeModel.emailOrMobile = textField.text;
-//        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeEmailOrMobile];
+        //        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeEmailOrMobile];
         
     }
     
@@ -261,6 +260,24 @@
     }
 }
 
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField == self.titleTextField) {
+        [self.messageTextView becomeFirstResponder];
+    }
+    else if (textField == self.sendToTextField){
+        [self.emailORmobileTextField becomeFirstResponder];
+    }
+    else if (textField == self.emailORmobileTextField){
+        [self.fromTextField becomeFirstResponder];
+    }
+    else if (textField == self.fromTextField){
+        [self.fromTextField resignFirstResponder];
+    }
+    
+    return YES;
+}
+
 
 
 #pragma mark - TextView Delegates
@@ -279,7 +296,7 @@
     self.viewTopConstraint.constant = 0;
     if (textView == _messageTextView) {
         tapeModel.message = textView.text;
-//        [[NSUserDefaults standardUserDefaults]setValue:textView.text forKey:key_createTapeMessage];
+        //        [[NSUserDefaults standardUserDefaults]setValue:textView.text forKey:key_createTapeMessage];
     }
 }
 
@@ -292,6 +309,10 @@
             return NO;
         }
         
+        if ([text isEqualToString:@"\n"]) {
+            [self.sendToTextField becomeFirstResponder];
+        }
+        
         NSUInteger newLength = [textView.text length] + [text length] - range.length;
         return newLength <= 50;
     }
@@ -300,6 +321,8 @@
         return YES;
     }
 }
+
+
 
 
 #pragma mark - Encode to base 64 string
@@ -320,8 +343,8 @@
         NSLog(@"PHONE");
     }
     tapeModel.isEmail = ifEmail;
-//    [[NSUserDefaults standardUserDefaults]setBool:ifEmail forKey:key_ifemail];
-//    NSLog(@"%d",[[NSUserDefaults standardUserDefaults]boolForKey:key_ifemail]);
+    //    [[NSUserDefaults standardUserDefaults]setBool:ifEmail forKey:key_ifemail];
+    //    NSLog(@"%d",[[NSUserDefaults standardUserDefaults]boolForKey:key_ifemail]);
     
 }
 
@@ -401,9 +424,9 @@
     }
     
     NSLog(@"%@",self.emailORmobileTextField.text);
-//    [[NSUserDefaults standardUserDefaults]setValue:selectedContact forKey:key_createTapeEmailOrMobile];
+    //    [[NSUserDefaults standardUserDefaults]setValue:selectedContact forKey:key_createTapeEmailOrMobile];
     tapeModel.emailOrMobile = selectedContact;
-//    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile]);
+    //    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile]);
     self.emailORmobileTextField.text = tapeModel.emailOrMobile;//[[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile];
     
     

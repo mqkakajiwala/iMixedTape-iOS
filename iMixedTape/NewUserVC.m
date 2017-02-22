@@ -280,6 +280,7 @@
                            oauth_provider:oauth_provider
                                 oauth_uid:oauth_uid
                                   zipcode:@""
+                           viewController:self
                                          :^(id callback) {
                                              NSLog(@"%@",callback);
                                              if ([callback isKindOfClass:[NSDictionary class]]) {

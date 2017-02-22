@@ -29,6 +29,7 @@
                  oauth_provider:(NSString *)oauth_provider
                       oauth_uid:(NSString *)oauth_uid
                         zipcode:(NSString *)zipcode
+                 viewController:(UIViewController *)vc
                                : (void (^)(id ))callback
 {
     [SVProgressHUD show];
@@ -38,6 +39,7 @@
     //    manager.securityPolicy.allowInvalidCertificates = YES;
     //    manager.securityPolicy.validatesDomainName = NO;
     [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
+    [manager.requestSerializer setTimeoutInterval:20];
     
     
     NSDictionary *params = @{@"first" : fname,
@@ -67,6 +69,7 @@
         [SVProgressHUD dismiss];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error.localizedDescription);
+        [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
         [SVProgressHUD dismiss];
     }];
 

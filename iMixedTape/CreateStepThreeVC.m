@@ -48,8 +48,11 @@
     [self.tableView reloadData];
     
     
-    
+    if (![tapeModel.uploadImageAccessToken isEqualToString:@""]) {
+        [self.tapeMainImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",tapeModel.uploadImageAccessToken,100,100]] placeholderImage:[UIImage imageNamed:@"imgicon"]];
+    }else{
     self.tapeMainImage.image = tapeModel.albumImage;
+    }
     self.titleView.labelText = tapeModel.title;
     self.messageLabel.text = tapeModel.message;
     

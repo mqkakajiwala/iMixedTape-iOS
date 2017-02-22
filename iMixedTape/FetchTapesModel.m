@@ -20,7 +20,6 @@ static FetchTapesModel *instance = nil;
         
         if (instance == nil) {
             instance = [FetchTapesModel new];
-            NSLog(@"%@",instance.myCretedTapesArray);
         }
         
     }
@@ -30,7 +29,7 @@ static FetchTapesModel *instance = nil;
 }
 
 
-+(void)fetchUserTapesWithPagination :(int)offset userID:(NSString *)userID :(void (^)(NSArray *))callback
++(void)fetchUserTapesWithPagination :(int)offset userID:(NSString *)userID viewController:(UIViewController *)vc :(void (^)(NSArray *))callback
 {
     [SVProgressHUD show];
     NSString *url = [NSString stringWithFormat:@"http://staging.imixedtape.com/api/tape/paginate/%d/%@",offset,userID];
@@ -40,6 +39,7 @@ static FetchTapesModel *instance = nil;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
+    [manager.requestSerializer setTimeoutInterval:20];
     
     
     [manager GET:url
@@ -51,13 +51,14 @@ static FetchTapesModel *instance = nil;
           [SVProgressHUD dismiss];
       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
           NSLog(@"%@",error.localizedDescription);
+          [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
           [SVProgressHUD dismiss];
       }];
     
     
 }
 
-+(void)mySharedTapesWihPagination :(int)offset userID:(NSString *)userID :(void (^)(NSArray *))callback
++(void)mySharedTapesWihPagination :(int)offset userID:(NSString *)userID viewController:(UIViewController *)vc :(void (^)(NSArray *))callback
 {
     [SVProgressHUD show];
     NSString *url = [NSString stringWithFormat:@"http://staging.imixedtape.com/api/sharedtapes/paginate/%d/%@",offset,userID];
@@ -67,6 +68,7 @@ static FetchTapesModel *instance = nil;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
+    [manager.requestSerializer setTimeoutInterval:20];
     
     
     [manager GET:url
@@ -78,6 +80,7 @@ static FetchTapesModel *instance = nil;
           [SVProgressHUD dismiss];
       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
           NSLog(@"%@",error.localizedDescription);
+          [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
           [SVProgressHUD dismiss];
       }];
 

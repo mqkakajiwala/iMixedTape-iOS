@@ -26,6 +26,7 @@
                  oauth_provider:(NSString *)oauth_provider
                       oauth_uid:(NSString *)oauth_uid
                         zipcode:(NSString *)zipcode
+                 viewController:(UIViewController *)vc
                                : (void (^)(id))callback;
 
 

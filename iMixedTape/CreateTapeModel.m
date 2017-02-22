@@ -9,8 +9,12 @@
 #import "CreateTapeModel.h"
 
 @implementation CreateTapeModel
+
+@synthesize tapeID;
+@synthesize selectedTapeIndex;
 @synthesize title;
 @synthesize uploadImageID;
+@synthesize uploadImageAccessToken;
 @synthesize message;
 @synthesize sendTo;
 @synthesize emailOrMobile;
@@ -39,20 +43,21 @@ static CreateTapeModel *instance = nil;
     if (self) {
         self = [super init];
         
+        self.tapeID = @"";
         self.albumImage = [UIImage imageNamed:@"imgicon"];
         self.uploadImageID = @"";
+        self.uploadImageAccessToken = @"";
         self.songsAddedArray = [[NSMutableArray alloc]init];
-//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//        self.title = [defaults valueForKey:key_createTapeTitle];
-//        self.uploadImageID = [defaults valueForKey:key_createTapeUploadImageID];
-//        self.message = [defaults valueForKey:key_createTapeMessage];
-//        self.sendTo = [defaults valueForKey:key_createTapeSendTo];
-//        self.emailOrMobile = [defaults valueForKey:key_createTapeEmailOrMobile];
-//        self.from = [defaults valueForKey:key_createTapeFrom];
-//        NSData *imgData = [defaults objectForKey:key_createTapeImage];
-//        self.albumImage = [UIImage imageWithData:imgData];
-//        self.isEmail = [defaults boolForKey:key_createTapeIfEmailMobileBOOL];
-//        self.songsAddedArray = [defaults objectForKey:key_createTapeSongs];
+        self.title = @"";
+        self.uploadImageID = @"";
+        self.message = @"";
+        self.sendTo = @"";
+        self.emailOrMobile = @"";
+        self.from = @"";
+        self.isEmail = YES;
+        
+        
+
     }
     
     return self;
@@ -62,30 +67,10 @@ static CreateTapeModel *instance = nil;
 {
     instance = nil;
 }
-+(void)uploadFileWithAttachnment :(NSString *)base64String callback :(void (^)(id))callback
++(void)uploadFileWithAttachnment :(NSString *)base64String viewController:(UIViewController *)vc callback :(void (^)(id))callback
 {
     [SVProgressHUD showWithStatus:@"Uploading .."];
-//    NSString *url = @"http://staging.imixedtape.com/api/upload/file";
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    //    manager.securityPolicy.allowInvalidCertificates = YES;
-//    //    manager.securityPolicy.validatesDomainName = NO;
-//    [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
-//    [manager.requestSerializer setTimeoutInterval:10];
-//    
-//    NSDictionary *params = @{@"attachment" : base64String,
-//                             };
-//    
-//    NSLog(@"%@",params);
-//    [manager POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
-//        
-//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"%@",responseObject);
-//        [SVProgressHUD dismiss];
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"%@",error.localizedDescription);
-//        [SVProgressHUD dismiss];
-//    }];
-    
+
     
     NSDictionary *headers = @{ @"content-type": @"multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
                                @"x-api-key": @"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y",
@@ -116,16 +101,18 @@ static CreateTapeModel *instance = nil;
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://staging.imixedtape.com/api/upload/file"]
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                       timeoutInterval:200];
+                                                       timeoutInterval:20];
     [request setHTTPMethod:@"POST"];
     [request setAllHTTPHeaderFields:headers];
     [request setHTTPBody:postData];
+    [request setTimeoutInterval:15];
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                     if (error) {
                                                         NSLog(@"%@", error);
+                                                        [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
                                                         [SVProgressHUD dismiss];
                                                         
                                                     } else {
@@ -142,37 +129,45 @@ static CreateTapeModel *instance = nil;
     [dataTask resume];
 }
 
-+(void)createTapeWithTitle :(NSString *)title message:(NSString *)message userID :(NSString *)userID imageUploadedID :(NSString *)imageID uploadType:(NSString *)uploadType
+
+-(void)postFinalTapeToServer :(NSString *)tapeTitle message:(NSString *)tapeMessage userID:(NSString *)userID uploadImageID:(NSString *)uploadID savedSongsArray:(NSMutableArray *)savedSongsArray viewController:(UIViewController *)vc callback:(void (^)(id))callback
 {
     
-}
-
--(void)postFinalTapeToServer :(NSString *)tapeTitle message:(NSString *)tapeMessage userID:(NSString *)userID uploadImageID:(NSString *)uploadID savedSongsArray:(NSMutableArray *)savedSongsArray callback:(void (^)(id))callback
-{
-    [SVProgressHUD show];
     NSString *url = @"http://staging.imixedtape.com/api/tape/create";
     
     NSLog(@"%@",userID);    
     NSLog(@"%@",url);
     
+    NSString *key;
+    NSString *errMsg;
+    if (self.isEmail) {
+        key = @"to_user_email";
+        errMsg = @"Please specify Email of the person you want to share mixedtape.";
+    }else{
+        key = @"to_user_phone";
+        errMsg = @"Please specify Phone of the person you want to share mixedtape.";
+    }
     
+    if ([tapeTitle isEqualToString:@""]) {
+        [SharedHelper AlertControllerWithTitle:@"" message:@"Please add title for your mixedtape." viewController:vc];
+    }
+    else if ([self.emailOrMobile isEqualToString:@""]){
+        [SharedHelper AlertControllerWithTitle:@"" message:errMsg viewController:vc];
+    }else{
     
-    
+        [SVProgressHUD show];
+        
     NSDictionary *params = @{@"title" : tapeTitle,
                              @"message" : message,
                              @"user_id" : userID,
                              @"upload_id" : uploadID
                              };
     
-    
-
-    
     NSLog(@"%@",params);
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    //    manager.securityPolicy.allowInvalidCertificates = YES;
-    //    manager.securityPolicy.validatesDomainName = NO;
     [manager.requestSerializer setValue:@"Jmnx9P8p3Y0rRy7yxkaLa5oF7IQ1ir5Y" forHTTPHeaderField:@"X-API-KEY"];
+    [manager.requestSerializer setTimeoutInterval:20];
     [manager POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -184,16 +179,6 @@ static CreateTapeModel *instance = nil;
         NSString *url = @"http://staging.imixedtape.com/api/tape/share";
         
         NSLog(@"%@",url);
-        
-        NSString *key;
-        if (self.isEmail) {
-            key = @"to_user_email";
-        }else{
-            key = @"to_user_phone";
-        }
-        
-        
-        
         
         
         NSDictionary *params = @{@"imixed_tape_id" : [[responseObject objectForKey:@"data"]objectForKey:@"id"],
@@ -215,6 +200,7 @@ static CreateTapeModel *instance = nil;
             [SVProgressHUD dismiss];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@",error.localizedDescription);
+            [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
             [SVProgressHUD dismiss];
         }];
 
@@ -239,22 +225,27 @@ static CreateTapeModel *instance = nil;
         
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://staging.imixedtape.com/api/tape/addmixedtapetracks"]
                                                                cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                           timeoutInterval:10.0];
+                                                           timeoutInterval:20.0];
         [request setHTTPMethod:@"POST"];
         [request setAllHTTPHeaderFields:headers];
         [request setHTTPBody:postData];
+        
         
         NSURLSession *session = [NSURLSession sharedSession];
         NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
                                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                         if (error) {
                                                             NSLog(@"%@", error);
+                                                            [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
                                                         } else {
-                                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-                                                            NSLog(@"%@", httpResponse);
+                                                           
                                                             id responseObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
                                                             NSLog(@"%@",responseObject);
                                                             callback(responseObject);
+                                                            
+                                                            
+                                                            
+                                                            
                                                         }
                                                         
                                                         
@@ -268,8 +259,11 @@ static CreateTapeModel *instance = nil;
         [SVProgressHUD dismiss];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error.localizedDescription);
+        [SharedHelper AlertControllerWithTitle:@"" message:[error localizedDescription] viewController:vc];
+        
         [SVProgressHUD dismiss];
     }];
 
+    }
 }
 @end

@@ -15,6 +15,7 @@
 		453C50C51E461A350037376A /* FaqView.m in Sources */ = {isa = PBXBuildFile; fileRef = 453C50C41E461A350037376A /* FaqView.m */; };
 		45434E8D1E3E407B00997D8E /* TriLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45434E8C1E3E407B00997D8E /* TriLabelView.swift */; };
 		4543B8671E3B870E0061A798 /* ResetPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4543B8661E3B870E0061A798 /* ResetPasswordVC.m */; };
+		4547D1DA1E5AC96500AC4A4F /* savedTapes.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 4547D1D91E5AC96500AC4A4F /* savedTapes.sqlite */; };
 		4552A3141E4C51E8004CC14D /* AcceptTapeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4552A3131E4C51E8004CC14D /* AcceptTapeModel.m */; };
 		455CF7AB1DCCED5C00E2EE5A /* HelpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 455CF7AA1DCCED5C00E2EE5A /* HelpVC.m */; };
 		455CF7AD1DCCFB6000E2EE5A /* HelpScreenChildViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455CF7AC1DCCFB6000E2EE5A /* HelpScreenChildViews.xib */; };
@@ -67,7 +68,6 @@
 		403186766C7707BBA48F6249 /* Pods-iMixedTape.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMixedTape.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iMixedTape/Pods-iMixedTape.debug.xcconfig"; sourceTree = "<group>"; };
 		450D365B1E0C52AC002A642F /* CreateStepOneVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateStepOneVC.h; sourceTree = "<group>"; };
 		450D365C1E0C52AC002A642F /* CreateStepOneVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateStepOneVC.m; sourceTree = "<group>"; };
-		451492A11E295FCC00EF2E12 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		451721DD1DE95C8900A3A7E6 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		451ECF951DF88BBD0026A8FF /* AboutUs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUs.h; sourceTree = "<group>"; };
 		451ECF961DF88BBD0026A8FF /* AboutUs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUs.m; sourceTree = "<group>"; };
@@ -82,6 +82,8 @@
 		45434E8C1E3E407B00997D8E /* TriLabelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriLabelView.swift; sourceTree = "<group>"; };
 		4543B8651E3B870E0061A798 /* ResetPasswordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordVC.h; sourceTree = "<group>"; };
 		4543B8661E3B870E0061A798 /* ResetPasswordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordVC.m; sourceTree = "<group>"; };
+		4547D1D91E5AC96500AC4A4F /* savedTapes.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = savedTapes.sqlite; sourceTree = "<group>"; };
+		4547D1DB1E5ACB0B00AC4A4F /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4552A3121E4C51E8004CC14D /* AcceptTapeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcceptTapeModel.h; sourceTree = "<group>"; };
 		4552A3131E4C51E8004CC14D /* AcceptTapeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptTapeModel.m; sourceTree = "<group>"; };
 		455CF7A91DCCED5C00E2EE5A /* HelpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpVC.h; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 		456882871DB5475600EAE837 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4547D1D91E5AC96500AC4A4F /* savedTapes.sqlite */,
 				45434E8C1E3E407B00997D8E /* TriLabelView.swift */,
 				45B1FC961E29114000CC919F /* GoogleService-Info.plist */,
 				45C22CF31E1D06B700A2A4E2 /* PrefixHeader */,
@@ -444,7 +447,7 @@
 		45C22CF31E1D06B700A2A4E2 /* PrefixHeader */ = {
 			isa = PBXGroup;
 			children = (
-				451492A11E295FCC00EF2E12 /* PrefixHeader.pch */,
+				4547D1DB1E5ACB0B00AC4A4F /* PrefixHeader.pch */,
 			);
 			name = PrefixHeader;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45D74B951E0AF52100F7775A /* HomeListCell.xib in Resources */,
+				4547D1DA1E5AC96500AC4A4F /* savedTapes.sqlite in Resources */,
 				456882971DB5475600EAE837 /* LaunchScreen.storyboard in Resources */,
 				459D89D51DD1B1FE005B052B /* images (11).jpeg in Resources */,
 				455CF7AD1DCCFB6000E2EE5A /* HelpScreenChildViews.xib in Resources */,

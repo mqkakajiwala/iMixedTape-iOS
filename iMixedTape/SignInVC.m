@@ -82,6 +82,7 @@
         
         [UserModel postUserSessionWithEmail:self.emailTextField.text
                                    password:self.passwordTextField.text
+                             viewController:self
                                     success:^(id responseObject) {
                                         NSLog(@"%@",responseObject);
                                         
@@ -129,7 +130,7 @@
     if ([self.emailTextField.text isEqualToString:@""] || !emailValid) {
         [SharedHelper AlertControllerWithTitle:@"" message:@"Please enter a valid email." viewController:self];
     }else{
-        [UserModel forgotPasswordAPIForEmail:self.emailTextField.text callback:^(id callback) {
+        [UserModel forgotPasswordAPIForEmail:self.emailTextField.text viewController:self  callback:^(id callback) {
             UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@""
                                                                                       message:[NSString stringWithFormat:@"%@, Please fill the required fields accordingly.",callback]
                                                                                preferredStyle:UIAlertControllerStyleAlert];

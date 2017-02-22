@@ -72,7 +72,7 @@
 
 -(void)webServiceForTracksOfTapes
 {
-    [FetchTracksModel fetchTracksForTapeID:self.selectedTapeID offset:200 callback:^(id callback) {
+    [FetchTracksModel fetchTracksForTapeID:self.selectedTapeID offset:200 viewController:self callback:^(id callback) {
         NSLog(@"%@",callback);
         if ([callback isKindOfClass:[NSArray class]]) {
             songsArray = callback;
@@ -132,7 +132,7 @@
 
 -(void)previewButtonPressed :(UIButton *)sender
 {
-   [PreviewBuyModel iTunesAPiForPreviewBuyForSongID:[[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row] callback:^(id responseObject) {
+   [PreviewBuyModel iTunesAPiForPreviewBuyForSongID:[[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row] viewController:self callback:^(id responseObject) {
        
        NSLog(@"%@",[[[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject]);
        NSLog(@"%lu",[[responseObject objectForKey:@"results"]count]);
@@ -150,7 +150,7 @@
 
 -(void)buyButtonPressed :(UIButton *)sender
 {
-    [PreviewBuyModel iTunesAPiForPreviewBuyForSongID:[[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row] callback:^(id responseObject) {
+    [PreviewBuyModel iTunesAPiForPreviewBuyForSongID:[[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row] viewController:self  callback:^(id responseObject) {
         
         if (![[[[responseObject objectForKey:@"results"]valueForKey:@"trackViewUrl"]firstObject] isKindOfClass:[NSNull class]]) {
             
@@ -261,7 +261,7 @@
 }
 - (IBAction)acceptTapeButton:(UIButton *)sender
 {
-    [AcceptTapeModel acceptSharedTapeWithID:self.selectedTapeSharedID status:@"1" callback:^(id callback) {
+    [AcceptTapeModel acceptSharedTapeWithID:self.selectedTapeSharedID status:@"1" viewController:self  callback:^(id callback) {
         NSLog(@"%@",callback);
         if ([[callback[@"data"]objectForKey:@"status"] isEqualToString:@"1"]) {
           self.tapeStatusView.hidden = YES;
@@ -272,12 +272,33 @@
 
 - (IBAction)rejectTapeButton:(UIButton *)sender
 {
-    [AcceptTapeModel acceptSharedTapeWithID:self.selectedTapeSharedID status:@"2" callback:^(id callback) {
+    [AcceptTapeModel acceptSharedTapeWithID:self.selectedTapeSharedID status:@"2" viewController:self  callback:^(id callback) {
         NSLog(@"%@",callback);
         if ([[callback[@"data"]objectForKey:@"status"] isEqualToString:@"2"]) {
            [self dismissViewControllerAnimated:YES completion:nil];
         }
         
     }];
+}
+
+- (IBAction)cloneTapeButton:(UIButton *)sender
+{
+    [CreateTapeModel resetCreateTapeModel];
+    CreateTapeModel *tapeModel = [CreateTapeModel sharedInstance];
+    
+    tapeModel.title = self.tapeTitleString;
+    tapeModel.uploadImageAccessToken = self.imageToken;
+    tapeModel.message = self.tapeMessageString;
+    
+    NSLog(@"%@",songsArray);
+    for (int i = 0; i<songsArray.count; i++) {
+        [SharedHelper iTunesSearchAPI:[[songsArray valueForKey:@"title"]objectAtIndex:i]];
+    }
+    
+    
+    
+    
+    
+    
 }
 @end

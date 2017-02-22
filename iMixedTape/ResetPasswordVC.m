@@ -68,6 +68,7 @@
                               resetToken:self.resetTokenTF.text
                                 password:self.passwordTF.text
                              confirmPass:self.confirmPassTF.text
+                          viewController:self
                                 callback:^(id callback) {
                                     NSLog(@"%@",callback);
                                     if ([callback boolValue] == YES) {

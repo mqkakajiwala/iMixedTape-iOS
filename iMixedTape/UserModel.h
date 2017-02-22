@@ -19,11 +19,11 @@
 
 
 -(void)logoutUserSession;
-+(void)postUserSessionWithEmail :(NSString *)email password :(NSString *)password success : (void (^)(id ))success;
-+(void)forgotPasswordAPIForEmail :(NSString *)email callback :(void (^)(id))callback;
-+(void)resetPasswordForEmail :(NSString *)email resetToken :(NSString *)resetToken password:(NSString *)pass confirmPass :(NSString *)confirmPass callback :(void (^)(id))callback;
++(void)postUserSessionWithEmail :(NSString *)email password :(NSString *)password viewController:(UIViewController *)vc success : (void (^)(id responseArray))success;
++(void)forgotPasswordAPIForEmail :(NSString *)email viewController:(UIViewController *)vc callback :(void (^)(id))callback;
++(void)resetPasswordForEmail :(NSString *)email resetToken :(NSString *)resetToken password:(NSString *)pass confirmPass :(NSString *)confirmPass viewController:(UIViewController *)vc callback :(void (^)(id))callback;
 
-+(void)changeUserPassword : (NSString *)pass confirmPass :(NSString *)confirmPass callback :(void (^)(id))callback;
++(void)changeUserPassword : (NSString *)pass confirmPass :(NSString *)confirmPass viewController:(UIViewController *)vc callback :(void (^)(id))callback;
 
 @end
 

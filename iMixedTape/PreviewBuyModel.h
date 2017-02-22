@@ -10,6 +10,6 @@
 
 @interface PreviewBuyModel : NSObject
 
-+(void)iTunesAPiForPreviewBuyForSongID :(NSString *)songID callback:(void(^)(id))callback;
++(void)iTunesAPiForPreviewBuyForSongID :(NSString *)songID viewController:(UIViewController *)vc callback:(void(^)(id))callback;
 
 @end
