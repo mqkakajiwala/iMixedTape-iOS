@@ -34,6 +34,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    musicPlayer = nil;
     
     if (IS_IPHONE_5) {
         self.scrollBottomConstraint.constant = 50;
