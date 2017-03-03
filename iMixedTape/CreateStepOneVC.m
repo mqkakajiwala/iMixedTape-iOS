@@ -371,10 +371,6 @@
 -(void)contactPicker:(CNContactPickerViewController *)picker didSelectContact:(CNContact *)contact
 {
     
-    NSLog(@"%@",contact);
-    NSLog(@"%@",contact.emailAddresses);
-    
-    
     
     if (!tapeModel.isEmail) {
         if (contact.phoneNumbers > 0) {
@@ -383,6 +379,7 @@
                 CNPhoneNumber *pn = pnum.value;
                 
                 selectedContact = pn.stringValue;
+                NSLog(@"%@",selectedContact);
                 
             }
         }else{
@@ -404,13 +401,13 @@
     }
     
     NSLog(@"%@",self.emailORmobileTextField.text);
-     if (!tapeModel.isEmail) {
-        NSString *countryIdentifier = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
-        NSLog(@"%@",[NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]]);
-        tapeModel.emailOrMobile = [NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]];
-    }else{
+//     if (!tapeModel.isEmail) {
+//        NSString *countryIdentifier = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
+//        NSLog(@"%@",[NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]]);
+//        tapeModel.emailOrMobile = [NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]];
+//    }else{
         tapeModel.emailOrMobile = selectedContact;
-    }
+    //}
     self.emailORmobileTextField.text = tapeModel.emailOrMobile;
     
     

@@ -18,7 +18,7 @@
 
 @implementation PlayTapeVC
 
-
+#pragma mark - View Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -88,6 +88,7 @@
     [musicPlayer endGeneratingPlaybackNotifications];
 }
 
+#pragma mark - Register Play Music notifications
 - (void) registerMediaPlayerNotifications
 {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -115,6 +116,7 @@
     
 }
 
+#pragma mark - getAlbumArtWork Resized
 - (UIImage *) getAlbumArtworkWithSize: (CGSize) albumSize :(NSString *)songTitle
 {
     MPMediaQuery *query = [MPMediaQuery songsQuery];
@@ -143,10 +145,7 @@
     return [UIImage imageNamed:@"logoIconFull"];
 }
 
-
-- (IBAction)likeButton:(UIButton *)sender {
-}
-
+#pragma mark - IBActions
 - (IBAction)nextButton:(UIButton *)sender
 {
     [musicPlayer skipToNextItem];
@@ -179,7 +178,8 @@
     
 }
 
-- (void) handle_NowPlayingItemChanged: (id) notification
+#pragma mark - Now Playing Notification
+-(void) handle_NowPlayingItemChanged: (id) notification
 {
     
     if ([musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
@@ -230,7 +230,8 @@
     }
 }
 
-- (void) handle_PlaybackStateChanged: (id) notification
+#pragma mark - Handle Playback notification
+-(void) handle_PlaybackStateChanged: (id) notification
 {
     MPMusicPlaybackState playbackState = [musicPlayer playbackState];
     
@@ -252,6 +253,8 @@
 - (void) handle_VolumeChanged: (id) notification
 {
 }
+
+#pragma mark - Song Seek Slider
 - (IBAction)songSliderChanged:(UISlider *)sender
 {
     musicPlayer.currentPlaybackTime = sender.value;
@@ -276,6 +279,7 @@
     }
 }
 
+#pragma mark - Timer Method
 - (void)onTimer:(NSTimer *)myTimer {
     
     long currentPlaybackTime = musicPlayer.currentPlaybackTime;

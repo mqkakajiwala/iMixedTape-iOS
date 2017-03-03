@@ -94,8 +94,11 @@
                                             [self.navigationController popViewControllerAnimated:YES];
                                             
                                             HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
-                                            [hg getWebserviceDataOnLoad];
-                                            self.tabBarController.selectedIndex = 0;
+                                            
+                                            
+                                                [hg getWebserviceDataOnLoad];
+                                                self.tabBarController.selectedIndex = 0;
+                                            
                                         }
                                         else{
                                             [SharedHelper AlertControllerWithTitle:@"" message:@"Incorrect email or password" viewController:self];

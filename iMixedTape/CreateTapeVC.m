@@ -41,6 +41,8 @@
 {
     [super viewWillAppear:animated];
     
+    self.navigationController.navigationBar.hidden = YES;
+    
     tapeModel = [CreateTapeModel sharedInstance];
     fetchTapeModel = [FetchTapesModel sharedInstance];
     
@@ -160,7 +162,7 @@
     
     [discardTapeAlert addAction:[UIAlertAction actionWithTitle:@"DISCARD" style:UIAlertActionStyleDestructive  handler:^(UIAlertAction * _Nonnull action) {
         
-        if (tapeModel.selectedTapeIndex > 0) {
+        if (tapeModel.selectedTapeIndex >= 0) {
             
             [fetchTapeModel.myCretedTapesArray removeObjectAtIndex:tapeModel.selectedTapeIndex];
             HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
@@ -196,7 +198,8 @@
     UserModel *userModel = [[UserModel alloc]init];
 
     if (!userModel.isLoggedIn) {
-        [SharedHelper AlertControllerWithTitle:@"" message:@"You need to login to create tape." viewController:self];
+       
+        [self loginAlert :@"create"];
     }
     else if (tapeModel.songsAddedArray.count == 0){
         [SharedHelper AlertControllerWithTitle:@"" message:@"Please add atleast 1 song to the mixedtape." viewController:self];
@@ -342,6 +345,8 @@
     
     [self presentViewController:discardTapeAlert animated:YES completion:nil];
         
+    }else{
+        [self loginAlert :@"save"];
     }
     
 }
@@ -383,5 +388,27 @@
 {
 //    vcIndexCount = 2;
 //    [self childVCAtIndex];
+}
+
+#pragma mark - Login/Register alert
+
+-(void)loginAlert : (NSString *)titleStr
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:[NSString stringWithFormat:@"You need to be signed in to %@ tapes.",titleStr] preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *loginAction = [UIAlertAction actionWithTitle:@"Login" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.navigationController.navigationBar.hidden = NO;
+        [self performSegueWithIdentifier:@"loginSegue" sender:self];
+    }];
+    
+    UIAlertAction *registerAction = [UIAlertAction actionWithTitle:@"Register" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.navigationController.navigationBar.hidden = NO;
+        [self performSegueWithIdentifier:@"registerSegue" sender:self];
+    }];
+    
+    [alert addAction:loginAction];
+    [alert addAction:registerAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 @end

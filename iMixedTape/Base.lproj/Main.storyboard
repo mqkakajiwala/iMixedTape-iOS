@@ -854,7 +854,6 @@
                                                 <rect key="frame" x="500" y="879" width="24" height="24"/>
                                                 <state key="normal" image="like_inactive"/>
                                                 <connections>
-                                                    <action selector="likeButton:" destination="ks1-y6-NKL" eventType="touchUpInside" id="BEX-9e-Rm3"/>
                                                     <action selector="likeButtonPressed:" destination="ks1-y6-NKL" eventType="touchUpInside" id="4Kr-TQ-K2V"/>
                                                 </connections>
                                             </button>
@@ -1920,7 +1919,7 @@
         <!--New UserVC-->
         <scene sceneID="wVi-F8-Zro">
             <objects>
-                <viewController id="pNv-PJ-kVE" customClass="NewUserVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegisterVC" id="pNv-PJ-kVE" customClass="NewUserVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Q01-lt-udz"/>
                         <viewControllerLayoutGuide type="bottom" id="DLT-7Q-sON"/>
@@ -2360,7 +2359,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WBX-uX-yJe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2107.2463768115945" y="997.01086956521749"/>
+            <point key="canvasLocation" x="2831.25" y="996.63250366032207"/>
         </scene>
         <!--Tab Bar Controller Sub Class-->
         <scene sceneID="V8I-NV-lgH">
@@ -2379,7 +2378,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="rCi-mp-goH" kind="relationship" relationship="viewControllers" id="XL4-j0-EV5"/>
-                        <segue destination="Zp6-z7-e5n" kind="relationship" relationship="viewControllers" id="dyg-r2-fBq"/>
+                        <segue destination="OK9-Oh-eih" kind="relationship" relationship="viewControllers" id="dyg-r2-fBq"/>
                         <segue destination="ks1-y6-NKL" kind="relationship" relationship="viewControllers" id="pGO-7N-mVm"/>
                         <segue destination="KwE-tL-FRS" kind="relationship" relationship="viewControllers" id="fbx-mx-tCi"/>
                         <segue destination="I5F-Iy-X2z" kind="relationship" relationship="viewControllers" id="5Cj-b1-rbB"/>
@@ -2389,7 +2388,7 @@
             </objects>
             <point key="canvasLocation" x="-143" y="209"/>
         </scene>
-        <!--Create Tape-->
+        <!--Create TapeVC-->
         <scene sceneID="Bcs-Ei-hWz">
             <objects>
                 <viewController id="Zp6-z7-e5n" customClass="CreateTapeVC" sceneMemberID="viewController">
@@ -2596,7 +2595,8 @@
                             <constraint firstAttribute="trailing" secondItem="mGU-Bk-kwO" secondAttribute="trailing" id="r9D-gr-0oa"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Create Tape" image="plus" id="MTN-YH-caz"/>
+                    <navigationItem key="navigationItem" id="tUU-9j-GB7"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="animateViewTopWhenKeyboardAppearsConstraint" destination="EWu-cP-KMN" id="ePG-6a-NGl"/>
                         <outlet property="createButtonOutlet" destination="u28-Dy-UxE" id="QBI-JK-EuQ"/>
@@ -2604,11 +2604,13 @@
                         <outlet property="nextButtonOutlet" destination="pJn-4o-O3K" id="Loc-xs-1uE"/>
                         <outlet property="parentView" destination="lLu-mf-xgV" id="6lf-BW-0Dx"/>
                         <outlet property="prevButtonOutlet" destination="q01-fu-TeU" id="nS4-Rd-114"/>
+                        <segue destination="pNv-PJ-kVE" kind="show" identifier="registerSegue" id="pB2-9R-Tjo"/>
+                        <segue destination="sS5-oV-itT" kind="show" identifier="loginSegue" id="Z3w-ZB-NAj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fia-sH-Rwd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="66.666666666666671" y="997.82608695652186"/>
+            <point key="canvasLocation" x="790.4296875" y="997.51098096632495"/>
         </scene>
         <!--Create Step OneVC-->
         <scene sceneID="6Nh-L9-Dji">
@@ -3062,7 +3064,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoIconFull" translatesAutoresizingMaskIntoConstraints="NO" id="Aat-Zl-LGD">
-                                <rect key="frame" x="399" y="110" width="226" height="103"/>
+                                <rect key="frame" x="399" y="66" width="226" height="103"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eka-Le-fWt">
                                 <rect key="frame" x="40" y="668" width="944" height="30"/>
@@ -3274,7 +3276,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jod-CM-Q3y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2790" y="999"/>
+            <point key="canvasLocation" x="3513.8671875" y="998.82869692532938"/>
         </scene>
         <!--PreferencesVC-->
         <scene sceneID="dW5-qZ-Mea">
@@ -3434,7 +3436,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JxK-jj-5A0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3521.25" y="998.23943661971828"/>
+            <point key="canvasLocation" x="4245.1171875" y="997.95021961932639"/>
         </scene>
         <!--Reset PasswordVC-->
         <scene sceneID="x1T-5N-HBn">
@@ -3704,7 +3706,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OdR-e0-iHI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5233.125" y="996.12676056338034"/>
+            <point key="canvasLocation" x="5957.2265625" y="995.75402635431908"/>
         </scene>
         <!--Settings-->
         <scene sceneID="VzK-YR-mbo">
@@ -3889,7 +3891,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HJX-dU-FRG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1448.8" y="998.05097451274366"/>
+            <point key="canvasLocation" x="2172.65625" y="997.95021961932639"/>
         </scene>
         <!--Settings-->
         <scene sceneID="0EY-Ih-4Xu">
@@ -3908,7 +3910,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9GU-JR-EvG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="747.82608695652175" y="998.64130434782612"/>
+            <point key="canvasLocation" x="1471.875" y="998.38945827232794"/>
         </scene>
         <!--Create Step TwoVC-->
         <scene sceneID="h30-aL-GDb">
@@ -4298,6 +4300,25 @@
             </objects>
             <point key="canvasLocation" x="947.46093749999989" y="1678.3308931185943"/>
         </scene>
+        <!--Create Tape-->
+        <scene sceneID="Pry-EO-U0E">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OK9-Oh-eih" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Create Tape" image="plus" id="MTN-YH-caz"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Pln-06-w5q">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Zp6-z7-e5n" kind="relationship" relationship="rootViewController" id="hnC-Ps-sew"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="14x-w2-yV6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="66.2109375" y="997.51098096632495"/>
+        </scene>
     </scenes>
     <resources>
         <image name="adduser" width="21" height="16"/>
@@ -4355,4 +4376,8 @@
         <image name="youtube" width="49" height="49"/>
         <image name="youtubeplain" width="28" height="33"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="pB2-9R-Tjo"/>
+        <segue reference="Z3w-ZB-NAj"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -41,7 +41,7 @@
 
 
 
-- (IBAction)likeButton:(UIButton *)sender;
+
 
 - (IBAction)nextButton:(UIButton *)sender;
 
