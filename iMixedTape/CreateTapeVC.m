@@ -27,9 +27,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboardOnTap)];
-    
-    //  [self addViewControllerAsChildVC:@"createStep1VC"];
-    //self.createStepsImageView.image = [UIImage imageNamed:@"step1"];
+
     
     [self.view addGestureRecognizer:tap];
     [self setDelegate];
@@ -125,65 +123,6 @@
 #pragma mark - IBActions
 - (IBAction)nextButton:(UIButton *)sender
 {
-    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //UserModel *userModel = [[UserModel alloc]init];
-    
-    
-    // NSLog(@"%@", userModel.userID);
-    
-    
-    
-    //    if (tapeModel.title == nil || tapeModel.message == nil || tapeModel.sendTo == nil || tapeModel.emailOrMobile == nil) {
-    //
-    //        [SharedHelper AlertControllerWithTitle:@"" message:@"Please fill the required fields to continue." viewController:self];
-    //        NSLog(@"EMPTY");
-    //    }else{
-    //
-    //        if (tapeModel.isEmail) {
-    //            NSString *email = [tapeModel.emailOrMobile stringByTrimmingCharactersInSet : [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    //
-    //            BOOL emailValid = [SharedHelper validateEmail : email
-    //                                                 required : YES
-    //                                                 minChars : 1
-    //                                                 maxChars : 100];
-    //            if (emailValid) {
-    //                self.prevButtonOutlet.hidden = NO;
-    //                vcIndexCount++;
-    //
-    //                if (vcIndexCount == 2) {
-    //                    self.createButtonOutlet.hidden = NO;
-    //                    self.nextButtonOutlet.hidden = YES;
-    //                }
-    //                [self childVCAtIndex];
-    //            }else{
-    //                [SharedHelper AlertControllerWithTitle:@"" message:@"Please enter a valid email." viewController:self];
-    //            }
-    //
-    //
-    //
-    //        }else{
-    //            NSString *phone = [tapeModel.emailOrMobile stringByTrimmingCharactersInSet : [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    //
-    //            BOOL phoneValid = [SharedHelper validatePhone:phone];
-    //
-    //            if (phoneValid) {
-    //                self.prevButtonOutlet.hidden = NO;
-    //                vcIndexCount++;
-    //
-    //                if (vcIndexCount == 2) {
-    //                    self.createButtonOutlet.hidden = NO;
-    //                    self.nextButtonOutlet.hidden = YES;
-    //                }
-    //                [self childVCAtIndex];
-    //            }else{
-    //                [SharedHelper AlertControllerWithTitle:@"" message:@"Please enter a valid phone number." viewController:self];
-    //            }
-    //        }
-    //        // Validating username
-    //    }
-    
-    
-    //        }else{
     self.prevButtonOutlet.hidden = NO;
     vcIndexCount++;
     
@@ -192,9 +131,7 @@
         self.nextButtonOutlet.hidden = YES;
     }
     [self childVCAtIndex];
-    //        }
-    //    }
-    
+
 }
 
 - (IBAction)previousButton:(UIButton *)sender
@@ -255,10 +192,7 @@
 {
     
     UserModel *userModel = [[UserModel alloc]init];
-    //    SharedHelper *helper = [[SharedHelper alloc]init];
-    //    NSMutableArray *tempArr = helper.tapeSongsArray;
-    
-    
+
     if (!userModel.isLoggedIn) {
         [SharedHelper AlertControllerWithTitle:@"" message:@"You need to login to create tape." viewController:self];
     }
@@ -288,23 +222,22 @@
                                     if ([callback isKindOfClass:[NSDictionary class]]) {
                                         if ([[callback valueForKey:@"error"]boolValue] == NO) {
                                             
-                                            
+                                            HomeGridVC *hg;
                                             if (tapeModel.selectedTapeIndex > 0) {
                                                 
                                                 [fetchTapeModel.myCretedTapesArray removeObjectAtIndex:tapeModel.selectedTapeIndex];
-                                                HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
+                                                 hg = self.tabBarController.viewControllers[0].childViewControllers[0];
+                                                
                                                 
                                                 FMDatabase *database = [FMDatabase databaseWithPath:[SharedHelper databaseWithPath]];
                                                 [database open];
                                                 
                                                 BOOL b = [database executeUpdate:@"delete from saved_tapes_table WHERE id=?",tapeModel.tapeID];
                                                 NSLog(@"%d",b);
-                                                dispatch_async(dispatch_get_main_queue(), ^{
-                                                    [hg getWebserviceDataOnLoad];
-                                                    [hg.collectionView reloadData];
-                                                });
-                                                
+    
                                             }
+                                            
+                                            [hg getWebserviceDataOnLoad];
                                             
                                             
                                             tapeModel.albumImage = nil;
@@ -337,34 +270,20 @@
 - (IBAction)saveTapeButton:(UIButton *)sender
 {
     UserModel *userModel = [[UserModel alloc]init];
-    //    SharedHelper *helper = [[SharedHelper alloc]init];
-    //    NSMutableArray *tempArr = helper.tapeSongsArray;
-    
     
     if (userModel.isLoggedIn) {
     fetchTapeModel = [FetchTapesModel sharedInstance];
     
     UIAlertController *discardTapeAlert = [UIAlertController alertControllerWithTitle:@"" message:@"Your changes have been saved." preferredStyle:UIAlertControllerStyleAlert];
-    
-    //    NSMutableArray *ArrayOfDicts = [[NSMutableArray alloc]init];
-    
-    
-    
-    
-    //    [ArrayOfDicts addObject:dict];
-    
+        
     FMDatabase *database = [FMDatabase databaseWithPath:[SharedHelper databaseWithPath]];
     [database open];
     
-    //    BOOL b = [database executeUpdate:@"insert into saved_tapes_table(title,image_token,imageUploadID,message,sendto,sendvia,from,tapeSongs,saved) values (?,?,?,?,?,?,?,?,?)",tapeModel.title,tapeModel.albumImage,tapeModel.uploadImageID,tapeModel.message,tapeModel.sendTo,tapeModel.emailOrMobile,tapeModel.from,tapeModel.songsAddedArray,YES];
-    
-    @try {
+        @try {
         NSLog(@"%@",tapeModel.songsAddedArray);
         
         NSData *sOngsData = [NSKeyedArchiver archivedDataWithRootObject:tapeModel.songsAddedArray];
-//        NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:sOngsData];
-//        NSLog(@"%@",arr);
-        
+       
         BOOL b;
         NSLog(@"%@",tapeModel.tapeID);
         NSLog(@"%@",tapeModel.title);

@@ -50,7 +50,7 @@
                              @"dob" : dob,
                              @"device_id" : deviceID,
                              @"device_token" : deviceToken,
-                             @"platform" : @"iOS",
+                             @"platform" : @"ios",
                              @"country" : country,
                              @"city" : city,
                              @"state" : state,

@@ -31,14 +31,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
-    
-    
-    
-    //    [self reloadTableData];
-    
-    
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -52,11 +44,7 @@
 
 -(void)webServiceToFetchTapes :(NSString *)userID
 {
-    
-    
-    
-    [FetchTapesModel fetchUserTapesWithPagination:200 userID:userID viewController:self                                              :^(NSArray *callback) {
-        
+        [FetchTapesModel fetchUserTapesWithPagination:200 userID:userID viewController:self :^(NSArray *callback) {
         
         [FetchTapesModel sharedInstance].myCretedTapesArray = callback.mutableCopy;
         
@@ -65,8 +53,7 @@
         
         NSLog(@"%@",[SharedHelper getSavedTaoesFromDB:database]);
         [FetchTapesModel sharedInstance].myCretedTapesArray = [[FetchTapesModel sharedInstance].myCretedTapesArray arrayByAddingObjectsFromArray:[SharedHelper getSavedTaoesFromDB:database]].mutableCopy;
-        
-        //        myTapesArray = callback;
+
         NSLog(@"%@",[FetchTapesModel sharedInstance].myCretedTapesArray);
         
         [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
@@ -77,8 +64,7 @@
     
     [FetchTapesModel mySharedTapesWihPagination:200 userID:userID viewController:self :^(NSArray *callback) {
         [FetchTapesModel sharedInstance].sharedTapesArray = callback.mutableCopy;
-        
-        //        myTapesArray = callback;
+
         NSLog(@"%@",[FetchTapesModel sharedInstance].sharedTapesArray);
         
         [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy collectionView:self.receivedTapesCollectionView view:self.view];
@@ -119,7 +105,7 @@
                 albumArtworkImage.contentMode = UIViewContentModeScaleAspectFit;
                 
                 [albumArtworkImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
-             
+                
                 
                 messageLabel.text = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
                 triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:5];
@@ -127,9 +113,23 @@
                 
                 if ([[[[FetchTapesModel sharedInstance].myCretedTapesArray objectAtIndex:indexPath.row] valueForKey:@"saved"]boolValue]) {
                     triView.viewColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
-                    triView.textColor = [UIColor colorWithRed:120.0/255.0 green:3.0/255.0 blue:10.0/255.0 alpha:0.8];
+                    triView.textColor = [UIColor colorWithRed:120.0/255.0 green:3.0/255.0 blue:10.0/255.0 alpha:0.7];
                 }else{
-                    triView.viewColor = [UIColor colorWithRed:120.0/255.0 green:3.0/255.0 blue:10.0/255.0 alpha:0.8];
+                    NSLog(@"%d",[[[[FetchTapesModel sharedInstance].myCretedTapesArray objectAtIndex:indexPath.row] valueForKey:@"share_tape_status"]intValue]);
+                    switch ([[[[FetchTapesModel sharedInstance].myCretedTapesArray objectAtIndex:indexPath.row] valueForKey:@"share_tape_status"]intValue]) {
+                        case 0:
+                            triView.viewColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:255.0/255.0 alpha:0.7];
+                            break;
+                        case 1:
+                            triView.viewColor = [UIColor colorWithRed:0.0/255.0 green:255.0/255.0 blue:0.0/255.0 alpha:0.7];
+                            break;
+                        case 2:
+                            triView.viewColor = [UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.7];
+                            
+                        default:
+                            break;
+                    }
+                    
                 }
                 
             }else{
@@ -143,9 +143,6 @@
             UILabel *messageLabel = (UILabel *)[cell viewWithTag:2];
             TriLabelView *triView = (TriLabelView *)[cell viewWithTag:1000];
             
-            
-            
-            
             if ([FetchTapesModel sharedInstance].sharedTapesArray.count !=0) {
                 
                 albumArtworkImage.contentMode = UIViewContentModeScaleAspectFit;
@@ -156,6 +153,21 @@
                 messageLabel.text = [[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
                 triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:5];
                 triView.fontSize = 8;
+                
+                switch ([[[[FetchTapesModel sharedInstance].sharedTapesArray objectAtIndex:indexPath.row] valueForKey:@"status"]intValue]) {
+                    case 0:
+                        triView.viewColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:255.0/255.0 alpha:0.7];
+                        break;
+                    case 1:
+                        triView.viewColor = [UIColor colorWithRed:0.0/255.0 green:255.0/255.0 blue:0.0/255.0 alpha:0.7];
+                        break;
+                    case 2:
+                        triView.viewColor = [UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.7];
+                        
+                    default:
+                        break;
+                }
+                
             }else{
                 [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
             }
@@ -178,8 +190,6 @@
     
     float cellWidth = [UIScreen mainScreen].bounds.size.width / 3.5; //Replace the divisor with the column count requirement. Make sure to have it in float.
     return  CGSizeMake(cellWidth, cellWidth);
-    
-    
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -230,7 +240,7 @@
         tapeModel.from = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"signed"]objectAtIndex:indexPath.row];
         tapeModel.uploadImageAccessToken = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row];
         tapeModel.songsAddedArray = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"tapeSongs"]objectAtIndex:indexPath.row];
-          tapeModel.uploadImageID = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"tapeImageUploadId"]objectAtIndex:indexPath.row];
+        tapeModel.uploadImageID = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"tapeImageUploadId"]objectAtIndex:indexPath.row];
         
         
         
@@ -275,10 +285,7 @@
         [self.collectionView reloadData];
         [self.receivedTapesCollectionView reloadData];
     });
-    
-    
-    
-    
+   
 }
 
 

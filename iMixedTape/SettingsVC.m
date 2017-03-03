@@ -59,11 +59,6 @@
 {
     [userModel logoutUserSession];
     
-    
-    
-//    HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
-    
- 
     [FetchTapesModel sharedInstance].myCretedTapesArray = [[NSMutableArray alloc]init];
     [FetchTapesModel sharedInstance].sharedTapesArray = [[NSMutableArray alloc]init];
     

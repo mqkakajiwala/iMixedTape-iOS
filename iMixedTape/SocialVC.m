@@ -70,51 +70,18 @@
 
 - (IBAction)tellFriendsButton:(UIButton *)sender
 {
-//    // grab an item we want to share
+
     UIImage *image = [UIImage imageNamed:@"logoIcon"];
-//    NSArray *items = @[image];
-//    
-//    // build an activity view controller
-//    UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
-//    
-//    
-//    
-//    NSArray *excludeActivities = @[UIActivityTypeAirDrop,
-//                                   UIActivityTypeCopyToPasteboard,
-//                                   UIActivityTypePrint,
-//                                   UIActivityTypeAssignToContact,
-//                                   UIActivityTypeSaveToCameraRoll,
-//                                   UIActivityTypeAddToReadingList,
-//                                   ];
-//    
-//    controller.excludedActivityTypes = excludeActivities;
-//
-//    
-//    // and present it
-//
-    
+
+
     NSString *text = @"I use iMixedTape to make mixed tapes and share with my friends. I love it! check it out at http://www.imixedtape.com";
-   
-//    UIImage *image = [UIImage imageNamed:@"roadfire-icon-square-200"];
     
     UIActivityViewController *controller =
     [[UIActivityViewController alloc]
      initWithActivityItems:@[text, image]
      applicationActivities:nil];
     
-//    controller.excludedActivityTypes = @[UIActivityTypePostToWeibo,
-//                                         UIActivityTypeMessage,
-//                                         UIActivityTypePrint,
-//                                         UIActivityTypeCopyToPasteboard,
-//                                         UIActivityTypeAssignToContact,
-//                                         UIActivityTypeSaveToCameraRoll,
-//                                         UIActivityTypeAddToReadingList,
-//                                         UIActivityTypePostToFlickr,
-//                                         UIActivityTypePostToVimeo,
-//                                         UIActivityTypePostToTencentWeibo,
-//                                         UIActivityTypeAirDrop,
-//                                         ];
- 
+
      [self presentActivityController:controller];
 }
 
@@ -185,13 +152,8 @@
 
 - (IBAction)rateButton:(UIButton *)sender
 {
-//#define YOUR_APP_STORE_ID 545174222 //Change this one to your ID
-//    
-//    static NSString *const iOS7AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/id%d";
-//    static NSString *const iOSAppStoreURLFormat = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%d";
-//    
-//    [NSURL URLWithString:[NSString stringWithFormat:([[UIDevice currentDevice].systemVersion floatValue] >= 7.0f)? iOS7AppStoreURLFormat: iOSAppStoreURLFormat, YOUR_APP_STORE_ID]]; // Would contain the right link
-    
-    
 }
+    
+    
+
 @end

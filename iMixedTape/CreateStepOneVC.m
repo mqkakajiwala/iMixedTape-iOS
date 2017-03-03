@@ -26,10 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSLog(@"LOADING");
-    
-    
-    
     
     tapeModel = [CreateTapeModel sharedInstance];
     
@@ -146,11 +142,10 @@
 {
     
     //load your data here.
-    
     UIImage *choosenImage = info[UIImagePickerControllerEditedImage];
-    //    tapeModel.albumImage = choosenImage;
+   
     tapeModel.imageData = UIImagePNGRepresentation(choosenImage);
- 
+    
     self.albumArtImage.image = [UIImage imageWithData:tapeModel.imageData];
     
     UIImage *resizedImage =[SharedHelper imageWithImage:choosenImage scaledToWidth:self.albumArtImage.frame.size.width];
@@ -163,14 +158,9 @@
             
             tapeModel.uploadImageID = imageUploadID;
             tapeModel.uploadImageAccessToken = [[callback objectForKey:@"data"]objectForKey:@"access_token"];
-            //                [[NSUserDefaults standardUserDefaults]setValue:imageUploadID forKey:key_createTapeUploadImageID];
-            
+         
             tapeModel.albumImage = self.albumArtImage.image;
             NSLog(@"%@",tapeModel.albumImage);
-            //                self.albumArtImage.image = tapeModel.albumImage;
-            //                [[NSUserDefaults standardUserDefaults]setObject:UIImagePNGRepresentation(self.albumArtImage.image) forKey:key_createTapeImage];
-            
-            
             NSLog(@"%@", base64str);
             
         }
@@ -223,21 +213,20 @@
     
     if (textField == _titleTextField) {
         tapeModel.title = textField.text;
-        //        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeTitle];
     }
     else if (textField == _sendToTextField){
         tapeModel.sendTo = textField.text;
-        //        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeSendTo];
-        
     }
     else if (textField == _fromTextField){
         tapeModel.from = textField.text;
-        //        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeFrom];
-        
     }else if (textField == _emailORmobileTextField){
-        tapeModel.emailOrMobile = textField.text;
-        //        [[NSUserDefaults standardUserDefaults]setValue:textField.text forKey:key_createTapeEmailOrMobile];
-        
+        if (!tapeModel.isEmail) {
+            NSString *countryIdentifier = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
+            NSLog(@"%@",[NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]]);
+            tapeModel.emailOrMobile = [NSString stringWithFormat:@"+%@%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier],textField.text];
+        }else{
+            tapeModel.emailOrMobile = textField.text;
+        }
     }
     
 }
@@ -296,8 +285,7 @@
     self.viewTopConstraint.constant = 0;
     if (textView == _messageTextView) {
         tapeModel.message = textView.text;
-        //        [[NSUserDefaults standardUserDefaults]setValue:textView.text forKey:key_createTapeMessage];
-    }
+     }
 }
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -322,9 +310,6 @@
     }
 }
 
-
-
-
 #pragma mark - Encode to base 64 string
 - (NSString *)encodeToBase64String:(UIImage *)image {
     return [UIImagePNGRepresentation(image) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
@@ -343,8 +328,6 @@
         NSLog(@"PHONE");
     }
     tapeModel.isEmail = ifEmail;
-    //    [[NSUserDefaults standardUserDefaults]setBool:ifEmail forKey:key_ifemail];
-    //    NSLog(@"%d",[[NSUserDefaults standardUserDefaults]boolForKey:key_ifemail]);
     
 }
 
@@ -396,13 +379,10 @@
     if (!tapeModel.isEmail) {
         if (contact.phoneNumbers > 0) {
             
-            
             for (CNLabeledValue *pnum  in contact.phoneNumbers) {
                 CNPhoneNumber *pn = pnum.value;
                 
                 selectedContact = pn.stringValue;
-                
-                
                 
             }
         }else{
@@ -424,10 +404,14 @@
     }
     
     NSLog(@"%@",self.emailORmobileTextField.text);
-    //    [[NSUserDefaults standardUserDefaults]setValue:selectedContact forKey:key_createTapeEmailOrMobile];
-    tapeModel.emailOrMobile = selectedContact;
-    //    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile]);
-    self.emailORmobileTextField.text = tapeModel.emailOrMobile;//[[NSUserDefaults standardUserDefaults]valueForKey:key_createTapeEmailOrMobile];
+     if (!tapeModel.isEmail) {
+        NSString *countryIdentifier = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
+        NSLog(@"%@",[NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]]);
+        tapeModel.emailOrMobile = [NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]];
+    }else{
+        tapeModel.emailOrMobile = selectedContact;
+    }
+    self.emailORmobileTextField.text = tapeModel.emailOrMobile;
     
     
 }

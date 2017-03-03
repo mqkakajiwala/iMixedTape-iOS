@@ -55,12 +55,12 @@
 		45D74B9A1E0AF59100F7775A /* ListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D74B991E0AF59100F7775A /* ListCell.m */; };
 		45ED1F211E3BD77600D8CB82 /* PreferencesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ED1F201E3BD77600D8CB82 /* PreferencesVC.m */; };
 		45EF72861E373B7E008DBEB0 /* SelecSongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EF72851E373B7E008DBEB0 /* SelecSongCell.m */; };
-		45EF728C1E37AB13008DBEB0 /* NSString+EncodeURLString.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EF728B1E37AB13008DBEB0 /* NSString+EncodeURLString.m */; };
 		45EF728F1E37B767008DBEB0 /* PreviewBuyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EF728E1E37B767008DBEB0 /* PreviewBuyModel.m */; };
 		45F73FC41E151FC900AB9AAF /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F73FC31E151FC900AB9AAF /* RadioButton.m */; };
 		45F73FC71E1526E200AB9AAF /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F73FC61E1526E200AB9AAF /* CustomCell.m */; };
 		45F73FCB1E15354500AB9AAF /* SocialVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F73FCA1E15354500AB9AAF /* SocialVC.m */; };
 		45F9888F1E52E44E003DFC1D /* HowItWorksView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F9888E1E52E44E003DFC1D /* HowItWorksView.m */; };
+		45FA70071E5D926C006EF601 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45FA70061E5D926C006EF601 /* CoreTelephony.framework */; };
 		7F3920AF4C50DE9E5B0C07CD /* libPods-iMixedTape.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C3A1139244A6B9E23E311B9 /* libPods-iMixedTape.a */; };
 /* End PBXBuildFile section */
 
@@ -158,8 +158,6 @@
 		45ED1F201E3BD77600D8CB82 /* PreferencesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesVC.m; sourceTree = "<group>"; };
 		45EF72841E373B7E008DBEB0 /* SelecSongCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelecSongCell.h; sourceTree = "<group>"; };
 		45EF72851E373B7E008DBEB0 /* SelecSongCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelecSongCell.m; sourceTree = "<group>"; };
-		45EF728A1E37AB13008DBEB0 /* NSString+EncodeURLString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+EncodeURLString.h"; sourceTree = "<group>"; };
-		45EF728B1E37AB13008DBEB0 /* NSString+EncodeURLString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+EncodeURLString.m"; sourceTree = "<group>"; };
 		45EF728D1E37B767008DBEB0 /* PreviewBuyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewBuyModel.h; sourceTree = "<group>"; };
 		45EF728E1E37B767008DBEB0 /* PreviewBuyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewBuyModel.m; sourceTree = "<group>"; };
 		45F73FC21E151FC900AB9AAF /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
@@ -170,6 +168,7 @@
 		45F73FCA1E15354500AB9AAF /* SocialVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialVC.m; sourceTree = "<group>"; };
 		45F9888D1E52E44E003DFC1D /* HowItWorksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowItWorksView.h; sourceTree = "<group>"; };
 		45F9888E1E52E44E003DFC1D /* HowItWorksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HowItWorksView.m; sourceTree = "<group>"; };
+		45FA70061E5D926C006EF601 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		8C3A1139244A6B9E23E311B9 /* libPods-iMixedTape.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iMixedTape.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D12343BD834F47EF2C97CA67 /* Pods-iMixedTape.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMixedTape.release.xcconfig"; path = "Pods/Target Support Files/Pods-iMixedTape/Pods-iMixedTape.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -179,6 +178,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45FA70071E5D926C006EF601 /* CoreTelephony.framework in Frameworks */,
 				451721DE1DE95C8900A3A7E6 /* MediaPlayer.framework in Frameworks */,
 				45CD9B291E1153C100F31A4C /* FBSDKCoreKit.framework in Frameworks */,
 				45CD9B2A1E1153C100F31A4C /* FBSDKLoginKit.framework in Frameworks */,
@@ -202,6 +202,7 @@
 		451721DC1DE95C8900A3A7E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45FA70061E5D926C006EF601 /* CoreTelephony.framework */,
 				45ED1F1B1E3BAE1300D8CB82 /* Contacts.framework */,
 				45ED1F1C1E3BAE1300D8CB82 /* ContactsUI.framework */,
 				4521745A1E33DCBA00E6343C /* UserNotifications.framework */,
@@ -354,8 +355,6 @@
 				456882881DB5475600EAE837 /* main.m */,
 				45C22CFA1E1D0A7D00A2A4E2 /* SharedHelper.h */,
 				45C22CFB1E1D0A7D00A2A4E2 /* SharedHelper.m */,
-				45EF728A1E37AB13008DBEB0 /* NSString+EncodeURLString.h */,
-				45EF728B1E37AB13008DBEB0 /* NSString+EncodeURLString.m */,
 				45434E8B1E3E407A00997D8E /* iMixedTape-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
@@ -545,6 +544,9 @@
 							com.apple.Push = {
 								enabled = 0;
 							};
+							com.apple.iCloud = {
+								enabled = 0;
+							};
 						};
 					};
 				};
@@ -661,7 +663,6 @@
 				4568828C1DB5475600EAE837 /* AppDelegate.m in Sources */,
 				45D74B9A1E0AF59100F7775A /* ListCell.m in Sources */,
 				4521745F1E372DA900E6343C /* FetchTracksModel.m in Sources */,
-				45EF728C1E37AB13008DBEB0 /* NSString+EncodeURLString.m in Sources */,
 				457195D11E0F009700C4C95A /* SettingsVC.m in Sources */,
 				4552A3141E4C51E8004CC14D /* AcceptTapeModel.m in Sources */,
 				45ABF8571E1EBF740067ACC7 /* FetchTapesModel.m in Sources */,
@@ -827,11 +828,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_PREFIX_HEADER = "/Volumes/Mustafa-USB/iMixedTapeWithCrashLytics/iMixedTape/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = /Users/Mustafa/Desktop/iMixedTapeWithCrashLytics/iMixedTape/PrefixHeader.pch;
 				INFOPLIST_FILE = iMixedTape/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.LemondeIT.iMixed;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lemondeit.mixedtape;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iMixedTape/iMixedTape-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -854,11 +855,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_PREFIX_HEADER = "/Volumes/Mustafa-USB/iMixedTapeWithCrashLytics/iMixedTape/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = /Users/Mustafa/Desktop/iMixedTapeWithCrashLytics/iMixedTape/PrefixHeader.pch;
 				INFOPLIST_FILE = iMixedTape/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.LemondeIT.iMixed;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lemondeit.mixedtape;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iMixedTape/iMixedTape-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

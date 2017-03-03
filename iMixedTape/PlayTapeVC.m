@@ -38,18 +38,9 @@
     if (IS_IPHONE_5) {
         self.scrollBottomConstraint.constant = 50;
     }
-    //  else if (IS_IPHONE_6){
-    //      self.scrollBottomConstraint.constant = 50;
-    //}else {
-    //  self.scrollBottomConstraint.constant = 50;
-    //}
     
      dispatch_async(dispatch_get_main_queue(), ^{
-    
     if (self.currentSongStr != nil) {
-        
-       
-            
         
         if (musicPlayer.playbackState == MPMusicPlaybackStatePlaying) {
             [self.playButtonOutlet setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
@@ -57,24 +48,9 @@
             [self.playButtonOutlet setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
         }
         
-        //    MPVolumeView* volumeView = [[MPVolumeView alloc] init];
-        //
-        //    //find the volumeSlider
-        //    self.volumeSlider = nil;
-        //    for (UIView *view in [volumeView subviews]){
-        //        if ([view.class.description isEqualToString:@"MPVolumeSlider"]){
-        //            self.volumeSlider = (UISlider*)view;
-        //            break;
-        //        }
-        //    }
-        //
-        //    [self.volumeSlider setValue:1.0f animated:YES];
-        //    [self.volumeSlider sendActionsForControlEvents:UIControlEventTouchUpInside];
-        //        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(sliderValueChange) userInfo:nil repeats:YES];
         self.songAlbumArtImageView.image = [self getAlbumArtworkWithSize:self.songAlbumArtImageView.frame.size :self.currentSongStr];
         self.currentSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"%@-%@",self.artistStr,self.currentSongStr] charactersToLimit:30];
         self.tapeMessageLabel.text = self.tapeMessageStr;
-        //        self.songTimerLabel.text = [self filterSongDetailsFromTitle:self.currentSongStr];
         self.songTimerLabel.text = @"00:00/00:00";
         self.nextSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"Next Song - %@",self.nextSongStr] charactersToLimit:30];
         self.triLabelView.labelText = self.tapeTitleStr.uppercaseString;
@@ -190,10 +166,6 @@
 {
     [musicPlayer skipToPreviousItem];
 }
-- (IBAction)volumeSliderChanged:(UISlider *)sender
-{
-    //    [musicPlayer setVolume:self.volumeSlider.value];
-}
 
 - (IBAction)openSocialPageButton:(UIButton *)sender
 {
@@ -234,11 +206,8 @@
         if (artistString) {
             self.currentSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"%@-%@",artistString,titleString] charactersToLimit:30];
         } else {
-            //            artistLabel.text = @"Unknown artist";
         }
-        
-//        MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
-//        NSArray *songs = [songsQuery items];
+
         int index = (int)musicPlayer.indexOfNowPlayingItem+1;
         MPMediaItem *nextItem;
         if (index < self.queueSongArray.count) {
@@ -276,26 +245,12 @@
         
         [self.playButtonOutlet setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
         [musicPlayer stop];
-        
-        //        [self.navigationController popViewControllerAnimated:YES];
-        
     }
     
 }
 
 - (void) handle_VolumeChanged: (id) notification
 {
-    //    MPVolumeView* volumeView = [[MPVolumeView alloc] init];
-    //    self.volumeSlider = nil;
-    //    for (UIView *view in [volumeView subviews]){
-    //        if ([view.class.description isEqualToString:@"MPVolumeSlider"]){
-    //            self.volumeSlider = (UISlider*)view;
-    //            break;
-    //        }
-    //    }
-    //
-    //    [self.volumeSlider setValue:1.0f animated:YES];
-    //    [self.volumeSlider sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 - (IBAction)songSliderChanged:(UISlider *)sender
 {

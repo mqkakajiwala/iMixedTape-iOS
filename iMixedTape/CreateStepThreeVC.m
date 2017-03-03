@@ -38,8 +38,7 @@
     previewArray = [[NSMutableArray alloc]init];
     tapeModel = [CreateTapeModel sharedInstance];
     NSLog(@"%@",tapeModel.songsAddedArray);
-//    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:key_createTapeSongs]);
-    previewArray = tapeModel.songsAddedArray;//[[[NSUserDefaults standardUserDefaults]objectForKey:key_createTapeSongs]mutableCopy];
+    previewArray = tapeModel.songsAddedArray;
     NSLog(@"%@",previewArray);
     
     if (previewArray.count == 0) {
@@ -70,16 +69,12 @@
 {
     CustomCell *cell = (CustomCell *) [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    //    cell.albumArtImageView;
-    
     NSLog(@"%@",[[previewArray objectAtIndex:indexPath.row] objectForKey:@"albumArt"]);
     
     [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[[previewArray objectAtIndex:indexPath.row] objectForKey:@"albumArt"]]];
     
     cell.songTitleLabel.text = [[previewArray objectAtIndex:indexPath.row] objectForKey:@"title"];
-    //
     cell.songDecLabel.text = [[previewArray objectAtIndex:indexPath.row] objectForKey:@"artist"];
-    //
     cell.songTimeLabel.text = [[previewArray objectAtIndex:indexPath.row] objectForKey:@"duration"];
     
     
@@ -103,7 +98,6 @@
         
         tapeModel.songsAddedArray = previewArray;
         NSLog(@"%@",previewArray);
-        //[[NSUserDefaults standardUserDefaults]setObject:previewArray forKey:key_createTapeSongs];
     }
 }
 

@@ -19,6 +19,10 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "iMixedTape-Swift.h"
 #import <FMDB/FMDatabase.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import <CoreTelephony/CTCarrier.h>
+#import <Crashlytics/Crashlytics.h>
+
 @import Contacts;
 @import ContactsUI;
 @import GoogleMobileAds;
@@ -33,6 +37,7 @@
 #define DBNAME @"savedTapes.sqlite"
 
 #define key_deviceToken @"key_deviceToken"
+#define key_appBadgeCount @"badgeCountKey"
 #define key_isLoggedIn @"is_LoggedIn"
 #define key_userData @"key_userData"
 #define key_firstName @"key_firstName"

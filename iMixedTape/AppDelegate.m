@@ -12,7 +12,9 @@
 
 
 
-@interface AppDelegate ()
+@interface AppDelegate (){
+    int badgeCount;
+}
     
     @end
 
@@ -21,6 +23,10 @@
     
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    
+    
+//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     //copy Database file
     [self copyDataBaseIfNeeded];
@@ -41,20 +47,20 @@
     
     if (ver >=9){
         
-//        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
         
-//        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
         
         
     }else{
         
-//        UNUserNotificationCenter *notifiCenter = [UNUserNotificationCenter currentNotificationCenter];
-//        notifiCenter.delegate = self;
-//        [notifiCenter requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
-//            if( !error ){
-////                [[UIApplication sharedApplication] registerForRemoteNotifications];
-//            }
-//        }];
+        UNUserNotificationCenter *notifiCenter = [UNUserNotificationCenter currentNotificationCenter];
+        notifiCenter.delegate = self;
+        [notifiCenter requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
+            if( !error ){
+                [[UIApplication sharedApplication] registerForRemoteNotifications];
+            }
+        }];
         
     }
     
@@ -109,16 +115,8 @@
         }else{
             NSLog(@"%@",user);
         }
-    }
-    
-    //- (BOOL)application:(UIApplication *)app
-    //            openURL:(NSURL *)url
-    //            options:(NSDictionary *)options {
-    //    return [[GIDSignIn sharedInstance] handleURL:url
-    //                               sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-    //                                      annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
-    //}
-    
+}
+
 #pragma mark - Push Notification methods
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler{
     
@@ -126,18 +124,30 @@
 }
     
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)())completionHandler{
-    
+    NSLog(@"%@",response);
 }
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-    {
+{
         NSString *dToken = [NSString stringWithFormat:@"DEVICE TOKEN = %@",deviceToken];
         [[NSUserDefaults standardUserDefaults]setValue:dToken forKey:key_deviceToken];
         NSLog(@"%@",dToken);
-    }
+}
     
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
     NSString *str = [NSString stringWithFormat: @"Error: %@", err];
     NSLog(@"%@",str);
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"%@",userInfo);
+//    badgeCount++;
+    badgeCount = [[[userInfo objectForKey:@"aps"]objectForKey:@"badge"]intValue];
+    [[NSUserDefaults standardUserDefaults]setInteger:badgeCount forKey:key_appBadgeCount];
+    NSLog(@"%d",[[NSUserDefaults standardUserDefaults]integerForKey:@"test"]);
+    
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey: @"badgecount"] intValue] + 1;
 }
     
 #pragma mark - Facebook SDK Method

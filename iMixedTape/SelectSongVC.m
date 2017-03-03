@@ -30,8 +30,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-//    self.tapeImage.contentMode = UIViewContentModeScaleAspectFit;
-    
     if (![self.tapeStatus isKindOfClass:[NSNull class]]) {
         if ([self.tapeStatus isEqual:@1]) {
             self.tapeStatusView.hidden = YES;
@@ -42,15 +40,19 @@
         self.tapeStatusView.hidden = YES;
     }
     
+    if (![self.imageToken isKindOfClass:[NSNull class]]) {
+        
+    
     [self.tapeImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",self.imageToken,100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
-    
-    
-//    self.tapeTitle.text = self.tapeTitleString;
+    }
+
     dispatch_async(dispatch_get_main_queue(), ^{
         self.titleView.labelText = [SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:5];
         
         self.tapeMessage.text = self.tapeMessageString;
+     if (![self.tapeOwnerNameString isKindOfClass:[NSNull class]]) {
         self.tapeOwnerNameLabel.text = self.tapeOwnerNameString;
+     }
         
     });
     
@@ -135,7 +137,7 @@
    [PreviewBuyModel iTunesAPiForPreviewBuyForSongID:[[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row] viewController:self callback:^(id responseObject) {
        
        NSLog(@"%@",[[[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject]);
-       NSLog(@"%lu",[[responseObject objectForKey:@"results"]count]);
+       NSLog(@"%u",[[responseObject objectForKey:@"results"]count]);
        
        if ([ [[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject] != nil) {
            
@@ -233,21 +235,6 @@
         
         vc.queueSongArray = tapeSongsArr;
         
-//        MPMediaQuery *testAllSongsQuery = [MPMediaQuery songsQuery];
-//        NSArray *testAllSongsArr = [allSongsQuery items];
-//        NSMutableArray *extraArrayToSend = testAllSongsArr.mutableCopy;
-//        for (int i = 0; i<[[songsArray valueForKey:@"title"] count]; i++) {
-//            MPMediaPropertyPredicate *allSongsPredicate = [MPMediaPropertyPredicate predicateWithValue:[titleArr objectAtIndex:i] forProperty:MPMediaItemPropertyTitle];
-//            
-//            [allSongsQuery addFilterPredicate:allSongsPredicate];
-//            [musicPlayer setQueueWithItemCollection:[MPMediaItemCollection collectionWithItems:[allSongsQuery items]]];
-////            [extraArrayToSend addObject:[allSongsQuery items]];
-//            
-//        }
-        
-//        NSLog(@"%@",extraArrayToSend);
-        
-        
     }
 }
 
@@ -265,6 +252,8 @@
         NSLog(@"%@",callback);
         if ([[callback[@"data"]objectForKey:@"status"] isEqualToString:@"1"]) {
           self.tapeStatusView.hidden = YES;
+            int badgeCount = [[NSUserDefaults standardUserDefaults]integerForKey:key_appBadgeCount];
+            [UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount - 1;
         }
         
     }];
@@ -294,11 +283,5 @@
     for (int i = 0; i<songsArray.count; i++) {
         [SharedHelper iTunesSearchAPI:[[songsArray valueForKey:@"title"]objectAtIndex:i]];
     }
-    
-    
-    
-    
-    
-    
 }
 @end

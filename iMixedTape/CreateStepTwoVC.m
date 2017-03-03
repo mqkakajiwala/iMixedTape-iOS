@@ -44,11 +44,7 @@
     MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:MPMediaTypeMusic] forProperty:MPMediaItemPropertyMediaType];
     query = [[MPMediaQuery alloc]init];
     [query addFilterPredicate:predicate];
-    
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboardOnTap)];
-    [self.view addGestureRecognizer:tap];
-    
+        
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.myTapesButtonOutlet setSelected:YES];
         [self.myTapesButtonOutlet setBackgroundColor:[UIColor blackColor]];
@@ -74,67 +70,11 @@
     
     [self fetchMyTapes];
 }
-#pragma mark - Dismiss Keyboard on tap
--(void)dismissKeyboardOnTap
-{
-//    [mySearchBar resignFirstResponder];
-}
-//#pragma mark - Search Delegate
-//-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
-//{
-//    searchActive = YES;
-//}
-//
-//-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-//{
-//    searchActive = NO;
-//}
-//
-//-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-//{
-//    searchActive = NO;
-//}
-//
-//-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-//{
-//    searchActive = NO;
-//}
-//
-//-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-//{
-//    if (searchResultsArray.count != 0) {
-//        [searchResultsArray removeAllObjects];
-//    }
-//    
-//    for (int i =0; i< mediaArray.count; i++)
-//    {
-//        NSString *string = [[mediaArray objectAtIndex:i] valueForKey:@"message"];
-//        NSRange nameRange = [string rangeOfString:searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch)];
-//        
-//        if(nameRange.location != NSNotFound)
-//        {
-//            [searchResultsArray addObject:string];
-//        }
-//        
-//        if (searchResultsArray.count == 0) {
-//            searchActive = NO;
-//        }else{
-//            searchActive = YES;
-//        }
-//        [self.tableView reloadData];
-//    }
-//    
-//    
-//}
 
 #pragma mark - TableView Datasource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if (self.searchController.isActive && self.searchController.searchBar.text.length > 0) {
-//        return searchResultsArray.count;
-//    }
-    
     if (searchActive) {
         return searchResultsArray.count;
     }else{
@@ -175,26 +115,16 @@
                     long secs = (duration.integerValue - mins * 60);  // fullseconds is an int
                     cell.songTimeLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", mins, secs];
                     
-                    
-                    
-//                    [cell.songAddButon addTarget:self action:@selector(addSongsBtn:) forControlEvents:UIControlEventTouchUpInside];
-                    
-                    
+     
                 }
                 
                 
                 
                 MPMediaItemArtwork *artwork = [rowItem valueForProperty:MPMediaItemPropertyArtwork];
                 cell.albumArtImageView.image = [artwork imageWithSize: CGSizeMake (44, 44)];
-                
-                //test
-                
-                
+               
             }
-            //        else{
-            //            [SharedHelper emptyTableScreenText:@"Please Login to create tapes" Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
-            //        }
-            
+         
         }else{
             if (ifMyTapes) {
                 
@@ -202,14 +132,8 @@
                 
                 [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[mediaArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
                 
-                //if (!searchActive) {
-                 cell.songTitleLabel.text = [[mediaArray valueForKey:@"message"]objectAtIndex:indexPath.row];
-               // }else{
-                    //cell.songTitleLabel.text = [[searchResultsArray valueForKey:@"message"]objectAtIndex:indexPath.row];
-   
-                //}
-                
-                
+                cell.songTitleLabel.text = [[mediaArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+           
                 cell.songDecLabel.text = @"";
                 cell.songTimeLabel.text = @"";
                 
@@ -234,27 +158,6 @@
 {
     return 60;
 }
-
-#pragma mark - Search Methods
-
-//- (void)filterContentForSearchText:(NSString*)searchText
-//{
-//    
-//    NSPredicate *resultPredicate = [NSPredicate
-//                                    predicateWithFormat:@"title contains[c] %@",
-//                                    searchText];
-//    
-//    searchResultsArray = [mediaArray filteredArrayUsingPredicate:resultPredicate];
-//    NSLog(@"%@",searchResultsArray);
-//    
-//    
-//  
-//}
-
-//-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-//{
-//    [self filterContentForSearchText:searchBar.text];
-//}
 
 #pragma mark - IBActions
 
@@ -343,7 +246,7 @@
     
     for (int i=0; i<tapeModel.songsAddedArray.count; i++) {
         NSString *addedSongsTitle = [[tapeModel.songsAddedArray objectAtIndex:i]objectForKey:@"title"];
-//        int j = 0;
+
         for (int j=0; j<mediaArray.count; j++) {
             MPMediaItem *rowItem = [mediaArray objectAtIndex:j];
             NSString *mediaTitle = [rowItem valueForProperty:MPMediaItemPropertyTitle];
@@ -353,15 +256,7 @@
             }
         }
     }
-    
-//    for (int i=0; i<mediaArray.count; i++) {
-//        MPMediaItem *rowItem = [mediaArray objectAtIndex:0];
-//        NSLog(@"%@",[rowItem valueForProperty:MPMediaItemPropertyAlbumTrackNumber]);
-//        NSLog(@"%@",[rowItem valueForProperty:MPMediaItemPropertyPersistentID]);
-//        NSLog(@"%@",[rowItem valueForProperty:MPMediaItemPropertyArtistPersistentID]);
-//        NSLog(@"%@",[rowItem valueForProperty:MPMediaItemPropertyAlbumPersistentID]);
-//    }
-//    
+ 
     
     [self.tableView reloadData];
 }
@@ -417,7 +312,6 @@
             NSLog(@"%@",songs);
             NSLog(@"%@",songsArray);
             [dic setObject:songsArray forKey:@"Song"];
-//            [localSongsList addObject:dic];
             NSLog(@"alub song list %@",dic);
             NSLog(@"%@",[[dic objectForKey:@"Song"]firstObject]);
             for(int i=0; i<[[dic objectForKey:@"Song"]count]; i++){
@@ -452,15 +346,6 @@
     [self.tableView deleteRowsAtIndexPaths:@[selectedIndex] withRowAnimation:UITableViewRowAnimationLeft];
    
 }
-
-//-(void)addSongsBtn :(UIButton *)sender
-//{
-//    CGPoint touchLocation = [sender convertPoint:CGPointZero toView:self.tableView];
-//    NSIndexPath *selectedIndex = [self.tableView indexPathForRowAtPoint:touchLocation];
-//    NSLog(@"%ld",(long)selectedIndex.row);
-//    
-//    
-//    }
 
 
 #pragma mark - Media Library Permissionn

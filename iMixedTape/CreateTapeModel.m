@@ -180,6 +180,8 @@ static CreateTapeModel *instance = nil;
         
         NSLog(@"%@",url);
         
+        NSLog(@"%@",key);
+        NSLog(@"%@",self.emailOrMobile);
         
         NSDictionary *params = @{@"imixed_tape_id" : [[responseObject objectForKey:@"data"]objectForKey:@"id"],
                                  @"user_id" : userID,

@@ -35,6 +35,7 @@
 +(NSString *)databaseWithPath;
 +(NSMutableArray *)getSavedTaoesFromDB :(FMDatabase *)database;
 +(void)iTunesSearchAPI :(NSString *)mySongtitle;
++(NSDictionary *)getCountryCodeDictionary;
 @end
 
 
