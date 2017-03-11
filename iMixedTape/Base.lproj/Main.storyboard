@@ -4306,7 +4306,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OK9-Oh-eih" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Create Tape" image="plus" id="MTN-YH-caz"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Pln-06-w5q">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Pln-06-w5q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

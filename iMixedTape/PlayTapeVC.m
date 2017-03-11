@@ -27,47 +27,47 @@
     [self registerMediaPlayerNotifications];
     
     
-       [SharedHelper fetchGoogleAdds:self.adBannerView onViewController:self];
+    [SharedHelper fetchGoogleAdds:self.adBannerView onViewController:self];
     
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    musicPlayer = nil;
+    //    musicPlayer = nil;
     
     if (IS_IPHONE_5) {
         self.scrollBottomConstraint.constant = 50;
     }
     
-     dispatch_async(dispatch_get_main_queue(), ^{
-    if (self.currentSongStr != nil) {
-        
-        if (musicPlayer.playbackState == MPMusicPlaybackStatePlaying) {
-            [self.playButtonOutlet setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.currentSongStr != nil) {
+            
+            if (musicPlayer.playbackState == MPMusicPlaybackStatePlaying) {
+                [self.playButtonOutlet setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+            }else{
+                [self.playButtonOutlet setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+            }
+            
+            self.songAlbumArtImageView.image = [self getAlbumArtworkWithSize:self.songAlbumArtImageView.frame.size :self.currentSongStr];
+            self.currentSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"%@-%@",self.artistStr,self.currentSongStr] charactersToLimit:30];
+            self.tapeMessageLabel.text = self.tapeMessageStr;
+            self.songTimerLabel.text = @"00:00/00:00";
+            self.nextSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"Next Song - %@",self.nextSongStr] charactersToLimit:30];
+            self.triLabelView.labelText = self.tapeTitleStr.uppercaseString;
+            
+            timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(onTimer:) userInfo:nil repeats:YES];
+            [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+            
+            
         }else{
-            [self.playButtonOutlet setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+            self.currentSongLabel.text = [SharedHelper truncatedLabelString: @"Unknown title" charactersToLimit:30];
+            self.tapeMessageLabel.text = @"Unknown";
+            self.songTimerLabel.text = @"00:00/00:00";
+            self.nextSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"Next Song - %@",@"Unknown title"] charactersToLimit:30];
         }
         
-        self.songAlbumArtImageView.image = [self getAlbumArtworkWithSize:self.songAlbumArtImageView.frame.size :self.currentSongStr];
-        self.currentSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"%@-%@",self.artistStr,self.currentSongStr] charactersToLimit:30];
-        self.tapeMessageLabel.text = self.tapeMessageStr;
-        self.songTimerLabel.text = @"00:00/00:00";
-        self.nextSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"Next Song - %@",self.nextSongStr] charactersToLimit:30];
-        self.triLabelView.labelText = self.tapeTitleStr.uppercaseString;
-        
-        timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(onTimer:) userInfo:nil repeats:YES];
-        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-        
-        
-    }else{
-        self.currentSongLabel.text = [SharedHelper truncatedLabelString: @"Unknown title" charactersToLimit:30];
-        self.tapeMessageLabel.text = @"Unknown";
-        self.songTimerLabel.text = @"00:00/00:00";
-        self.nextSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"Next Song - %@",@"Unknown title"] charactersToLimit:30];
-    }
-                       
-                       });
+    });
 }
 
 - (void)didReceiveMemoryWarning
@@ -154,11 +154,15 @@
 
 - (IBAction)playButton:(UIButton *)sender
 {
-    if ([musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
-        [musicPlayer pause];
+    if (![self.currentSongLabel.text isEqualToString:@"Unknown title"]) {
         
-    } else {
-        [musicPlayer play];
+        if ([musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
+            [musicPlayer pause];
+            
+        } else {
+            [musicPlayer play];
+        }
+        
     }
 }
 
@@ -208,7 +212,7 @@
             self.currentSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"%@-%@",artistString,titleString] charactersToLimit:30];
         } else {
         }
-
+        
         int index = (int)musicPlayer.indexOfNowPlayingItem+1;
         MPMediaItem *nextItem;
         if (index < self.queueSongArray.count) {
@@ -226,7 +230,6 @@
         int tSecs = (totalPlaybackTime % 60 );
         self.songDurationStr = [NSString stringWithFormat:@"%i:%02d:%02d", tHours, tMins, tSecs ];
         NSLog(@"%@",self.songDurationStr);
-        
         
     }
 }
@@ -290,7 +293,7 @@
     
     NSString *duration = [musicPlayer.nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
     long mins = (duration.integerValue / 60); // fullminutes is an int
-                long secs = (duration.integerValue - mins * 60);  // fullseconds is an int
+    long secs = (duration.integerValue - mins * 60);  // fullseconds is an int
     
     
     self.songSlider.maximumValue = musicPlayer.nowPlayingItem.playbackDuration;

@@ -144,7 +144,7 @@
 //    badgeCount++;
     badgeCount = [[[userInfo objectForKey:@"aps"]objectForKey:@"badge"]intValue];
     [[NSUserDefaults standardUserDefaults]setInteger:badgeCount forKey:key_appBadgeCount];
-    NSLog(@"%d",[[NSUserDefaults standardUserDefaults]integerForKey:@"test"]);
+    NSLog(@"%ld",(long)[[NSUserDefaults standardUserDefaults]integerForKey:@"test"]);
     
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey: @"badgecount"] intValue] + 1;

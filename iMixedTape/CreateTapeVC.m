@@ -199,7 +199,7 @@
 
     if (!userModel.isLoggedIn) {
        
-        [self loginAlert :@"create"];
+        [self loginAlert :@"create "];
     }
     else if (tapeModel.songsAddedArray.count == 0){
         [SharedHelper AlertControllerWithTitle:@"" message:@"Please add atleast 1 song to the mixedtape." viewController:self];
