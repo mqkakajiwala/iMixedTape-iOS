@@ -44,8 +44,12 @@
         
     
     [self.tapeImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",self.imageToken,100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+        
+    }else{
+        self.tapeImage.contentMode = UIViewContentModeScaleAspectFit;
+        self.tapeImage.image = [UIImage imageNamed:@"logoIconFull"];
     }
-
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         self.titleView.labelText = [SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:5];
         

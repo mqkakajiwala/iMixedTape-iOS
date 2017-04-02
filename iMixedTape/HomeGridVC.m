@@ -44,7 +44,7 @@
 
 -(void)webServiceToFetchTapes :(NSString *)userID
 {
-        [FetchTapesModel fetchUserTapesWithPagination:200 userID:userID viewController:self :^(NSArray *callback) {
+    [FetchTapesModel fetchUserTapesWithPagination:200 userID:userID viewController:self :^(NSArray *callback) {
         
         [FetchTapesModel sharedInstance].myCretedTapesArray = callback.mutableCopy;
         
@@ -53,7 +53,7 @@
         
         NSLog(@"%@",[SharedHelper getSavedTaoesFromDB:database]);
         [FetchTapesModel sharedInstance].myCretedTapesArray = [[FetchTapesModel sharedInstance].myCretedTapesArray arrayByAddingObjectsFromArray:[SharedHelper getSavedTaoesFromDB:database]].mutableCopy;
-
+        
         NSLog(@"%@",[FetchTapesModel sharedInstance].myCretedTapesArray);
         
         [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
@@ -64,7 +64,7 @@
     
     [FetchTapesModel mySharedTapesWihPagination:200 userID:userID viewController:self :^(NSArray *callback) {
         [FetchTapesModel sharedInstance].sharedTapesArray = callback.mutableCopy;
-
+        
         NSLog(@"%@",[FetchTapesModel sharedInstance].sharedTapesArray);
         
         [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy collectionView:self.receivedTapesCollectionView view:self.view];
@@ -106,9 +106,21 @@
                 
                 [albumArtworkImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
                 
+                if (![[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row] isEqualToString:@"(null)"]) {
+                    messageLabel.text = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+                }else{
+                    messageLabel.text = @"";
+                }
                 
-                messageLabel.text = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
-                triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:5];
+                
+                
+                NSLog(@"%@",[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString]);
+                if (![[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] isEqualToString:@"(NULL)"]) {
+                    triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:5];
+                }else{
+                    triView.labelText = @"";
+                }
+                
                 triView.fontSize = 8;
                 
                 if ([[[[FetchTapesModel sharedInstance].myCretedTapesArray objectAtIndex:indexPath.row] valueForKey:@"saved"]boolValue]) {
@@ -285,7 +297,7 @@
         [self.collectionView reloadData];
         [self.receivedTapesCollectionView reloadData];
     });
-   
+    
 }
 
 

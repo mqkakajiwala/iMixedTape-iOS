@@ -17,6 +17,7 @@
     UIImagePickerController *imagePicker;
     NSString *selectedContact;
     CreateTapeModel *tapeModel;
+    NSData *imgData;
 }
 
 @end
@@ -63,22 +64,38 @@
 
 -(void)loadDefaultValues
 {
-    self.titleTextField.text = tapeModel.title;
-    self.messageTextView.text = tapeModel.message;
-    self.sendToTextField.text = tapeModel.sendTo;
-    self.emailORmobileTextField.text = tapeModel.emailOrMobile;
-    self.fromTextField.text = tapeModel.from;
-    NSData *imgData = tapeModel.imageData;
+    NSString *nulStr = @"(null)";
     
     
-    if (![tapeModel.uploadImageAccessToken isEqualToString:@""]) {
-        [self.albumArtImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",tapeModel.uploadImageAccessToken,100,100]] placeholderImage:[UIImage imageNamed:@"imgicon"]];
+    if (![tapeModel.title isEqualToString:nulStr]) {
+        self.titleTextField.text = tapeModel.title;
     }
-    else{
-        if (imgData !=nil) {
-            self.albumArtImage.image = [UIImage imageWithData:imgData];
-        }else{
-            self.albumArtImage.image = [UIImage imageNamed:@"imgicon"] ;
+    if (![tapeModel.message isEqualToString:nulStr]) {
+        self.messageTextView.text = tapeModel.message;
+    }
+    if (![tapeModel.sendTo isEqualToString:nulStr]) {
+        self.sendToTextField.text = tapeModel.sendTo;
+    }
+    if (![tapeModel.emailOrMobile isEqualToString:nulStr]) {
+        self.emailORmobileTextField.text = tapeModel.emailOrMobile;
+    }
+    if (![tapeModel.from isEqualToString:nulStr]) {
+        self.fromTextField.text = tapeModel.from;
+    }
+    //    if (tapeModel.imageData != nil){
+    imgData = tapeModel.imageData;
+    //    }
+    
+    if ([tapeModel.uploadImageAccessToken isKindOfClass:[NSString class]]) {
+        if (![tapeModel.uploadImageAccessToken isEqualToString:@""]) {
+            [self.albumArtImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",tapeModel.uploadImageAccessToken,100,100]] placeholderImage:[UIImage imageNamed:@"imgicon"]];
+        }
+        else{
+            if (imgData !=nil) {
+                self.albumArtImage.image = [UIImage imageWithData:imgData];
+            }else{
+                self.albumArtImage.image = [UIImage imageNamed:@"imgicon"] ;
+            }
         }
     }
     
@@ -143,10 +160,12 @@
     
     //load your data here.
     UIImage *choosenImage = info[UIImagePickerControllerEditedImage];
-   
+    
     tapeModel.imageData = UIImagePNGRepresentation(choosenImage);
+    imgData = UIImagePNGRepresentation(choosenImage);
     
     self.albumArtImage.image = [UIImage imageWithData:tapeModel.imageData];
+    
     
     UIImage *resizedImage =[SharedHelper imageWithImage:choosenImage scaledToWidth:self.albumArtImage.frame.size.width];
     
@@ -158,7 +177,7 @@
             
             tapeModel.uploadImageID = imageUploadID;
             tapeModel.uploadImageAccessToken = [[callback objectForKey:@"data"]objectForKey:@"access_token"];
-         
+            
             tapeModel.albumImage = self.albumArtImage.image;
             NSLog(@"%@",tapeModel.albumImage);
             NSLog(@"%@", base64str);
@@ -285,7 +304,7 @@
     self.viewTopConstraint.constant = 0;
     if (textView == _messageTextView) {
         tapeModel.message = textView.text;
-     }
+    }
 }
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -401,12 +420,12 @@
     }
     
     NSLog(@"%@",self.emailORmobileTextField.text);
-//     if (!tapeModel.isEmail) {
-//        NSString *countryIdentifier = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
-//        NSLog(@"%@",[NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]]);
-//        tapeModel.emailOrMobile = [NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]];
-//    }else{
-        tapeModel.emailOrMobile = selectedContact;
+    //     if (!tapeModel.isEmail) {
+    //        NSString *countryIdentifier = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
+    //        NSLog(@"%@",[NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]]);
+    //        tapeModel.emailOrMobile = [NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]];
+    //    }else{
+    tapeModel.emailOrMobile = selectedContact;
     //}
     self.emailORmobileTextField.text = tapeModel.emailOrMobile;
     

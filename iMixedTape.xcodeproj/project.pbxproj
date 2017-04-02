@@ -42,6 +42,7 @@
 		45ABF8571E1EBF740067ACC7 /* FetchTapesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ABF8561E1EBF740067ACC7 /* FetchTapesModel.m */; };
 		45AED7911E0FB61D00CB98CE /* CreateStepTwoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AED7901E0FB61D00CB98CE /* CreateStepTwoVC.m */; };
 		45B1FC971E29114000CC919F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45B1FC961E29114000CC919F /* GoogleService-Info.plist */; };
+		45BE97621E8AC50900CD6F5F /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE97611E8AC50900CD6F5F /* testViewController.swift */; };
 		45C22CFC1E1D0A7D00A2A4E2 /* SharedHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C22CFB1E1D0A7D00A2A4E2 /* SharedHelper.m */; };
 		45C3B28A1DFEF493008A9AD6 /* TabBarControllerSubClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C3B2891DFEF493008A9AD6 /* TabBarControllerSubClass.m */; };
 		45C5BDD81DCECCC5005F3A77 /* HomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C5BDD71DCECCC5005F3A77 /* HomeVC.m */; };
@@ -133,6 +134,7 @@
 		45AED78F1E0FB61D00CB98CE /* CreateStepTwoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateStepTwoVC.h; sourceTree = "<group>"; };
 		45AED7901E0FB61D00CB98CE /* CreateStepTwoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateStepTwoVC.m; sourceTree = "<group>"; };
 		45B1FC961E29114000CC919F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		45BE97611E8AC50900CD6F5F /* testViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
 		45C22CFA1E1D0A7D00A2A4E2 /* SharedHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedHelper.h; sourceTree = "<group>"; };
 		45C22CFB1E1D0A7D00A2A4E2 /* SharedHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedHelper.m; sourceTree = "<group>"; };
 		45C3B2861DFE7C65008A9AD6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -245,6 +247,7 @@
 				45CDF3701E0F056A004B645F /* SignInVC */,
 				45C22CF81E1D06FC00A2A4E2 /* SocialVC */,
 				45ABF8531E1EAF250067ACC7 /* SelectSongVC */,
+				45BE97611E8AC50900CD6F5F /* testViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -683,6 +686,7 @@
 				45C22CFC1E1D0A7D00A2A4E2 /* SharedHelper.m in Sources */,
 				4562FA551E23F52600BDCD86 /* UserModel.m in Sources */,
 				45ABF8521E1EAF170067ACC7 /* SelectSongVC.m in Sources */,
+				45BE97621E8AC50900CD6F5F /* testViewController.swift in Sources */,
 				45212F881E0FB93D00059D7E /* CreateStepThreeVC.m in Sources */,
 				453C50C51E461A350037376A /* FaqView.m in Sources */,
 				45ABF84E1E1E97E20067ACC7 /* PlayTapeVC.m in Sources */,
@@ -828,7 +832,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_PREFIX_HEADER = /Users/Mustafa/Desktop/iMixedTapeWithCrashLytics/iMixedTape/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "/Users/Mustafa/Desktop/iMixedTape-iOS/iMixedTape/PrefixHeader.pch";
 				INFOPLIST_FILE = iMixedTape/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -855,7 +859,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_PREFIX_HEADER = /Users/Mustafa/Desktop/iMixedTapeWithCrashLytics/iMixedTape/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "/Users/Mustafa/Desktop/iMixedTape-iOS/iMixedTape/PrefixHeader.pch";
 				INFOPLIST_FILE = iMixedTape/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

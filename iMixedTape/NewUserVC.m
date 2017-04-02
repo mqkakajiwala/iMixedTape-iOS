@@ -7,6 +7,7 @@
 //
 
 #import "NewUserVC.h"
+#import "HomeGridVC.h"
 
 
 @interface NewUserVC (){
@@ -290,7 +291,12 @@
                                                  [[NSUserDefaults standardUserDefaults]setObject:encodedData forKey:key_userData];
                                                  [self.navigationController popViewControllerAnimated:YES];
                                                  
+                                                 HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
+                                                 
+                                                 
+                                                 [hg getWebserviceDataOnLoad];
                                                  self.tabBarController.selectedIndex = 0;
+
                                              }else{
                                                  if ([[callback firstObject] isKindOfClass:[NSString class]]) {
                                                      [SharedHelper AlertControllerWithTitle:@"" message:[callback firstObject] viewController:self];
