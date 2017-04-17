@@ -61,8 +61,8 @@
             
             
         }else{
-            self.currentSongLabel.text = [SharedHelper truncatedLabelString: @"Unknown title" charactersToLimit:30];
-            self.tapeMessageLabel.text = @"Unknown";
+//            self.currentSongLabel.text = [SharedHelper truncatedLabelString: @"Unknown title" charactersToLimit:30];
+            self.tapeMessageLabel.text = @"No mixed tapes found.";
             self.songTimerLabel.text = @"00:00/00:00";
             self.nextSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"Next Song - %@",@"Unknown title"] charactersToLimit:30];
         }
