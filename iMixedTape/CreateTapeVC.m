@@ -204,6 +204,11 @@
     else if (tapeModel.songsAddedArray.count == 0){
         [SharedHelper AlertControllerWithTitle:@"" message:@"Please add atleast 1 song to the mixedtape." viewController:self];
     }
+    else if (tapeModel.emailOrMobile.length < 10) {
+        if (!tapeModel.isEmail) {
+            [SharedHelper AlertControllerWithTitle:@"" message:@"Phone number should contain atleast 10 digits." viewController:self];
+        }
+    }
     else{
         
         for (int i = 0; i<tapeModel.songsAddedArray.count; i++) {

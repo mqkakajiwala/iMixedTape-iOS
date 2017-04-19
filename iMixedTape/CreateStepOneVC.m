@@ -359,8 +359,6 @@
 
 -(void)getContactRequest
 {
-    
-    
     if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusNotDetermined ) {
         CNContactStore *store = [[CNContactStore alloc]init];
         
@@ -375,10 +373,6 @@
     }
 }
 
--(void)getAllContacts
-{
-    
-}
 
 -(void)openContactBook
 {
@@ -407,7 +401,6 @@
     }else{
         if (contact.emailAddresses.count > 0) {
             
-            
             for (CNLabeledValue *email  in contact.emailAddresses) {
                 selectedContact = email.value;
                 
@@ -420,13 +413,7 @@
     }
     
     NSLog(@"%@",self.emailORmobileTextField.text);
-    //     if (!tapeModel.isEmail) {
-    //        NSString *countryIdentifier = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
-    //        NSLog(@"%@",[NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]]);
-    //        tapeModel.emailOrMobile = [NSString stringWithFormat:@"+%@",[[SharedHelper getCountryCodeDictionary] objectForKey:countryIdentifier]];
-    //    }else{
     tapeModel.emailOrMobile = selectedContact;
-    //}
     self.emailORmobileTextField.text = tapeModel.emailOrMobile;
     
     
