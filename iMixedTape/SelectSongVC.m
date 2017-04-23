@@ -13,6 +13,7 @@
 #import "PreviewBuyModel.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AcceptTapeModel.h"
+#import "HomeGridVC.h"
 
 @interface SelectSongVC (){
     NSMutableArray *songsArray;
@@ -32,12 +33,15 @@
     
     if (![self.tapeStatus isKindOfClass:[NSNull class]]) {
         if ([self.tapeStatus isEqual:@1]) {
-            self.tapeStatusView.hidden = YES;
+            self.acceptBtnOutlet.hidden = YES;
+            self.rejectBtnOutlet.hidden = YES;
         }else{
-            self.tapeStatusView.hidden = NO;
+            self.acceptBtnOutlet.hidden = NO;
+            self.rejectBtnOutlet.hidden = NO;
         }
     }else{
-        self.tapeStatusView.hidden = YES;
+        self.acceptBtnOutlet.hidden = YES;
+        self.rejectBtnOutlet.hidden = YES;
     }
     
     if (![self.imageToken isKindOfClass:[NSNull class]]) {
@@ -50,15 +54,16 @@
         self.tapeImage.image = [UIImage imageNamed:@"logoIconFull"];
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.titleView.labelText = [SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:5];
+ //   dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"%@",[SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:5]);
+        self.titleView.labelText =self.tapeTitleString;// [SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:5];
         
         self.tapeMessage.text = self.tapeMessageString;
      if (![self.tapeOwnerNameString isKindOfClass:[NSNull class]]) {
         self.tapeOwnerNameLabel.text = self.tapeOwnerNameString;
      }
         
-    });
+   // });
     
     songsArray = [[NSMutableArray alloc]init];
     localSongsArray = [[NSMutableArray alloc]init];
@@ -141,7 +146,7 @@
    [PreviewBuyModel iTunesAPiForPreviewBuyForSongID:[[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row] viewController:self callback:^(id responseObject) {
        
        NSLog(@"%@",[[[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject]);
-       NSLog(@"%u",[[responseObject objectForKey:@"results"]count]);
+       NSLog(@"%lu",[[responseObject objectForKey:@"results"]count]);
        
        if ([ [[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject] != nil) {
            
@@ -255,9 +260,11 @@
     [AcceptTapeModel acceptSharedTapeWithID:self.selectedTapeSharedID status:@"1" viewController:self  callback:^(id callback) {
         NSLog(@"%@",callback);
         if ([[callback[@"data"]objectForKey:@"status"] isEqualToString:@"1"]) {
-          self.tapeStatusView.hidden = YES;
-            int badgeCount = [[NSUserDefaults standardUserDefaults]integerForKey:key_appBadgeCount];
-            [UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount - 1;
+            self.acceptBtnOutlet.hidden = YES;
+            self.rejectBtnOutlet.hidden = YES;
+            [self getRefreshedTapes];
+//            int badgeCount = [[NSUserDefaults standardUserDefaults]integerForKey:key_appBadgeCount];
+//            [UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount - 1;
         }
         
     }];
@@ -268,6 +275,7 @@
     [AcceptTapeModel acceptSharedTapeWithID:self.selectedTapeSharedID status:@"2" viewController:self  callback:^(id callback) {
         NSLog(@"%@",callback);
         if ([[callback[@"data"]objectForKey:@"status"] isEqualToString:@"2"]) {
+            [self getRefreshedTapes];
            [self dismissViewControllerAnimated:YES completion:nil];
         }
         
@@ -287,5 +295,12 @@
     for (int i = 0; i<songsArray.count; i++) {
         [SharedHelper iTunesSearchAPI:[[songsArray valueForKey:@"title"]objectAtIndex:i]];
     }
+}
+
+-(void)getRefreshedTapes
+{
+    HomeGridVC *hg = [[HomeGridVC alloc]init];
+    
+    [hg getWebserviceDataOnLoad];
 }
 @end

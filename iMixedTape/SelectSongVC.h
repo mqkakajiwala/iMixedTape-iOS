@@ -11,10 +11,9 @@
 @interface SelectSongVC : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UILabel *tapeTitle;
+
 @property (strong,nonatomic) NSString *tapeTitleString;
-@property (strong, nonatomic) IBOutlet UILabel *tapeArtist;
-@property (strong, nonatomic) IBOutlet UILabel *tapeGenre;
+
 @property (strong, nonatomic) IBOutlet UILabel *tapeMessage;
 @property (strong,nonatomic) NSString *tapeMessageString;
 @property (strong,nonatomic) NSString *imageToken;
@@ -24,8 +23,9 @@
 @property (strong,nonatomic) NSString *selectedTapeID;
 @property (strong, nonatomic) IBOutlet TriLabelView *titleView;
 @property (strong,nonatomic) NSNumber *tapeStatus;
-@property (weak, nonatomic) IBOutlet UIView *tapeStatusView;
 @property(strong,nonatomic) NSString *selectedTapeSharedID;
+@property (strong, nonatomic) IBOutlet UIButton *acceptBtnOutlet;
+@property (strong, nonatomic) IBOutlet UIButton *rejectBtnOutlet;
 
 
 - (IBAction)acceptTapeButton:(UIButton *)sender;

@@ -279,12 +279,16 @@
 }
 - (IBAction)saveTapeButton:(UIButton *)sender
 {
+    
     UserModel *userModel = [[UserModel alloc]init];
     
     if (userModel.isLoggedIn) {
     fetchTapeModel = [FetchTapesModel sharedInstance];
     
     UIAlertController *discardTapeAlert = [UIAlertController alertControllerWithTitle:@"" message:@"Your changes have been saved." preferredStyle:UIAlertControllerStyleAlert];
+   
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
         
     FMDatabase *database = [FMDatabase databaseWithPath:[SharedHelper databaseWithPath]];
     [database open];
@@ -349,10 +353,12 @@
     [CreateTapeModel resetCreateTapeModel];
     
     [self presentViewController:discardTapeAlert animated:YES completion:nil];
-        
+      });
     }else{
         [self loginAlert :@"save"];
     }
+                       
+                       
     
 }
 #pragma mark - Create Step Child VC's at index

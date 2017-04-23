@@ -64,16 +64,42 @@
     }
     [self openPageURL:pageURL];
     
-  
+    
 
 }
 
 - (IBAction)tellFriendsButton:(UIButton *)sender
 {
+    NSURL *instagramURL = [NSURL URLWithString:@"instagram://location?id=1"];
+    
+    
+    switch (sender.tag) {
+        case 501:
+            [self openActivityController];
+            break;
+        case 502:
+            
+            break;
+        case 503:
+            if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
+                [[UIApplication sharedApplication] openURL:instagramURL];
+            }
+            break;
+        case 504:
+            
+            break;
+            
+        default:
+            break;
+    }
 
+}
+
+-(void)openActivityController
+{
     UIImage *image = [UIImage imageNamed:@"logoIcon"];
-
-
+    
+    
     NSString *text = @"I use iMixedTape to make mixed tapes and share with my friends. I love it! check it out at http://www.imixedtape.com";
     
     UIActivityViewController *controller =
@@ -82,9 +108,9 @@
      applicationActivities:nil];
     
 
-     [self presentActivityController:controller];
+    
+    [self presentActivityController:controller];
 }
-
 
 -(void)openPageURL :(NSString *)url
 {

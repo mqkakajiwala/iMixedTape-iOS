@@ -18,6 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
     CGFloat numberOFItems = self.tabBar.items.count;
     CGSize tabBarItemSize = CGSizeMake(self.tabBar.frame.size.width/numberOFItems, self.tabBar.frame.size.height);
     
