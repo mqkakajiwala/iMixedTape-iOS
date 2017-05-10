@@ -1537,7 +1537,7 @@
                                         <rect key="frame" x="8" y="7" width="16" height="16"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Select" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAp-wZ-8J4">
-                                        <rect key="frame" x="32" y="7" width="86" height="16"/>
+                                        <rect key="frame" x="32" y="7" width="85.5" height="16"/>
                                         <fontDescription key="fontDescription" name="Verdana-BoldItalic" family="Verdana" pointSize="13"/>
                                         <nil key="highlightedColor"/>
                                     </label>

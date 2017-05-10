@@ -98,7 +98,7 @@
             UIImageView *albumArtworkImage = (UIImageView *)[cell viewWithTag:1];
             UILabel *messageLabel = (UILabel *)[cell viewWithTag:2];
             TriLabelView *triView = (TriLabelView *)[cell viewWithTag:1000];
-            
+           
             
             if ([FetchTapesModel sharedInstance].myCretedTapesArray.count != 0) {
                 
@@ -116,7 +116,15 @@
                 
                 NSLog(@"%@",[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString]);
                 if (![[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] isEqualToString:@"(NULL)"]) {
-                    triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:5];
+                    
+                    NSInteger charLength = [[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row] length];
+                    
+                    charLength = (charLength > 6 && charLength < 36) ? round(triView.layer.frame.size.width / charLength) + 2 : charLength;
+                    
+                    
+                    triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:(int)charLength];
+                   
+                    
                 }else{
                     triView.labelText = @"";
                 }
