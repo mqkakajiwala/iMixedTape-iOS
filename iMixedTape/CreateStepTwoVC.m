@@ -71,6 +71,24 @@
     [self fetchMyTapes];
 }
 
+#pragma mark - SearchBar Delegate
+
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    MPMediaPropertyPredicate *artistPredicate =
+    [MPMediaPropertyPredicate predicateWithValue:searchText
+                                     forProperty:MPMediaItemPropertyArtist
+                                  comparisonType:MPMediaPredicateComparisonContains];
+    
+    NSSet *predicates = [NSSet setWithObjects: artistPredicate, nil];
+    
+    MPMediaQuery *songsQuery =  [[MPMediaQuery alloc] initWithFilterPredicates: predicates];
+    
+    NSLog(@"%@", [songsQuery items]);
+    
+    
+}
+
 #pragma mark - TableView Datasource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

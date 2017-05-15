@@ -41,7 +41,6 @@
 		45ABF8521E1EAF170067ACC7 /* SelectSongVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ABF8511E1EAF170067ACC7 /* SelectSongVC.m */; };
 		45ABF8571E1EBF740067ACC7 /* FetchTapesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ABF8561E1EBF740067ACC7 /* FetchTapesModel.m */; };
 		45AED7911E0FB61D00CB98CE /* CreateStepTwoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AED7901E0FB61D00CB98CE /* CreateStepTwoVC.m */; };
-		45B1FC971E29114000CC919F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45B1FC961E29114000CC919F /* GoogleService-Info.plist */; };
 		45BE97621E8AC50900CD6F5F /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE97611E8AC50900CD6F5F /* testViewController.swift */; };
 		45C22CFC1E1D0A7D00A2A4E2 /* SharedHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C22CFB1E1D0A7D00A2A4E2 /* SharedHelper.m */; };
 		45C3B28A1DFEF493008A9AD6 /* TabBarControllerSubClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C3B2891DFEF493008A9AD6 /* TabBarControllerSubClass.m */; };
@@ -133,7 +132,6 @@
 		45ABF8561E1EBF740067ACC7 /* FetchTapesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchTapesModel.m; sourceTree = "<group>"; };
 		45AED78F1E0FB61D00CB98CE /* CreateStepTwoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateStepTwoVC.h; sourceTree = "<group>"; };
 		45AED7901E0FB61D00CB98CE /* CreateStepTwoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateStepTwoVC.m; sourceTree = "<group>"; };
-		45B1FC961E29114000CC919F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		45BE97611E8AC50900CD6F5F /* testViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
 		45C22CFA1E1D0A7D00A2A4E2 /* SharedHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedHelper.h; sourceTree = "<group>"; };
 		45C22CFB1E1D0A7D00A2A4E2 /* SharedHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedHelper.m; sourceTree = "<group>"; };
@@ -350,7 +348,6 @@
 			children = (
 				4547D1D91E5AC96500AC4A4F /* savedTapes.sqlite */,
 				45434E8C1E3E407B00997D8E /* TriLabelView.swift */,
-				45B1FC961E29114000CC919F /* GoogleService-Info.plist */,
 				45C22CF31E1D06B700A2A4E2 /* PrefixHeader */,
 				459A86721E1BCEDF004C6C4B /* AFNetworking */,
 				45C22CF41E1D06BE00A2A4E2 /* RadioButton */,
@@ -584,7 +581,6 @@
 				455CF7AD1DCCFB6000E2EE5A /* HelpScreenChildViews.xib in Resources */,
 				456882941DB5475600EAE837 /* Assets.xcassets in Resources */,
 				456882921DB5475600EAE837 /* Main.storyboard in Resources */,
-				45B1FC971E29114000CC919F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
