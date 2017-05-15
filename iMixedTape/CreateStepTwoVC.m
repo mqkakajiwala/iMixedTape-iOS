@@ -40,22 +40,24 @@
     
     self.searchBar.delegate = self;
     searchResultsArray = [[NSMutableArray alloc]init];
-   
+    
     MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:MPMediaTypeMusic] forProperty:MPMediaItemPropertyMediaType];
     query = [[MPMediaQuery alloc]init];
     [query addFilterPredicate:predicate];
-        
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.myTapesButtonOutlet setSelected:YES];
         [self.myTapesButtonOutlet setBackgroundColor:[UIColor blackColor]];
     });
     
-
-        helper = [[SharedHelper alloc]init];
-
+    
+    helper = [[SharedHelper alloc]init];
+    
     
     matchArray = [[[[NSUserDefaults standardUserDefaults]objectForKey:key_createTapeSongs]mutableCopy]valueForKey:@"title"];
     NSLog(@"%@",matchArray);
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -63,7 +65,7 @@
     [super viewWillAppear:animated];
     
     tapeModel = [CreateTapeModel sharedInstance];
-   
+    
     MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:MPMediaTypeMusic] forProperty:MPMediaItemPropertyMediaType];
     query = [[MPMediaQuery alloc]init];
     [query addFilterPredicate:predicate];
@@ -75,18 +77,62 @@
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    MPMediaPropertyPredicate *artistPredicate =
+    
+    NSArray *filterArray;
+    
+    if (![searchText isEqualToString:@""]) {
+        
+        if (ifAlbums) {
+            mediaArray = [self predicateFilterSearch:searchText forMediaProperty:MPMediaItemPropertyAlbumTitle];
+            
+            for (MPMediaItem *song in filterArray) {
+                NSString *Title = [song valueForProperty: MPMediaItemPropertyAlbumTitle];
+                NSLog(@"%@",Title);
+                /* Filter found songs here manually */
+            }
+            
+            
+        }else{
+            
+        
+            mediaArray = [self predicateFilterSearch:searchText forMediaProperty:MPMediaItemPropertyTitle];
+            
+            for (MPMediaItem *song in filterArray) {
+                NSString *Title = [song valueForProperty: MPMediaItemPropertyTitle];
+                NSLog(@"%@",Title);
+                /* Filter found songs here manually */
+            }
+            
+        }
+        
+    }
+    
+    [self.tableView reloadData];
+    
+    
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.searchBar resignFirstResponder];
+}
+
+#pragma mark - Predicate/Filter Search method
+
+-(NSMutableArray *)predicateFilterSearch :(NSString *)searchText forMediaProperty:(NSString *)property
+{
+    MPMediaPropertyPredicate *predicate =
     [MPMediaPropertyPredicate predicateWithValue:searchText
-                                     forProperty:MPMediaItemPropertyArtist
+                                     forProperty:property
                                   comparisonType:MPMediaPredicateComparisonContains];
     
-    NSSet *predicates = [NSSet setWithObjects: artistPredicate, nil];
+    NSSet *predicates = [NSSet setWithObjects: predicate, nil];
     
     MPMediaQuery *songsQuery =  [[MPMediaQuery alloc] initWithFilterPredicates: predicates];
     
     NSLog(@"%@", [songsQuery items]);
     
-    
+    return [songsQuery items].mutableCopy;
 }
 
 #pragma mark - TableView Datasource
@@ -96,7 +142,7 @@
     if (searchActive) {
         return searchResultsArray.count;
     }else{
-    return mediaArray.count;
+        return mediaArray.count;
     }
 }
 
@@ -133,16 +179,16 @@
                     long secs = (duration.integerValue - mins * 60);  // fullseconds is an int
                     cell.songTimeLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", mins, secs];
                     
-     
+                    
                 }
                 
                 
                 
                 MPMediaItemArtwork *artwork = [rowItem valueForProperty:MPMediaItemPropertyArtwork];
                 cell.albumArtImageView.image = [artwork imageWithSize: CGSizeMake (44, 44)];
-               
+                
             }
-         
+            
         }else{
             if (ifMyTapes) {
                 
@@ -151,7 +197,7 @@
                 [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[mediaArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
                 
                 cell.songTitleLabel.text = [[mediaArray valueForKey:@"message"]objectAtIndex:indexPath.row];
-           
+                
                 cell.songDecLabel.text = @"";
                 cell.songTimeLabel.text = @"";
                 
@@ -214,7 +260,7 @@
         
         
         mediaArray = callback.mutableCopy;
-
+        
         NSLog(@"%@",mediaArray);
         if (mediaArray.count == 0) {
             [SharedHelper emptyTableScreenText:@"You have not created mixed tapes." Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
@@ -260,11 +306,11 @@
     if (mediaArray.count == 0) {
         [SharedHelper emptyTableScreenText:@"You have no songs to show." Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
     }
- 
+    
     
     for (int i=0; i<tapeModel.songsAddedArray.count; i++) {
         NSString *addedSongsTitle = [[tapeModel.songsAddedArray objectAtIndex:i]objectForKey:@"title"];
-
+        
         for (int j=0; j<mediaArray.count; j++) {
             MPMediaItem *rowItem = [mediaArray objectAtIndex:j];
             NSString *mediaTitle = [rowItem valueForProperty:MPMediaItemPropertyTitle];
@@ -274,7 +320,7 @@
             }
         }
     }
- 
+    
     
     [self.tableView reloadData];
 }
@@ -309,7 +355,7 @@
             
             
         }];
-
+        
     }else if (ifAlbums == YES){
         
         MPMediaQuery *albumsQuery = [MPMediaQuery albumsQuery];
@@ -334,8 +380,8 @@
             NSLog(@"%@",[[dic objectForKey:@"Song"]firstObject]);
             for(int i=0; i<[[dic objectForKey:@"Song"]count]; i++){
                 NSLog(@"%@",[[dic objectForKey:@"Song"]objectAtIndex:i]);
-            [SharedHelper iTunesSearchAPI:[[dic objectForKey:@"Song"]objectAtIndex:i]];
-             }
+                [SharedHelper iTunesSearchAPI:[[dic objectForKey:@"Song"]objectAtIndex:i]];
+            }
         }
         
     }else{
@@ -356,13 +402,13 @@
         [SharedHelper iTunesSearchAPI:songTitle];
         
         
-       
-
+        
+        
     }
     
     [mediaArray removeObjectAtIndex:selectedIndex.row];
     [self.tableView deleteRowsAtIndexPaths:@[selectedIndex] withRowAnimation:UITableViewRowAnimationLeft];
-   
+    
 }
 
 

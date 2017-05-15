@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cdX-Ab-8Km">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cdX-Ab-8Km">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -648,7 +648,7 @@
         <!--Play Mixed Tape-->
         <scene sceneID="dPY-Em-d5b">
             <objects>
-                <viewController storyboardIdentifier="PLAYTAPE_VC" id="ks1-y6-NKL" customClass="PlayTapeVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PLAYTAPEVC" id="ks1-y6-NKL" customClass="PlayTapeVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="U0H-Zb-iQU"/>
                         <viewControllerLayoutGuide type="bottom" id="a7X-Fr-cpG"/>
@@ -1160,7 +1160,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="myCell" id="LWV-ZF-ceC">
-                                        <rect key="frame" x="10" y="-6" width="150" height="150"/>
+                                        <rect key="frame" x="10" y="-5.5" width="150" height="150"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
@@ -1263,7 +1263,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="sharedCell" id="WCK-j0-6tg">
-                                        <rect key="frame" x="10" y="-6" width="150" height="150"/>
+                                        <rect key="frame" x="10" y="-5.5" width="150" height="150"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
@@ -1523,7 +1523,6 @@
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="cloneTapeButton:" destination="f5q-ur-DuD" eventType="touchUpInside" id="iA8-hk-qnj"/>
-                                                    <segue destination="Wbx-I4-fkx" kind="unwind" unwindAction="unwindSegueToClone:" id="Shb-Je-Ehm"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1680,7 +1679,7 @@
                                                     <rect key="frame" x="280" y="27" width="20" height="22"/>
                                                     <state key="normal" image="playgray"/>
                                                     <connections>
-                                                        <segue destination="Wbx-I4-fkx" kind="unwind" unwindAction="prepareForUnwind:" id="74W-Ms-weg"/>
+                                                        <segue destination="Wbx-I4-fkx" kind="unwind" unwindAction="prepareForUnwind:" id="0mC-ih-TEb"/>
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kgP-65-js7">
@@ -4288,6 +4287,10 @@
         <scene sceneID="Q7g-7F-Jm5">
             <objects>
                 <viewController id="zcc-lk-MxK" customClass="HomeVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wr6-Tj-ZQz"/>
+                        <viewControllerLayoutGuide type="bottom" id="RZt-xg-WXX"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Mld-Ke-mYK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="499"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
