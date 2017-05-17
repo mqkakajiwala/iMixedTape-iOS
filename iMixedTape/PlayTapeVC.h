@@ -42,6 +42,7 @@
 
 
 
+- (IBAction)dismissPlayTape:(UIBarButtonItem *)sender;
 
 - (IBAction)nextButton:(UIButton *)sender;
 

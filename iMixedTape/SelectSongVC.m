@@ -136,8 +136,23 @@
 #pragma mark - IBActions
 -(void)playButtonPressed :(UIButton *)sender
 {
+    //[self dismissViewControllerAnimated:YES completion:nil];
+    
     
     //Everything happens with unwind segue from storyboard ..
+ //   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+   //     [self performSegueWithIdentifier:@"unwindToPlayTape" sender:sender];
+    //});
+    
+    PlayTapeVC *playVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PLAYTAPEVC"];
+    
+    
+    [self presentViewController:playVC animated:YES completion:nil];
+     [self playClickedSong:playVC sender:sender];
+    
+    
+    
+    
     
 }
 
@@ -175,10 +190,16 @@
         }];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+
+-(void)playClickedSong : (PlayTapeVC *)vc sender:(id)sender
 {
-    if ([segue.destinationViewController isKindOfClass:[PlayTapeVC class]]) {
-        PlayTapeVC *vc = segue.destinationViewController;
+    //if ([segue.identifier isEqualToString:@"segueToPlayTapeVC"]) {
+        
+    
+    
+   // if ([segue.destinationViewController isKindOfClass:[PlayTapeVC class]]) {
+        //PlayTapeVC *vc = segue.destinationViewController;
         NSLog(@"%ld",(long)[self selectedIndexOfSender:sender].row);
         NSLog(@"%@",[songsArray valueForKey:@"title"]);
         vc.currentSongStr = [[songsArray valueForKey:@"title"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
@@ -244,7 +265,7 @@
         
         vc.queueSongArray = tapeSongsArr;
         
-    }
+    //}
 }
 
 -(NSIndexPath *)selectedIndexOfSender :(id)sender

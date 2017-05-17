@@ -147,6 +147,11 @@
 }
 
 #pragma mark - IBActions
+- (IBAction)dismissPlayTape:(UIBarButtonItem *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (IBAction)nextButton:(UIButton *)sender
 {
     [musicPlayer skipToNextItem];
