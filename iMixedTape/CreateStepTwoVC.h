@@ -18,5 +18,4 @@
 @property (strong, nonatomic) IBOutlet UIView *myView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
-//@property(strong,nonatomic) UISearchController *searchController;
 @end

@@ -10,7 +10,7 @@
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2518FB66-3B5F-4D44-AB6B-010EB028046E",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "2FA3993082E8425625FC5999FEA7153B8FE0A31F" : "iMixedTapeWithCrashLytics\/Pods\/",
-    "6FCAE030926443936BC08DECFB2CC9A7BB2316E0" : "iMixedTapeWithCrashLytics\/"
+    "6FCAE030926443936BC08DECFB2CC9A7BB2316E0" : "iMixedTape-iOS\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "iMixedTape",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,

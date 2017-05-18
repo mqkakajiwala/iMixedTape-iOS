@@ -54,16 +54,15 @@
         self.tapeImage.image = [UIImage imageNamed:@"logoIconFull"];
     }
     
- //   dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"%@",[SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:5]);
-        self.titleView.labelText =self.tapeTitleString;// [SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:5];
-        
+    dispatch_async(dispatch_get_main_queue(), ^{
+    
+    
         self.tapeMessage.text = self.tapeMessageString;
      if (![self.tapeOwnerNameString isKindOfClass:[NSNull class]]) {
         self.tapeOwnerNameLabel.text = self.tapeOwnerNameString;
      }
         
-   // });
+    });
     
     songsArray = [[NSMutableArray alloc]init];
     localSongsArray = [[NSMutableArray alloc]init];
@@ -79,6 +78,14 @@
     
     [self webServiceForTracksOfTapes];
     
+}
+
+-(void)viewWillLayoutSubviews {
+    NSInteger charLength = [self.tapeTitleString length];
+    
+    charLength = (charLength > 6 && charLength < 36) ? round((self.titleView.layer.frame.size.width/6) / charLength) + 2 : charLength;
+    
+    self.titleView.labelText = [SharedHelper truncatedLabelString:[self.tapeTitleString uppercaseString] charactersToLimit:(int)charLength];
 }
 
 -(void)webServiceForTracksOfTapes

@@ -832,7 +832,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_PREFIX_HEADER = "/Users/Mustafa/Desktop/iMixedTape-iOS/iMixedTape/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "${SRCROOT}/iMixedTape/PrefixHeader.pch";
 				INFOPLIST_FILE = iMixedTape/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -859,7 +859,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_PREFIX_HEADER = "/Users/Mustafa/Desktop/iMixedTape-iOS/iMixedTape/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "${SRCROOT}/iMixedTape/PrefixHeader.pch";
 				INFOPLIST_FILE = iMixedTape/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

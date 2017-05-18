@@ -98,7 +98,7 @@
             UIImageView *albumArtworkImage = (UIImageView *)[cell viewWithTag:1];
             UILabel *messageLabel = (UILabel *)[cell viewWithTag:2];
             TriLabelView *triView = (TriLabelView *)[cell viewWithTag:1000];
-            
+           
             
             if ([FetchTapesModel sharedInstance].myCretedTapesArray.count != 0) {
                 
@@ -116,12 +116,20 @@
                 
                 NSLog(@"%@",[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString]);
                 if (![[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] isEqualToString:@"(NULL)"]) {
-                    triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:5];
+                    
+                    NSInteger charLength = [[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row] length];
+                    
+                    charLength = (charLength > 6 && charLength < 36) ? round(triView.layer.frame.size.width / charLength) + 2 : charLength;
+                    
+                    
+                    triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:(int)charLength];
+                   
+                    
                 }else{
                     triView.labelText = @"";
                 }
                 
-                triView.fontSize = 8;
+                
                 
                 if ([[[[FetchTapesModel sharedInstance].myCretedTapesArray objectAtIndex:indexPath.row] valueForKey:@"saved"]boolValue]) {
                     triView.viewColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
@@ -166,8 +174,13 @@
                 
                 
                 messageLabel.text = [[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
-                triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:5];
-                triView.fontSize = 8;
+                
+                NSInteger charLength = [[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row] length];
+                
+                charLength = (charLength > 6 && charLength < 36) ? round(triView.layer.frame.size.width / charLength) + 2 : charLength;
+                
+                triView.labelText = [SharedHelper truncatedLabelString:[[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"title"]objectAtIndex:indexPath.row]uppercaseString] charactersToLimit:(int)charLength];
+
                 
                 switch ([[[[FetchTapesModel sharedInstance].sharedTapesArray objectAtIndex:indexPath.row] valueForKey:@"status"]intValue]) {
                     case 0:

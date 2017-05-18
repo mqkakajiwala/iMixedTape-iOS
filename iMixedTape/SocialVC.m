@@ -70,28 +70,29 @@
 
 - (IBAction)tellFriendsButton:(UIButton *)sender
 {
-    NSURL *instagramURL = [NSURL URLWithString:@"instagram://location?id=1"];
+//    NSURL *instagramURL = [NSURL URLWithString:@"instagram://location?id=1"];
     
+    [self openActivityController];
     
-    switch (sender.tag) {
-        case 501:
-            [self openActivityController];
-            break;
-        case 502:
-            
-            break;
-        case 503:
-            if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
-                [[UIApplication sharedApplication] openURL:instagramURL];
-            }
-            break;
-        case 504:
-            
-            break;
-            
-        default:
-            break;
-    }
+//    switch (sender.tag) {
+//        case 501:
+//            [self openActivityController];
+//            break;
+//        case 502:
+//            
+//            break;
+//        case 503:
+//            if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
+//                [[UIApplication sharedApplication] openURL:instagramURL];
+//            }
+//            break;
+//        case 504:
+//            
+//            break;
+//            
+//        default:
+//            break;
+//    }
 
 }
 

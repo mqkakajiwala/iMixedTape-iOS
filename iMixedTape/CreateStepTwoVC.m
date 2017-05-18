@@ -71,6 +71,17 @@
     [self fetchMyTapes];
 }
 
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (searchText.length ==0) {
+        searchActive = NO;
+    }else {
+        searchActive = YES;
+        
+//        NSPredicate *predicate = [NSPredicate pref]
+    }
+}
+
 #pragma mark - TableView Datasource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

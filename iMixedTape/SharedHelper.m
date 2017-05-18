@@ -250,7 +250,7 @@
     if ([temp length] > 15) {
         @try {
             temp = [temp substringToIndex:index];
-            temp = [temp stringByAppendingString:@" …"];
+            temp = [temp stringByAppendingString:@"…"];
         } @catch (NSException *exception) {
             NSLog(@"%@",exception);
         } @finally {
