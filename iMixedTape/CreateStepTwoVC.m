@@ -75,39 +75,73 @@
 
 #pragma mark - SearchBar Delegate
 
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    searchActive = YES;
+
+}
+
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
+    searchResultsArray = [[NSMutableArray alloc]init];
     
-    NSArray *filterArray;
-    
-    if (![searchText isEqualToString:@""]) {
-        
-        if (ifAlbums) {
-            mediaArray = [self predicateFilterSearch:searchText forMediaProperty:MPMediaItemPropertyAlbumTitle];
-            
-            for (MPMediaItem *song in filterArray) {
-                NSString *Title = [song valueForProperty: MPMediaItemPropertyAlbumTitle];
-                NSLog(@"%@",Title);
-                /* Filter found songs here manually */
-            }
-            
-            
-        }else{
-            
-        
-            mediaArray = [self predicateFilterSearch:searchText forMediaProperty:MPMediaItemPropertyTitle];
-            
-            for (MPMediaItem *song in filterArray) {
-                NSString *Title = [song valueForProperty: MPMediaItemPropertyTitle];
-                NSLog(@"%@",Title);
-                /* Filter found songs here manually */
-            }
-            
-        }
-        
+    if (searchText.length != 0) {
+        searchActive = YES;
+        [self searchTableList];
+    }
+    else{
+        searchActive = NO;
+        [self.tableView reloadData];
     }
     
-    [self.tableView reloadData];
+    
+    
+}
+
+-(void)searchTableList {
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+    
+    
+    if (ifMusicLib) {
+        
+        
+        if (ifAlbums) {
+            for (MPMediaItem *rowItem  in mediaArray) {
+                NSComparisonResult result = [[rowItem valueForProperty:MPMediaItemPropertyAlbumTitle] compare:self.searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [self.searchBar.text length])];
+                if (result == NSOrderedSame) {
+                    NSLog(@"%@",rowItem);
+                    if (![searchResultsArray containsObject:rowItem]) {
+                        [searchResultsArray addObject:rowItem];
+                    }
+                }
+            }
+            
+        }else{
+            for (MPMediaItem *rowItem  in mediaArray) {
+                NSComparisonResult result = [[rowItem valueForProperty:MPMediaItemPropertyTitle] compare:self.searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [self.searchBar.text length])];
+                if (result == NSOrderedSame) {
+                    NSLog(@"%@",rowItem);
+                    if (![searchResultsArray containsObject:rowItem]) {
+                        [searchResultsArray addObject:rowItem];
+                    }
+                    
+                }
+            }
+        }
+    }else {
+        //            NSPredicate *resultPredicate = [NSPredicate
+        //                                            predicateWithFormat:@"SELF contains[cd] %@",
+        //                                            searchText];
+        //
+        //            mediaArray = [mediaArray filteredArrayUsingPredicate:resultPredicate].mutableCopy;
+    }
+    
+        
+        [self.tableView reloadData];
+        });
+    
     
     
 }
@@ -150,67 +184,138 @@
 {
     CustomCell *cell = (CustomCell *) [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    @try {
-        if ([mediaArray.firstObject isKindOfClass:[MPMediaItem class]] || [mediaArray.firstObject isKindOfClass:[MPMediaItemCollection class]] ) {
-            
-            
-            if (ifMusicLib) {
+    if (searchActive) {
+        @try {
+            if ([searchResultsArray.firstObject isKindOfClass:[MPMediaItem class]] || [searchResultsArray.firstObject isKindOfClass:[MPMediaItemCollection class]] ) {
                 
-                MPMediaItem *rowItem;
                 
-                if (ifAlbums) {
-                    rowItem = [mediaArray[indexPath.row]representativeItem];
-                    cell.songTitleLabel.text = [rowItem valueForProperty:MPMediaItemPropertyAlbumTitle];
-                    cell.songDecLabel.text = [rowItem valueForProperty:MPMediaItemPropertyAlbumArtist];
-                    cell.songTimeLabel.hidden = YES;
-                    NSLog(@"%@",[rowItem valueForProperty:MPMediaItemPropertyAlbumPersistentID]);
-                }else{
-                    rowItem = mediaArray[indexPath.row];
-                    NSLog(@"%@",[rowItem valueForProperty:MPMediaItemPropertyTitle]);
-                    cell.songTitleLabel.text = [rowItem valueForProperty:MPMediaItemPropertyTitle];
-                    cell.songDecLabel.text = [rowItem valueForProperty:MPMediaItemPropertyArtist];
-                    cell.songTimeLabel.hidden = NO;
-                    NSNumber *duration = [rowItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
-                    NSLog(@"%@",[rowItem valueForKey:MPMediaItemPropertyPersistentID]);
-                    NSLog(@"%@",[rowItem valueForKey:MPMediaItemPropertyAssetURL]);
+                
+                
+                if (ifMusicLib) {
+                    
+                    MPMediaItem *rowItem;
+                    
+                    if (ifAlbums) {
+                        rowItem = [searchResultsArray[indexPath.row]representativeItem];
+                        cell.songTitleLabel.text = [rowItem valueForProperty:MPMediaItemPropertyAlbumTitle];
+                        cell.songDecLabel.text = [rowItem valueForProperty:MPMediaItemPropertyAlbumArtist];
+                        cell.songTimeLabel.hidden = YES;
+                        NSLog(@"%@",[rowItem valueForProperty:MPMediaItemPropertyAlbumPersistentID]);
+                    }else{
+                        rowItem = searchResultsArray[indexPath.row];
+                        NSLog(@"%@",[rowItem valueForProperty:MPMediaItemPropertyTitle]);
+                        cell.songTitleLabel.text = [rowItem valueForProperty:MPMediaItemPropertyTitle];
+                        cell.songDecLabel.text = [rowItem valueForProperty:MPMediaItemPropertyArtist];
+                        cell.songTimeLabel.hidden = NO;
+                        NSNumber *duration = [rowItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
+                        NSLog(@"%@",[rowItem valueForKey:MPMediaItemPropertyPersistentID]);
+                        NSLog(@"%@",[rowItem valueForKey:MPMediaItemPropertyAssetURL]);
+                        
+                        
+                        long mins = (duration.integerValue / 60); // fullminutes is an int
+                        long secs = (duration.integerValue - mins * 60);  // fullseconds is an int
+                        cell.songTimeLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", mins, secs];
+                        
+                        
+                    }
                     
                     
-                    long mins = (duration.integerValue / 60); // fullminutes is an int
-                    long secs = (duration.integerValue - mins * 60);  // fullseconds is an int
-                    cell.songTimeLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", mins, secs];
+                    
+                    MPMediaItemArtwork *artwork = [rowItem valueForProperty:MPMediaItemPropertyArtwork];
+                    cell.albumArtImageView.image = [artwork imageWithSize: CGSizeMake (44, 44)];
+                    
+                }
+                
+            }else{
+                if (ifMyTapes) {
+                    
+                    cell.albumArtImageView.contentMode = UIViewContentModeScaleAspectFit;
+                    
+                    [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[searchResultsArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+                    
+                    cell.songTitleLabel.text = [[searchResultsArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+                    
+                    cell.songDecLabel.text = @"";
+                    cell.songTimeLabel.text = @"";
+                    
                     
                     
                 }
                 
-                
-                
-                MPMediaItemArtwork *artwork = [rowItem valueForProperty:MPMediaItemPropertyArtwork];
-                cell.albumArtImageView.image = [artwork imageWithSize: CGSizeMake (44, 44)];
-                
             }
-            
-        }else{
-            if (ifMyTapes) {
-                
-                cell.albumArtImageView.contentMode = UIViewContentModeScaleAspectFit;
-                
-                [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[mediaArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
-                
-                cell.songTitleLabel.text = [[mediaArray valueForKey:@"message"]objectAtIndex:indexPath.row];
-                
-                cell.songDecLabel.text = @"";
-                cell.songTimeLabel.text = @"";
-                
-                
-                
-            }
+        } @catch (NSException *exception) {
+            NSLog(@"%@", exception.reason);
+        } @finally {
             
         }
-    } @catch (NSException *exception) {
-        NSLog(@"%@", exception.reason);
-    } @finally {
-        
+    }else{
+        @try {
+            if ([mediaArray.firstObject isKindOfClass:[MPMediaItem class]] || [mediaArray.firstObject isKindOfClass:[MPMediaItemCollection class]] ) {
+                
+                
+                
+                
+                if (ifMusicLib) {
+                    
+                    MPMediaItem *rowItem;
+                    
+                    if (ifAlbums) {
+                        rowItem = [mediaArray[indexPath.row]representativeItem];
+                        cell.songTitleLabel.text = [rowItem valueForProperty:MPMediaItemPropertyAlbumTitle];
+                        cell.songDecLabel.text = [rowItem valueForProperty:MPMediaItemPropertyAlbumArtist];
+                        cell.songTimeLabel.hidden = YES;
+                        NSLog(@"%@",[rowItem valueForProperty:MPMediaItemPropertyAlbumPersistentID]);
+                    }else{
+                        rowItem = mediaArray[indexPath.row];
+                        NSLog(@"%@",[rowItem valueForProperty:MPMediaItemPropertyTitle]);
+                        cell.songTitleLabel.text = [rowItem valueForProperty:MPMediaItemPropertyTitle];
+                        cell.songDecLabel.text = [rowItem valueForProperty:MPMediaItemPropertyArtist];
+                        cell.songTimeLabel.hidden = NO;
+                        NSNumber *duration = [rowItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
+                        NSLog(@"%@",[rowItem valueForKey:MPMediaItemPropertyPersistentID]);
+                        NSLog(@"%@",[rowItem valueForKey:MPMediaItemPropertyAssetURL]);
+                        
+                        
+                        long mins = (duration.integerValue / 60); // fullminutes is an int
+                        long secs = (duration.integerValue - mins * 60);  // fullseconds is an int
+                        cell.songTimeLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", mins, secs];
+                        
+                        
+                    }
+                    
+                    
+                    
+                    MPMediaItemArtwork *artwork = [rowItem valueForProperty:MPMediaItemPropertyArtwork];
+                    cell.albumArtImageView.image = [artwork imageWithSize: CGSizeMake (44, 44)];
+                    
+                }
+                
+            }else{
+                if (ifMyTapes) {
+                    
+                    cell.albumArtImageView.contentMode = UIViewContentModeScaleAspectFit;
+                    
+                    [cell.albumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[mediaArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+                    
+                    cell.songTitleLabel.text = [[mediaArray valueForKey:@"message"]objectAtIndex:indexPath.row];
+                    
+                    cell.songDecLabel.text = @"";
+                    cell.songTimeLabel.text = @"";
+                    
+                    
+                    
+                }
+                
+            }
+        } @catch (NSException *exception) {
+            NSLog(@"%@", exception.reason);
+        } @finally {
+            
+        }
     }
+    
+    
+    
     
     [cell.songAddButon addTarget:self action:@selector(addMyTapesTracks:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
@@ -305,6 +410,8 @@
     
     if (mediaArray.count == 0) {
         [SharedHelper emptyTableScreenText:@"You have no songs to show." Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
+    }else {
+         [SharedHelper emptyTableScreenText:@"" Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
     }
     
     
@@ -343,71 +450,139 @@
     NSIndexPath *selectedIndex = [self.tableView indexPathForRowAtPoint:touchLocation];
     NSLog(@"%ld",(long)selectedIndex.row);
     
-    
-    NSLog(@"%@",mediaArray[selectedIndex.row]);
-    
-    if (ifMyTapes== YES) {
-        [FetchTracksModel fetchTracksForTapeID:[[mediaArray valueForKey:@"id"]objectAtIndex:selectedIndex.row] offset:200 viewController:self  callback:^(id callback) {
-            NSLog(@"%@",callback);
-            for (int i=0; i<[callback count]; i++) {
-                [SharedHelper iTunesSearchAPI:[[callback valueForKey:@"title"]objectAtIndex:i]];
+    if (searchActive) {
+        NSLog(@"%@",searchResultsArray[selectedIndex.row]);
+        
+        if (ifMyTapes== YES) {
+            [FetchTracksModel fetchTracksForTapeID:[[searchResultsArray valueForKey:@"id"]objectAtIndex:selectedIndex.row] offset:200 viewController:self  callback:^(id callback) {
+                NSLog(@"%@",callback);
+                for (int i=0; i<[callback count]; i++) {
+                    [SharedHelper iTunesSearchAPI:[[callback valueForKey:@"title"]objectAtIndex:i]];
+                }
+                
+                
+            }];
+            
+        }else if (ifAlbums == YES){
+            
+            MPMediaQuery *albumsQuery = [MPMediaQuery albumsQuery];
+            NSArray *albums = [albumsQuery collections];
+            NSArray * al = [NSArray arrayWithObjects:[albums objectAtIndex:selectedIndex.row], nil];
+            MPMediaItemCollection *albumCollection;
+            for (albumCollection in al) {
+                NSString *selectedAlbumTitle = [[albumCollection representativeItem] valueForProperty:MPMediaItemPropertyAlbumTitle];
+                NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
+                [dic setObject:selectedAlbumTitle forKey:@"AlbumName"];
+                NSArray *songs = albumCollection.items;
+                NSLog(@"album title is %@",selectedAlbumTitle);
+                NSMutableArray * songsArray = [[NSMutableArray alloc]init];
+                for (MPMediaItem *song in songs) {
+                    NSLog(@"the album songs title is--->%@",[song valueForProperty: MPMediaItemPropertyTitle]);
+                    [songsArray addObject:[song valueForProperty: MPMediaItemPropertyTitle]];
+                }
+                NSLog(@"%@",songs);
+                NSLog(@"%@",songsArray);
+                [dic setObject:songsArray forKey:@"Song"];
+                NSLog(@"alub song list %@",dic);
+                NSLog(@"%@",[[dic objectForKey:@"Song"]firstObject]);
+                for(int i=0; i<[[dic objectForKey:@"Song"]count]; i++){
+                    NSLog(@"%@",[[dic objectForKey:@"Song"]objectAtIndex:i]);
+                    [SharedHelper iTunesSearchAPI:[[dic objectForKey:@"Song"]objectAtIndex:i]];
+                }
             }
             
+        }else{
+            MPMediaItem *rowItem =  searchResultsArray[selectedIndex.row];
+            songTitle =(NSString *)[rowItem valueForProperty:MPMediaItemPropertyTitle];
             
-        }];
-        
-    }else if (ifAlbums == YES){
-        
-        MPMediaQuery *albumsQuery = [MPMediaQuery albumsQuery];
-        NSArray *albums = [albumsQuery collections];
-        NSArray * al = [NSArray arrayWithObjects:[albums objectAtIndex:selectedIndex.row], nil];
-        MPMediaItemCollection *albumCollection;
-        for (albumCollection in al) {
-            NSString *selectedAlbumTitle = [[albumCollection representativeItem] valueForProperty:MPMediaItemPropertyAlbumTitle];
-            NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
-            [dic setObject:selectedAlbumTitle forKey:@"AlbumName"];
-            NSArray *songs = albumCollection.items;
-            NSLog(@"album title is %@",selectedAlbumTitle);
-            NSMutableArray * songsArray = [[NSMutableArray alloc]init];
-            for (MPMediaItem *song in songs) {
-                NSLog(@"the album songs title is--->%@",[song valueForProperty: MPMediaItemPropertyTitle]);
-                [songsArray addObject:[song valueForProperty: MPMediaItemPropertyTitle]];
-            }
-            NSLog(@"%@",songs);
-            NSLog(@"%@",songsArray);
-            [dic setObject:songsArray forKey:@"Song"];
-            NSLog(@"alub song list %@",dic);
-            NSLog(@"%@",[[dic objectForKey:@"Song"]firstObject]);
-            for(int i=0; i<[[dic objectForKey:@"Song"]count]; i++){
-                NSLog(@"%@",[[dic objectForKey:@"Song"]objectAtIndex:i]);
-                [SharedHelper iTunesSearchAPI:[[dic objectForKey:@"Song"]objectAtIndex:i]];
-            }
+            NSNumber *duration = [rowItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
+            NSLog(@"%@",[rowItem valueForKey:MPMediaItemPropertyPersistentID]);
+            NSLog(@"%@",[rowItem valueForKey:MPMediaItemPropertyAssetURL]);
+            
+            
+            long mins = (duration.integerValue / 60); // fullminutes is an int
+            long secs = (duration.integerValue - mins * 60);  // fullseconds is an int
+            songDuration = [NSString stringWithFormat:@"%02ld:%02ld", mins, secs];
+            
+            NSLog(@"%@",searchResultsArray[selectedIndex.row]);
+            
+            [SharedHelper iTunesSearchAPI:songTitle];
+            
+            
+            
+            
         }
         
-    }else{
-        MPMediaItem *rowItem =  mediaArray[selectedIndex.row];
-        songTitle =(NSString *)[rowItem valueForProperty:MPMediaItemPropertyTitle];
-        
-        NSNumber *duration = [rowItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
-        NSLog(@"%@",[rowItem valueForKey:MPMediaItemPropertyPersistentID]);
-        NSLog(@"%@",[rowItem valueForKey:MPMediaItemPropertyAssetURL]);
-        
-        
-        long mins = (duration.integerValue / 60); // fullminutes is an int
-        long secs = (duration.integerValue - mins * 60);  // fullseconds is an int
-        songDuration = [NSString stringWithFormat:@"%02ld:%02ld", mins, secs];
-        
+        [searchResultsArray removeObjectAtIndex:selectedIndex.row];
+        [self.tableView deleteRowsAtIndexPaths:@[selectedIndex] withRowAnimation:UITableViewRowAnimationLeft];
+
+    }else {
         NSLog(@"%@",mediaArray[selectedIndex.row]);
         
-        [SharedHelper iTunesSearchAPI:songTitle];
+        if (ifMyTapes== YES) {
+            [FetchTracksModel fetchTracksForTapeID:[[mediaArray valueForKey:@"id"]objectAtIndex:selectedIndex.row] offset:200 viewController:self  callback:^(id callback) {
+                NSLog(@"%@",callback);
+                for (int i=0; i<[callback count]; i++) {
+                    [SharedHelper iTunesSearchAPI:[[callback valueForKey:@"title"]objectAtIndex:i]];
+                }
+                
+                
+            }];
+            
+        }else if (ifAlbums == YES){
+            
+            MPMediaQuery *albumsQuery = [MPMediaQuery albumsQuery];
+            NSArray *albums = [albumsQuery collections];
+            NSArray * al = [NSArray arrayWithObjects:[albums objectAtIndex:selectedIndex.row], nil];
+            MPMediaItemCollection *albumCollection;
+            for (albumCollection in al) {
+                NSString *selectedAlbumTitle = [[albumCollection representativeItem] valueForProperty:MPMediaItemPropertyAlbumTitle];
+                NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
+                [dic setObject:selectedAlbumTitle forKey:@"AlbumName"];
+                NSArray *songs = albumCollection.items;
+                NSLog(@"album title is %@",selectedAlbumTitle);
+                NSMutableArray * songsArray = [[NSMutableArray alloc]init];
+                for (MPMediaItem *song in songs) {
+                    NSLog(@"the album songs title is--->%@",[song valueForProperty: MPMediaItemPropertyTitle]);
+                    [songsArray addObject:[song valueForProperty: MPMediaItemPropertyTitle]];
+                }
+                NSLog(@"%@",songs);
+                NSLog(@"%@",songsArray);
+                [dic setObject:songsArray forKey:@"Song"];
+                NSLog(@"alub song list %@",dic);
+                NSLog(@"%@",[[dic objectForKey:@"Song"]firstObject]);
+                for(int i=0; i<[[dic objectForKey:@"Song"]count]; i++){
+                    NSLog(@"%@",[[dic objectForKey:@"Song"]objectAtIndex:i]);
+                    [SharedHelper iTunesSearchAPI:[[dic objectForKey:@"Song"]objectAtIndex:i]];
+                }
+            }
+            
+        }else{
+            MPMediaItem *rowItem =  mediaArray[selectedIndex.row];
+            songTitle =(NSString *)[rowItem valueForProperty:MPMediaItemPropertyTitle];
+            
+            NSNumber *duration = [rowItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
+            NSLog(@"%@",[rowItem valueForKey:MPMediaItemPropertyPersistentID]);
+            NSLog(@"%@",[rowItem valueForKey:MPMediaItemPropertyAssetURL]);
+            
+            
+            long mins = (duration.integerValue / 60); // fullminutes is an int
+            long secs = (duration.integerValue - mins * 60);  // fullseconds is an int
+            songDuration = [NSString stringWithFormat:@"%02ld:%02ld", mins, secs];
+            
+            NSLog(@"%@",mediaArray[selectedIndex.row]);
+            
+            [SharedHelper iTunesSearchAPI:songTitle];
+            
+            
+            
+            
+        }
         
-        
-        
-        
+        [mediaArray removeObjectAtIndex:selectedIndex.row];
+        [self.tableView deleteRowsAtIndexPaths:@[selectedIndex] withRowAnimation:UITableViewRowAnimationLeft];
+
     }
-    
-    [mediaArray removeObjectAtIndex:selectedIndex.row];
-    [self.tableView deleteRowsAtIndexPaths:@[selectedIndex] withRowAnimation:UITableViewRowAnimationLeft];
     
 }
 

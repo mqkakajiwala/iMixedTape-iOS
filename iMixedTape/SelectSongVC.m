@@ -55,8 +55,14 @@
     }
     
  //   dispatch_async(dispatch_get_main_queue(), ^{
+    NSInteger charLength = self.tapeTitleString.length;
+    
+    charLength = (charLength > 6 && charLength < 36) ? round(self.titleView.layer.frame.size.width / charLength) + 2 : charLength;
+    
+    
+    
         NSLog(@"%@",[SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:5]);
-        self.titleView.labelText =self.tapeTitleString;// [SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:5];
+        self.titleView.labelText =[SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:(int)charLength];
         
         self.tapeMessage.text = self.tapeMessageString;
      if (![self.tapeOwnerNameString isKindOfClass:[NSNull class]]) {

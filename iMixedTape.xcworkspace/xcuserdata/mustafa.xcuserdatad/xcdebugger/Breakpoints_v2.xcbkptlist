@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iMixedTape/SocialVC.m"
-            timestampString = "514399543.599501"
+            filePath = "iMixedTape/CreateStepTwoVC.m"
+            timestampString = "516824837.118609"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "-tellFriendsButton:"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,29 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iMixedTape/SelectSongVC.m"
-            timestampString = "516722028.754937"
+            filePath = "iMixedTape/CreateStepTwoVC.m"
+            timestampString = "516824837.118609"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
-            landmarkName = "-playClickedSong:sender:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iMixedTape/SelectSongVC.m"
-            timestampString = "516721798.617534"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "-playButtonPressed:"
+            startingLineNumber = "451"
+            endingLineNumber = "451"
+            landmarkName = "-addMyTapesTracks:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
