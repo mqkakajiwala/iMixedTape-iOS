@@ -131,6 +131,19 @@
             }
         }
     }else {
+        
+        for (NSDictionary *dict  in mediaArray) {
+            NSComparisonResult result = [[dict valueForKey:@"message"] compare:self.searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [self.searchBar.text length])];
+            if (result == NSOrderedSame) {
+                NSLog(@"%@",dict);
+                if (![searchResultsArray containsObject:dict]) {
+                    [searchResultsArray addObject:dict];
+                }
+                
+            }
+        }
+        
+        
         //            NSPredicate *resultPredicate = [NSPredicate
         //                                            predicateWithFormat:@"SELF contains[cd] %@",
         //                                            searchText];
@@ -353,6 +366,7 @@
     }else{
         dispatch_async(dispatch_get_main_queue(), ^{
             [SharedHelper emptyTableScreenText:@"Please Login To Create Tapes." Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
+            
             
             [self.tableView reloadData];
         });
