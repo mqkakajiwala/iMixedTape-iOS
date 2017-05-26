@@ -53,7 +53,21 @@
             self.tapeMainImage.image = tapeModel.albumImage;
         }
     }
-    self.titleView.labelText = tapeModel.title;
+    
+    
+    
+    NSInteger charLength = tapeModel.title.length;
+    
+    charLength = (charLength > 6 && charLength < 36) ? round(self.titleView.layer.frame.size.width / charLength) + 2 : charLength;
+    
+    
+    
+    
+    self.titleView.labelText =[SharedHelper truncatedLabelString:tapeModel.title charactersToLimit:(int)charLength];
+    
+    
+    
+    
     self.messageLabel.text = tapeModel.message;
     
     

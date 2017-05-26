@@ -4204,16 +4204,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgicon" translatesAutoresizingMaskIntoConstraints="NO" id="oIB-Zv-qxu">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgicon" translatesAutoresizingMaskIntoConstraints="NO" id="oIB-Zv-qxu">
                                 <rect key="frame" x="22" y="20" width="277" height="204"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="oIB-Zv-qxu" secondAttribute="height" multiplier="1:1" constant="73" id="tOg-ev-Enm"/>
                                     <constraint firstAttribute="height" constant="204" id="xx0-bA-GkA"/>
                                 </constraints>
                             </imageView>
-                            <view alpha="0.80000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TAW-fL-WuW" customClass="TriLabelView" customModule="iMixedTape" customModuleProvider="target">
+                            <view alpha="0.80000001192092896" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="TAW-fL-WuW" customClass="TriLabelView" customModule="iMixedTape" customModuleProvider="target">
                                 <rect key="frame" x="22" y="20" width="277" height="204"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="positionName" value="topleft"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="viewColor">
@@ -4225,7 +4225,6 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="lengthPercentage">
                                         <real key="value" value="60"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="labelText" value="UNKNOWN"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
