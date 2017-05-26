@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		450260191ED8994200FB2024 /* StockVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 450260181ED8994200FB2024 /* StockVC.m */; };
 		450D365D1E0C52AC002A642F /* CreateStepOneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 450D365C1E0C52AC002A642F /* CreateStepOneVC.m */; };
 		451721DE1DE95C8900A3A7E6 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 451721DD1DE95C8900A3A7E6 /* MediaPlayer.framework */; };
 		451ECF971DF88BBD0026A8FF /* AboutUs.m in Sources */ = {isa = PBXBuildFile; fileRef = 451ECF961DF88BBD0026A8FF /* AboutUs.m */; };
@@ -66,6 +67,8 @@
 
 /* Begin PBXFileReference section */
 		403186766C7707BBA48F6249 /* Pods-iMixedTape.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMixedTape.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iMixedTape/Pods-iMixedTape.debug.xcconfig"; sourceTree = "<group>"; };
+		450260171ED8994200FB2024 /* StockVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockVC.h; sourceTree = "<group>"; };
+		450260181ED8994200FB2024 /* StockVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockVC.m; sourceTree = "<group>"; };
 		450D365B1E0C52AC002A642F /* CreateStepOneVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateStepOneVC.h; sourceTree = "<group>"; };
 		450D365C1E0C52AC002A642F /* CreateStepOneVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateStepOneVC.m; sourceTree = "<group>"; };
 		451721DD1DE95C8900A3A7E6 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -379,6 +382,8 @@
 			children = (
 				450D365B1E0C52AC002A642F /* CreateStepOneVC.h */,
 				450D365C1E0C52AC002A642F /* CreateStepOneVC.m */,
+				450260171ED8994200FB2024 /* StockVC.h */,
+				450260181ED8994200FB2024 /* StockVC.m */,
 			);
 			name = StepOneVC;
 			sourceTree = "<group>";
@@ -659,6 +664,7 @@
 				45ED1F211E3BD77600D8CB82 /* PreferencesVC.m in Sources */,
 				455CF7AB1DCCED5C00E2EE5A /* HelpVC.m in Sources */,
 				450D365D1E0C52AC002A642F /* CreateStepOneVC.m in Sources */,
+				450260191ED8994200FB2024 /* StockVC.m in Sources */,
 				4568828C1DB5475600EAE837 /* AppDelegate.m in Sources */,
 				45D74B9A1E0AF59100F7775A /* ListCell.m in Sources */,
 				4521745F1E372DA900E6343C /* FetchTracksModel.m in Sources */,

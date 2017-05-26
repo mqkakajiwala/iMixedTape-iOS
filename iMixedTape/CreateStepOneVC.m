@@ -88,13 +88,23 @@
     
     if ([tapeModel.uploadImageAccessToken isKindOfClass:[NSString class]]) {
         if (![tapeModel.uploadImageAccessToken isEqualToString:@""]) {
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+            
             [self.albumArtImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",tapeModel.uploadImageAccessToken,100,100]] placeholderImage:[UIImage imageNamed:@"imgicon"]];
+                 });
         }
         else{
             if (imgData !=nil) {
-                self.albumArtImage.image = [UIImage imageWithData:imgData];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                 self.albumArtImage.image = [UIImage imageWithData:imgData];
+                });
+                
             }else{
+                dispatch_async(dispatch_get_main_queue(), ^{
                 self.albumArtImage.image = [UIImage imageNamed:@"imgicon"] ;
+                    });
             }
         }
     }
@@ -123,7 +133,9 @@
     
 }
 
-- (IBAction)openStockImagesButton:(UIButton *)sender {
+- (IBAction)openStockImagesButton:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:@"segueToStock" sender:sender];
 }
 
 - (IBAction)openCamLibraryRollButton:(UIButton *)sender
@@ -169,27 +181,8 @@
     
     UIImage *resizedImage =[SharedHelper imageWithImage:choosenImage scaledToWidth:self.albumArtImage.frame.size.width];
     
-    NSString *base64str = [self encodeToBase64String:resizedImage];
-    [CreateTapeModel uploadFileWithAttachnment:base64str viewController:self callback:^(id callback) {
-        
-        if ([[callback objectForKey:@"error"]boolValue] == NO) {
-            imageUploadID = [[callback objectForKey:@"data"]objectForKey:@"id"];
-            
-            tapeModel.uploadImageID = imageUploadID;
-            tapeModel.uploadImageAccessToken = [[callback objectForKey:@"data"]objectForKey:@"access_token"];
-            
-            tapeModel.albumImage = self.albumArtImage.image;
-            NSLog(@"%@",tapeModel.albumImage);
-            NSLog(@"%@", base64str);
-            
-        }
-        else{
-            [SharedHelper AlertControllerWithTitle:@"Error" message:@"Image cannot be uploaded" viewController:self];
-        }
-        
-    }];
+    [self sendResizedToServer:resizedImage :picker];
     
-    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -250,23 +243,23 @@
     
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
-    if (textField == _titleTextField) {
-        // Prevent crashing undo bug – see note below.
-        if(range.length + range.location > textField.text.length)
-        {
-            return NO;
-        }
-        
-        NSUInteger newLength = [textField.text length] + [string length] - range.length;
-        return newLength <= 6;
-    }
-    else
-    {
-        return YES;
-    }
-}
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+//    
+//    if (textField == _titleTextField) {
+//        // Prevent crashing undo bug – see note below.
+//        if(range.length + range.location > textField.text.length)
+//        {
+//            return NO;
+//        }
+//        
+//        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+//        return newLength <= 6;
+//    }
+//    else
+//    {
+//        return YES;
+//    }
+//}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -416,6 +409,43 @@
     tapeModel.emailOrMobile = selectedContact;
     self.emailORmobileTextField.text = tapeModel.emailOrMobile;
     
+    
+}
+
+-(void)sendResizedToServer :(UIImage *)resizedImage :(UIImagePickerController *)picker
+{
+    
+    
+    NSString *base64str = [self encodeToBase64String:resizedImage];
+    [CreateTapeModel uploadFileWithAttachnment:base64str viewController:self callback:^(id callback) {
+        
+        if ([[callback objectForKey:@"error"]boolValue] == NO) {
+            imageUploadID = [[callback objectForKey:@"data"]objectForKey:@"id"];
+            
+            tapeModel.uploadImageID = imageUploadID;
+            tapeModel.uploadImageAccessToken = [[callback objectForKey:@"data"]objectForKey:@"access_token"];
+            
+            tapeModel.albumImage = self.albumArtImage.image;
+            NSLog(@"%@",tapeModel.albumImage);
+            NSLog(@"%@", base64str);
+            
+            
+            
+            [picker dismissViewControllerAnimated:YES completion:nil];
+            
+        }
+        else{
+            [SharedHelper AlertControllerWithTitle:@"Error" message:@"Image cannot be uploaded" viewController:self];
+        }
+        
+    }];
+
+}
+
+-(IBAction)unwindStockImage:(UIStoryboardSegue *)segue
+{
+    self.stockImage = [UIImage imageWithData:tapeModel.imageData];
+    [self sendResizedToServer:self.stockImage :nil];
     
 }
 
