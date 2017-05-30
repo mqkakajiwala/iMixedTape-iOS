@@ -22,6 +22,7 @@
     UIImage *albumImage;
     NSData *imageData;
     BOOL isEmail;
+    BOOL isCloned;
     NSMutableArray *songsAddedArray;
 }
 
@@ -39,6 +40,7 @@
 @property (strong,nonatomic) NSString *from;
 @property (strong,nonatomic) UIImage *albumImage;
 @property (nonatomic) BOOL isEmail;
+@property (nonatomic) BOOL isCloned;
 @property (strong,nonatomic) NSMutableArray *songsAddedArray;
 
 

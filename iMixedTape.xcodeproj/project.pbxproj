@@ -62,7 +62,7 @@
 		45F73FCB1E15354500AB9AAF /* SocialVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F73FCA1E15354500AB9AAF /* SocialVC.m */; };
 		45F9888F1E52E44E003DFC1D /* HowItWorksView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F9888E1E52E44E003DFC1D /* HowItWorksView.m */; };
 		45FA70071E5D926C006EF601 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45FA70061E5D926C006EF601 /* CoreTelephony.framework */; };
-		7F3920AF4C50DE9E5B0C07CD /* libPods-iMixedTape.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C3A1139244A6B9E23E311B9 /* libPods-iMixedTape.a */; };
+		68F20BB80115555FED77A811 /* libPods-iMixedTape.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C3A1139244A6B9E23E311B9 /* libPods-iMixedTape.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -186,7 +186,7 @@
 				45CD9B291E1153C100F31A4C /* FBSDKCoreKit.framework in Frameworks */,
 				45CD9B2A1E1153C100F31A4C /* FBSDKLoginKit.framework in Frameworks */,
 				45CD9B2C1E1153EC00F31A4C /* Bolts.framework in Frameworks */,
-				7F3920AF4C50DE9E5B0C07CD /* libPods-iMixedTape.a in Frameworks */,
+				68F20BB80115555FED77A811 /* libPods-iMixedTape.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,7 +604,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		45E706711E533C99004281EB /* ShellScript */ = {

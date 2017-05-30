@@ -162,19 +162,24 @@
     
     [discardTapeAlert addAction:[UIAlertAction actionWithTitle:@"DISCARD" style:UIAlertActionStyleDestructive  handler:^(UIAlertAction * _Nonnull action) {
         
-        if (tapeModel.selectedTapeIndex >= 0) {
-            
-            [fetchTapeModel.myCretedTapesArray removeObjectAtIndex:tapeModel.selectedTapeIndex];
-            HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
-            
-            FMDatabase *database = [FMDatabase databaseWithPath:[SharedHelper databaseWithPath]];
-            [database open];
-            
-         BOOL b = [database executeUpdate:@"delete from saved_tapes_table WHERE id=?",tapeModel.tapeID];
-            NSLog(@"%d",b);
-            
-            [hg.collectionView reloadData];
+        if (tapeModel.isCloned == NO) {
+           
+            if (tapeModel.selectedTapeIndex >= 0) {
+                
+                [fetchTapeModel.myCretedTapesArray removeObjectAtIndex:tapeModel.selectedTapeIndex];
+                HomeGridVC *hg = self.tabBarController.viewControllers[0].childViewControllers[0];
+                
+                FMDatabase *database = [FMDatabase databaseWithPath:[SharedHelper databaseWithPath]];
+                [database open];
+                
+                BOOL b = [database executeUpdate:@"delete from saved_tapes_table WHERE id=?",tapeModel.tapeID];
+                NSLog(@"%d",b);
+                
+                [hg.collectionView reloadData];
+            }
         }
+        
+    
         vcIndexCount = 0;
         [self childVCAtIndex];
         

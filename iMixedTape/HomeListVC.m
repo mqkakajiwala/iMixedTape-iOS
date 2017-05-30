@@ -104,31 +104,34 @@
 #pragma mark - TableView delegate method
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [CreateTapeModel resetCreateTapeModel];
+//    [CreateTapeModel resetCreateTapeModel];
     
     NSArray *selectedTape = [[NSArray alloc]init];
     SelectSongVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SELECT_SONG_VC"];
     
-    if (![[[[FetchTapesModel sharedInstance].myCretedTapesArray objectAtIndex:indexPath.row] valueForKey:@"saved"]boolValue]) {
-        
     if (tableView == self.myMixedTapeTableView) {
         selectedTape = [FetchTapesModel sharedInstance].myCretedTapesArray;
         vc.tapeOwnerNameString = @"";
         vc.selectedTapeID = [[selectedTape valueForKey:@"id"]objectAtIndex:indexPath.row];
+        vc.myTapeStatus = [[selectedTape valueForKey:@"share_tape_status"]objectAtIndex:indexPath.row];
     }else{
         selectedTape = [FetchTapesModel sharedInstance].sharedTapesArray;
         vc.tapeOwnerNameString = [[selectedTape valueForKey:@"full_name"]objectAtIndex:indexPath.row];
         vc.selectedTapeID = [[selectedTape valueForKey:@"imixed_tape_id"]objectAtIndex:indexPath.row];
+        vc.sharedTapeStatus = [[selectedTape valueForKey:@"status"]objectAtIndex:indexPath.row];
     }
-    
+
     
     vc.tapeTitleString = [[selectedTape valueForKey:@"title"]objectAtIndex:indexPath.row];
     vc.tapeMessageString = [[selectedTape valueForKey:@"message"]objectAtIndex:indexPath.row];
     vc.imageToken =  [[selectedTape valueForKey:@"image_token"]objectAtIndex:indexPath.row];
-    vc.tapeStatus = [[selectedTape valueForKey:@"status"]objectAtIndex:indexPath.row];
+    
     vc.selectedTapeSharedID =[[selectedTape valueForKey:@"shared_id"]objectAtIndex:indexPath.row];
-    NSLog(@"%@",vc.tapeStatus);
+    
     NSLog(@"%@",vc.selectedTapeID);
+    
+    
+    if (![[[selectedTape objectAtIndex:indexPath.row] valueForKey:@"saved"]boolValue]) {
         
         [self presentViewController:vc animated:YES completion:nil];
     }

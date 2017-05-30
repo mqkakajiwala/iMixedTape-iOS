@@ -22,7 +22,8 @@
 @property (strong,nonatomic) NSString *tapeOwnerNameString;
 @property (strong,nonatomic) NSString *selectedTapeID;
 @property (strong, nonatomic) IBOutlet TriLabelView *titleView;
-@property (strong,nonatomic) NSNumber *tapeStatus;
+@property (strong,nonatomic) NSNumber *myTapeStatus;
+@property (strong,nonatomic) NSNumber *sharedTapeStatus;
 @property(strong,nonatomic) NSString *selectedTapeSharedID;
 @property (strong, nonatomic) IBOutlet UIButton *acceptBtnOutlet;
 @property (strong, nonatomic) IBOutlet UIButton *rejectBtnOutlet;

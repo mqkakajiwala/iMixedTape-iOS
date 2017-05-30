@@ -23,6 +23,7 @@
 @synthesize isEmail;
 @synthesize songsAddedArray;
 @synthesize imageData;
+@synthesize isCloned;
 
 static CreateTapeModel *instance = nil;
 
@@ -55,6 +56,7 @@ static CreateTapeModel *instance = nil;
         self.emailOrMobile = @"";
         self.from = @"";
         self.isEmail = YES;
+        self.isCloned = NO;
         
         
 

@@ -132,8 +132,11 @@
                 triView.fontSize = 8;
                 
                 if ([[[[FetchTapesModel sharedInstance].myCretedTapesArray objectAtIndex:indexPath.row] valueForKey:@"saved"]boolValue]) {
-                    triView.viewColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
-                    triView.textColor = [UIColor colorWithRed:120.0/255.0 green:3.0/255.0 blue:10.0/255.0 alpha:0.7];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        triView.viewColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
+                        triView.textColor = [UIColor colorWithRed:120.0/255.0 green:3.0/255.0 blue:10.0/255.0 alpha:0.7];
+                    });
+                    
                 }else{
                     NSLog(@"%d",[[[[FetchTapesModel sharedInstance].myCretedTapesArray objectAtIndex:indexPath.row] valueForKey:@"share_tape_status"]intValue]);
                     
@@ -141,12 +144,15 @@
                         switch ([[[[FetchTapesModel sharedInstance].myCretedTapesArray objectAtIndex:indexPath.row] valueForKey:@"share_tape_status"]intValue]) {
                             case 0:
                                 triView.viewColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:255.0/255.0 alpha:0.7];
+                                triView.textColor = [UIColor whiteColor];
                                 break;
                             case 1:
                                 triView.viewColor = [UIColor colorWithRed:0.0/255.0 green:255.0/255.0 blue:0.0/255.0 alpha:0.7];
+                                triView.textColor = [UIColor whiteColor];
                                 break;
                             case 2:
                                 triView.viewColor = [UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.7];
+                                triView.textColor = [UIColor whiteColor];
                                 
                             default:
                                 break;
@@ -228,19 +234,20 @@
         selectedTape = [FetchTapesModel sharedInstance].myCretedTapesArray;
         vc.tapeOwnerNameString = @"";
         vc.selectedTapeID = [[selectedTape valueForKey:@"id"]objectAtIndex:indexPath.row];
+        vc.myTapeStatus = [[selectedTape valueForKey:@"share_tape_status"]objectAtIndex:indexPath.row];
     }else{
         selectedTape = [FetchTapesModel sharedInstance].sharedTapesArray;
         vc.tapeOwnerNameString = [[selectedTape valueForKey:@"full_name"]objectAtIndex:indexPath.row];
         vc.selectedTapeID = [[selectedTape valueForKey:@"imixed_tape_id"]objectAtIndex:indexPath.row];
+        vc.sharedTapeStatus = [[selectedTape valueForKey:@"status"]objectAtIndex:indexPath.row];
     }
     
     
     vc.tapeTitleString = [[selectedTape valueForKey:@"title"]objectAtIndex:indexPath.row];
     vc.tapeMessageString = [[selectedTape valueForKey:@"message"]objectAtIndex:indexPath.row];
     vc.imageToken =  [[selectedTape valueForKey:@"image_token"]objectAtIndex:indexPath.row];
-    vc.tapeStatus = [[selectedTape valueForKey:@"status"]objectAtIndex:indexPath.row];
     vc.selectedTapeSharedID =[[selectedTape valueForKey:@"shared_id"]objectAtIndex:indexPath.row];
-    NSLog(@"%@",vc.tapeStatus);
+    
     NSLog(@"%@",vc.selectedTapeID);
     
     NSLog(@"%c",[[[selectedTape objectAtIndex:indexPath.row]valueForKey:@"saved"]boolValue]);

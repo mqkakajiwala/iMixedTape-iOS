@@ -91,7 +91,9 @@
     }
     else{
         searchActive = NO;
-        [self.tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
     }
     
     
@@ -109,7 +111,7 @@
         
         if (ifAlbums) {
             for (MPMediaItem *rowItem  in mediaArray) {
-                NSComparisonResult result = [[rowItem valueForProperty:MPMediaItemPropertyAlbumTitle] compare:self.searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [self.searchBar.text length])];
+                NSComparisonResult result = [[rowItem valueForProperty:AVMetadataCommonKeyAlbumName] compare:self.searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [self.searchBar.text length])];
                 if (result == NSOrderedSame) {
                     NSLog(@"%@",rowItem);
                     if (![searchResultsArray containsObject:rowItem]) {
@@ -152,7 +154,9 @@
     }
     
         
-        [self.tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
         });
     
     
@@ -345,6 +349,8 @@
 
 - (IBAction)myTapesBtn:(UIButton *)sender
 {
+    self.searchBar.text = @"";
+    searchActive = NO;
     ifMusicLib = NO;
     
     [SharedHelper changeButtonBackgroundOnSelection:sender :self.myView];
@@ -368,7 +374,9 @@
             [SharedHelper emptyTableScreenText:@"Please Login To Create Tapes." Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
             
             
-            [self.tableView reloadData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
         });
     }
 }
@@ -387,12 +395,17 @@
             [SharedHelper emptyTableScreenText:@"" Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
         }
         
-        [self.tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [self.tableView reloadData];
+        });
+        
     }];
 }
 
 - (IBAction)albumsBtn:(UIButton *)sender
 {
+    self.searchBar.text = @"";
+    searchActive = NO;
     [SharedHelper changeButtonBackgroundOnSelection:sender :self.myView];
     query = [MPMediaQuery albumsQuery];
     mediaArray = [query collections].mutableCopy;
@@ -409,11 +422,14 @@
     
     
     
-    [self.tableView reloadData];
-}
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });}
 
 - (IBAction)songsBtn:(UIButton *)sender
 {
+    self.searchBar.text = @"";
+    searchActive = NO;
     [SharedHelper changeButtonBackgroundOnSelection:sender :self.myView];
     ifAlbums = NO;
     ifMusicLib = YES;
@@ -443,17 +459,23 @@
     }
     
     
-    [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 - (IBAction)streamingBtn:(UIButton *)sender
 {
+    self.searchBar.text = @"";
+    searchActive = NO;
     [SharedHelper changeButtonBackgroundOnSelection:sender :self.myView];
     ifMusicLib = NO;
     ifMyTapes = NO;
     mediaArray = [[NSMutableArray alloc]init];
     [SharedHelper emptyTableScreenText:@"Streaming is not available for now." Array:mediaArray tableView:self.tableView view:self.view];
-    [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 #pragma mark - table IBActions

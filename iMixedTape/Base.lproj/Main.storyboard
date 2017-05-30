@@ -1165,12 +1165,32 @@
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oC7-zs-geT">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oC7-zs-geT">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="oC7-zs-geT" secondAttribute="height" multiplier="1:1" id="3zc-1u-PO9"/>
                                                     </constraints>
                                                 </imageView>
+                                                <view clipsSubviews="YES" alpha="0.80000000000000004" tag="1000" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hps-7O-pzP" customClass="TriLabelView" customModule="iMixedTape">
+                                                    <rect key="frame" x="0.0" y="-0.5" width="150" height="150"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="lengthPercentage">
+                                                            <real key="value" value="50"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="viewColor">
+                                                            <color key="value" red="0.47058823529999999" green="0.01176470588" blue="0.039215686270000001" alpha="0.90879173800000002" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                            <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="positionName" value="topleft"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="labelText" value="Unknown "/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
+                                                            <real key="value" value="16"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                                 <view alpha="0.80000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wek-dQ-4E6">
                                                     <rect key="frame" x="0.0" y="125" width="150" height="25"/>
                                                     <subviews>
@@ -1189,26 +1209,6 @@
                                                         <constraint firstAttribute="bottom" secondItem="hEe-Mx-qB9" secondAttribute="bottom" id="jYR-Ty-Xbt"/>
                                                         <constraint firstAttribute="trailing" secondItem="hEe-Mx-qB9" secondAttribute="trailing" id="wqn-Lf-dX1"/>
                                                     </constraints>
-                                                </view>
-                                                <view alpha="0.80000000000000004" tag="1000" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hps-7O-pzP" customClass="TriLabelView" customModule="iMixedTape">
-                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="lengthPercentage">
-                                                            <real key="value" value="50"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="viewColor">
-                                                            <color key="value" red="0.47058823529999999" green="0.01176470588" blue="0.039215686270000001" alpha="0.90879173800000002" colorSpace="calibratedRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                                                            <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="positionName" value="topleft"/>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="labelText" value="Unknown "/>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
-                                                            <real key="value" value="16"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
                                         </view>
@@ -1271,12 +1271,32 @@
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qVU-sY-zyp">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qVU-sY-zyp">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="qVU-sY-zyp" secondAttribute="height" multiplier="1:1" id="fJO-Lz-6xg"/>
                                                     </constraints>
                                                 </imageView>
+                                                <view alpha="0.80000000000000004" tag="1000" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="K2W-wx-Ixe" customClass="TriLabelView" customModule="iMixedTape">
+                                                    <rect key="frame" x="0.0" y="-0.5" width="150" height="150"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="lengthPercentage">
+                                                            <real key="value" value="50"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="viewColor">
+                                                            <color key="value" red="0.47058823529999999" green="0.01176470588" blue="0.039215686270000001" alpha="0.90879173800000002" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                            <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="positionName" value="topleft"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="labelText" value="Unknown"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
+                                                            <real key="value" value="16"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                                 <view alpha="0.80000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3c9-rm-KC5">
                                                     <rect key="frame" x="0.0" y="125" width="150" height="25"/>
                                                     <subviews>
@@ -1295,26 +1315,6 @@
                                                         <constraint firstItem="cGr-TS-LVt" firstAttribute="leading" secondItem="3c9-rm-KC5" secondAttribute="leading" id="MTE-01-DYw"/>
                                                         <constraint firstAttribute="trailing" secondItem="cGr-TS-LVt" secondAttribute="trailing" id="j51-rm-oHy"/>
                                                     </constraints>
-                                                </view>
-                                                <view alpha="0.80000000000000004" tag="1000" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K2W-wx-Ixe" customClass="TriLabelView" customModule="iMixedTape">
-                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="lengthPercentage">
-                                                            <real key="value" value="50"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="viewColor">
-                                                            <color key="value" red="0.47058823529999999" green="0.01176470588" blue="0.039215686270000001" alpha="0.90879173800000002" colorSpace="calibratedRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                                                            <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="positionName" value="topleft"/>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="labelText" value="Unknown"/>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
-                                                            <real key="value" value="16"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
                                         </view>
@@ -1606,8 +1606,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="280"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ts1-qg-w5O">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ts1-qg-w5O">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="280"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <view alpha="0.80000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wpg-yv-cvq">
                                             <rect key="frame" x="0.0" y="240" width="320" height="40"/>
@@ -4204,7 +4207,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgicon" translatesAutoresizingMaskIntoConstraints="NO" id="oIB-Zv-qxu">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgicon" translatesAutoresizingMaskIntoConstraints="NO" id="oIB-Zv-qxu">
                                 <rect key="frame" x="22" y="20" width="277" height="204"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="oIB-Zv-qxu" secondAttribute="height" multiplier="1:1" constant="73" id="tOg-ev-Enm"/>
@@ -4213,7 +4216,7 @@
                             </imageView>
                             <view alpha="0.80000001192092896" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="TAW-fL-WuW" customClass="TriLabelView" customModule="iMixedTape" customModuleProvider="target">
                                 <rect key="frame" x="22" y="20" width="277" height="204"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="positionName" value="topleft"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="viewColor">

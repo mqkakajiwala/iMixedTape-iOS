@@ -31,18 +31,53 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    if (![self.tapeStatus isKindOfClass:[NSNull class]]) {
-        if ([self.tapeStatus isEqual:@1]) {
+    if (self.sharedTapeStatus != nil) {
+        if ([self.sharedTapeStatus isEqual:@1]) {
             self.acceptBtnOutlet.hidden = YES;
             self.rejectBtnOutlet.hidden = YES;
+            
+            
+            
         }else{
             self.acceptBtnOutlet.hidden = NO;
             self.rejectBtnOutlet.hidden = NO;
         }
+        
+        switch (self.sharedTapeStatus.intValue) {
+            case 0:
+                self.titleView.viewColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:255.0/255.0 alpha:0.7];
+                break;
+            case 1:
+                self.titleView.viewColor = [UIColor colorWithRed:0.0/255.0 green:255.0/255.0 blue:0.0/255.0 alpha:0.7];
+                break;
+            case 2:
+                self.titleView.viewColor = [UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.7];
+                
+            default:
+                break;
+        }
+        
     }else{
         self.acceptBtnOutlet.hidden = YES;
         self.rejectBtnOutlet.hidden = YES;
+        
+        switch (self.myTapeStatus.intValue) {
+            case 0:
+                self.titleView.viewColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:255.0/255.0 alpha:0.7];
+                break;
+            case 1:
+                self.titleView.viewColor = [UIColor colorWithRed:0.0/255.0 green:255.0/255.0 blue:0.0/255.0 alpha:0.7];
+                break;
+            case 2:
+                self.titleView.viewColor = [UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.7];
+                
+            default:
+                break;
+        }
+
     }
+    
+    
     
     if (![self.imageToken isKindOfClass:[NSNull class]]) {
         
@@ -81,6 +116,9 @@
         [titleArr addObject:[item valueForProperty:MPMediaItemPropertyTitle]];
     }
     NSLog(@"%@",titleArr);
+    
+
+
     
     
     [self webServiceForTracksOfTapes];
@@ -317,6 +355,7 @@
     tapeModel.title = self.tapeTitleString;
     tapeModel.uploadImageAccessToken = self.imageToken;
     tapeModel.message = self.tapeMessageString;
+    tapeModel.isCloned = YES;
     
     NSLog(@"%@",songsArray);
     for (int i = 0; i<songsArray.count; i++) {
