@@ -249,21 +249,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="14e-LJ-lBN">
                                 <rect key="frame" x="105" y="340" width="163" height="106"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x5Z-ez-DMj">
-                                        <rect key="frame" x="0.0" y="57" width="49" height="49"/>
-                                        <state key="normal" image="insta"/>
+                                    <button opaque="NO" tag="501" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isS-qg-5ZC">
+                                        <rect key="frame" x="0.0" y="0.0" width="49" height="49"/>
+                                        <state key="normal" image="fb"/>
                                         <connections>
-                                            <action selector="tellFriendsButton:" destination="5kR-LQ-V5c" eventType="touchUpInside" id="mVD-7e-uoz"/>
+                                            <action selector="tellFriendsButton:" destination="5kR-LQ-V5c" eventType="touchUpInside" id="hds-O0-XcQ"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sem-Jn-FWQ">
-                                        <rect key="frame" x="114" y="57" width="49" height="49"/>
-                                        <state key="normal" image="youtube"/>
-                                        <connections>
-                                            <action selector="tellFriendsButton:" destination="5kR-LQ-V5c" eventType="touchUpInside" id="6nj-Gz-nYr"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yFm-7m-L6W">
+                                    <button opaque="NO" tag="502" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yFm-7m-L6W">
                                         <rect key="frame" x="57" y="0.0" width="49" height="49"/>
                                         <state key="normal" image="twitter"/>
                                         <connections>
@@ -277,18 +270,25 @@
                                             <action selector="tellFriendsButton:" destination="5kR-LQ-V5c" eventType="touchUpInside" id="lms-j6-8nC"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efC-4I-s1y">
+                                    <button opaque="NO" tag="503" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x5Z-ez-DMj">
+                                        <rect key="frame" x="0.0" y="57" width="49" height="49"/>
+                                        <state key="normal" image="insta"/>
+                                        <connections>
+                                            <action selector="tellFriendsButton:" destination="5kR-LQ-V5c" eventType="touchUpInside" id="mVD-7e-uoz"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sem-Jn-FWQ">
+                                        <rect key="frame" x="114" y="57" width="49" height="49"/>
+                                        <state key="normal" image="youtube"/>
+                                        <connections>
+                                            <action selector="tellFriendsButton:" destination="5kR-LQ-V5c" eventType="touchUpInside" id="6nj-Gz-nYr"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="504" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efC-4I-s1y">
                                         <rect key="frame" x="57" y="57" width="49" height="49"/>
                                         <state key="normal" image="pinterest"/>
                                         <connections>
                                             <action selector="tellFriendsButton:" destination="5kR-LQ-V5c" eventType="touchUpInside" id="uwN-wg-TGQ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isS-qg-5ZC">
-                                        <rect key="frame" x="0.0" y="0.0" width="49" height="49"/>
-                                        <state key="normal" image="fb"/>
-                                        <connections>
-                                            <action selector="tellFriendsButton:" destination="5kR-LQ-V5c" eventType="touchUpInside" id="hds-O0-XcQ"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -316,8 +316,8 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
-                                        <exclude reference="sem-Jn-FWQ"/>
                                         <exclude reference="jpY-FO-Xbs"/>
+                                        <exclude reference="sem-Jn-FWQ"/>
                                     </mask>
                                 </variation>
                             </view>

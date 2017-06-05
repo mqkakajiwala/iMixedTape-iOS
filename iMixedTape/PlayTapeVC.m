@@ -49,7 +49,7 @@
                 [self.playButtonOutlet setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
             }
             
-            self.songAlbumArtImageView.image = [self getAlbumArtworkWithSize:self.songAlbumArtImageView.frame.size :self.currentSongStr];
+            self.songAlbumArtImageView.image = self.albumArtImage;//[self getAlbumArtworkWithSize:self.songAlbumArtImageView.frame.size :self.currentSongStr];
             self.currentSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"%@-%@",self.artistStr,self.currentSongStr] charactersToLimit:30];
             self.tapeMessageLabel.text = self.tapeMessageStr;
             self.songTimerLabel.text = @"00:00/00:00";

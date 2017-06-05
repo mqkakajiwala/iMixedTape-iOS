@@ -18,6 +18,7 @@
 @property (strong,nonatomic) NSString *tapeMessageStr;
 @property (strong, nonatomic) IBOutlet UILabel *tapeMessageLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *songAlbumArtImageView;
+@property (strong,nonatomic) UIImage *albumArtImage;
 @property (strong,nonatomic) NSString *nextSongStr;
 @property (strong, nonatomic) IBOutlet UILabel *nextSongLabel;
 @property (strong,nonatomic) NSString *currentSongStr;

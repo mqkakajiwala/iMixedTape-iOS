@@ -74,37 +74,37 @@
             default:
                 break;
         }
-
+        
     }
     
     
     
     if (![self.imageToken isKindOfClass:[NSNull class]]) {
         
-    
-    [self.tapeImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",self.imageToken,100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+        
+        [self.tapeImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",self.imageToken,100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
         
     }else{
         self.tapeImage.contentMode = UIViewContentModeScaleAspectFit;
         self.tapeImage.image = [UIImage imageNamed:@"logoIconFull"];
     }
     
- //   dispatch_async(dispatch_get_main_queue(), ^{
+    //   dispatch_async(dispatch_get_main_queue(), ^{
     NSInteger charLength = self.tapeTitleString.length;
     
     charLength = (charLength > 6 && charLength < 36) ? round(self.titleView.layer.frame.size.width / charLength) + 2 : charLength;
     
     
     
-        NSLog(@"%@",[SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:5]);
-        self.titleView.labelText =[SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:(int)charLength];
-        
-        self.tapeMessage.text = self.tapeMessageString;
-     if (![self.tapeOwnerNameString isKindOfClass:[NSNull class]]) {
+    NSLog(@"%@",[SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:5]);
+    self.titleView.labelText =[SharedHelper truncatedLabelString:self.tapeTitleString charactersToLimit:(int)charLength];
+    
+    self.tapeMessage.text = self.tapeMessageString;
+    if (![self.tapeOwnerNameString isKindOfClass:[NSNull class]]) {
         self.tapeOwnerNameLabel.text = self.tapeOwnerNameString;
-     }
-        
-   // });
+    }
+    
+    // });
     
     songsArray = [[NSMutableArray alloc]init];
     localSongsArray = [[NSMutableArray alloc]init];
@@ -117,8 +117,8 @@
     }
     NSLog(@"%@",titleArr);
     
-
-
+    
+    
     
     
     [self webServiceForTracksOfTapes];
@@ -167,7 +167,7 @@
         cell.previewBuyView.hidden = NO;
     }
     
-
+    
     
     return cell;
 }
@@ -184,15 +184,15 @@
     
     
     //Everything happens with unwind segue from storyboard ..
- //   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-   //     [self performSegueWithIdentifier:@"unwindToPlayTape" sender:sender];
+    //   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //     [self performSegueWithIdentifier:@"unwindToPlayTape" sender:sender];
     //});
     
     PlayTapeVC *playVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PLAYTAPEVC"];
     
     
     [self presentViewController:playVC animated:YES completion:nil];
-     [self playClickedSong:playVC sender:sender];
+    [self playClickedSong:playVC sender:sender];
     
     
     
@@ -202,20 +202,20 @@
 
 -(void)previewButtonPressed :(UIButton *)sender
 {
-   [PreviewBuyModel iTunesAPiForPreviewBuyForSongID:[[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row] viewController:self callback:^(id responseObject) {
-       
-       NSLog(@"%@",[[[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject]);
-       NSLog(@"%u",[[responseObject objectForKey:@"results"]count]);
-       
-       if ([ [[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject] != nil) {
-           
-           
-           [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject]]];
-       }else{
-           [SharedHelper AlertControllerWithTitle:@"" message:@"Preview for this song is unavailable" viewController:self];
-       }
-   }];
-
+    [PreviewBuyModel iTunesAPiForPreviewBuyForSongID:[[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row] viewController:self callback:^(id responseObject) {
+        
+        NSLog(@"%@",[[[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject]);
+        NSLog(@"%u",[[responseObject objectForKey:@"results"]count]);
+        
+        if ([ [[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject] != nil) {
+            
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject]]];
+        }else{
+            [SharedHelper AlertControllerWithTitle:@"" message:@"Preview for this song is unavailable" viewController:self];
+        }
+    }];
+    
 }
 
 -(void)buyButtonPressed :(UIButton *)sender
@@ -227,11 +227,11 @@
             
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[responseObject objectForKey:@"results"]valueForKey:@"trackViewUrl"]firstObject]]];
         }else{
-           [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[responseObject objectForKey:@"results"]valueForKey:@"artistLinkUrl"]firstObject]]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[[responseObject objectForKey:@"results"]valueForKey:@"artistLinkUrl"]firstObject]]];
         }
-
         
-        }];
+        
+    }];
 }
 
 //-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -239,83 +239,84 @@
 -(void)playClickedSong : (PlayTapeVC *)vc sender:(id)sender
 {
     //if ([segue.identifier isEqualToString:@"segueToPlayTapeVC"]) {
-        
     
     
-   // if ([segue.destinationViewController isKindOfClass:[PlayTapeVC class]]) {
-        //PlayTapeVC *vc = segue.destinationViewController;
-        NSLog(@"%ld",(long)[self selectedIndexOfSender:sender].row);
-        NSLog(@"%@",[songsArray valueForKey:@"title"]);
-        vc.currentSongStr = [[songsArray valueForKey:@"title"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
-        vc.tapeMessageStr = self.tapeMessageString;
-        vc.artistStr = [[songsArray valueForKey:@"artist"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
-        vc.songID = [[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
-        vc.tapeTitleStr = self.tapeTitleString;
+    
+    // if ([segue.destinationViewController isKindOfClass:[PlayTapeVC class]]) {
+    //PlayTapeVC *vc = segue.destinationViewController;
+    NSLog(@"%ld",(long)[self selectedIndexOfSender:sender].row);
+    NSLog(@"%@",[songsArray valueForKey:@"title"]);
+    vc.currentSongStr = [[songsArray valueForKey:@"title"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
+    vc.tapeMessageStr = self.tapeMessageString;
+    vc.artistStr = [[songsArray valueForKey:@"artist"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
+    vc.songID = [[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
+    vc.tapeTitleStr = self.tapeTitleString;
+    vc.albumArtImage = self.tapeImage.image;
+    
+    
+    
+    //play selected song..
+    MPMediaQuery *selectedSongQuery = [MPMediaQuery songsQuery];
+    
+    MPMediaPropertyPredicate *albumPredicate = [MPMediaPropertyPredicate predicateWithValue: [[songsArray valueForKey:@"title"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row] forProperty: MPMediaItemPropertyTitle];
+    
+    [selectedSongQuery addFilterPredicate:albumPredicate];
+    NSArray *songs = [selectedSongQuery items];
+    NSArray *tempArr = [[NSArray alloc]init];
+    NSMutableArray *tapeSongsArr = [[NSMutableArray alloc]init];
+    
+    MPMediaItem *selectedItem = [songs objectAtIndex:0];
+    MPMusicPlayerController *musicPlayer = [MPMusicPlayerController systemMusicPlayer];
+    
+    //get all the songs from local library that are included in the mixed tapes..
+    MPMediaQuery *allSongsQuery = [MPMediaQuery songsQuery];
+    for (int i=0; i<[[songsArray valueForKey:@"title"]count]; i++) {
+        NSLog(@"%@",[[songsArray valueForKey:@"title"]objectAtIndex:i]);
         
+        MPMediaPropertyPredicate *tapePredicate = [MPMediaPropertyPredicate predicateWithValue:[[songsArray valueForKey:@"title"]objectAtIndex:i] forProperty:MPMediaItemPropertyTitle comparisonType:MPMediaPredicateComparisonEqualTo];
         
+        [allSongsQuery addFilterPredicate:tapePredicate];
         
-        //play selected song..
-        MPMediaQuery *selectedSongQuery = [MPMediaQuery songsQuery];
-        
-        MPMediaPropertyPredicate *albumPredicate = [MPMediaPropertyPredicate predicateWithValue: [[songsArray valueForKey:@"title"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row] forProperty: MPMediaItemPropertyTitle];
-        
-        [selectedSongQuery addFilterPredicate:albumPredicate];
-        NSArray *songs = [selectedSongQuery items];
-        NSArray *tempArr = [[NSArray alloc]init];
-        NSMutableArray *tapeSongsArr = [[NSMutableArray alloc]init];
-        
-        MPMediaItem *selectedItem = [songs objectAtIndex:0];
-        MPMusicPlayerController *musicPlayer = [MPMusicPlayerController systemMusicPlayer];
-        
-        //get all the songs from local library that are included in the mixed tapes..
-        MPMediaQuery *allSongsQuery = [MPMediaQuery songsQuery];
-        for (int i=0; i<[[songsArray valueForKey:@"title"]count]; i++) {
-            NSLog(@"%@",[[songsArray valueForKey:@"title"]objectAtIndex:i]);
-            
-            MPMediaPropertyPredicate *tapePredicate = [MPMediaPropertyPredicate predicateWithValue:[[songsArray valueForKey:@"title"]objectAtIndex:i] forProperty:MPMediaItemPropertyTitle comparisonType:MPMediaPredicateComparisonEqualTo];
-            
-            [allSongsQuery addFilterPredicate:tapePredicate];
-            
-            tempArr = [allSongsQuery items];
-            for (MPMediaItem *item in tempArr) {
-                [tapeSongsArr addObject:item];
-            }
-            
-            allSongsQuery = [MPMediaQuery songsQuery];
-            
+        tempArr = [allSongsQuery items];
+        for (MPMediaItem *item in tempArr) {
+            [tapeSongsArr addObject:item];
         }
         
-        NSLog(@"%@",tapeSongsArr);
-        MPMediaItemCollection *tapeCollection = [[MPMediaItemCollection alloc]initWithItems:tapeSongsArr];
+        allSongsQuery = [MPMediaQuery songsQuery];
         
-        [musicPlayer setQueueWithItemCollection:tapeCollection];
-        
-        [musicPlayer setNowPlayingItem:selectedItem];
-        
-        [musicPlayer play];
-        
-        
-        int index = (int)[self selectedIndexOfSender:sender].row +1;
-        MPMediaItem *nextItem;
-        if (index < tapeSongsArr.count) {
-            nextItem = [tapeSongsArr objectAtIndex:index];
-            vc.nextSongMPMediaItem = nextItem;
-            vc.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
-        }else{
-            nextItem = [tapeSongsArr objectAtIndex:0];
-            vc.nextSongMPMediaItem = nextItem;
-            vc.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
-        }
-        
-        vc.queueSongArray = tapeSongsArr;
-        
+    }
+    
+    NSLog(@"%@",tapeSongsArr);
+    MPMediaItemCollection *tapeCollection = [[MPMediaItemCollection alloc]initWithItems:tapeSongsArr];
+    
+    [musicPlayer setQueueWithItemCollection:tapeCollection];
+    
+    [musicPlayer setNowPlayingItem:selectedItem];
+    
+    [musicPlayer play];
+    
+    
+    int index = (int)[self selectedIndexOfSender:sender].row +1;
+    MPMediaItem *nextItem;
+    if (index < tapeSongsArr.count) {
+        nextItem = [tapeSongsArr objectAtIndex:index];
+        vc.nextSongMPMediaItem = nextItem;
+        vc.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
+    }else{
+        nextItem = [tapeSongsArr objectAtIndex:0];
+        vc.nextSongMPMediaItem = nextItem;
+        vc.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
+    }
+    
+    vc.queueSongArray = tapeSongsArr;
+    
     //}
 }
 
 -(NSIndexPath *)selectedIndexOfSender :(id)sender
 {
     CGPoint touchLocation = [sender convertPoint:CGPointZero toView:self.tableView];
-   NSIndexPath *selectedIndex = [self.tableView indexPathForRowAtPoint:touchLocation];
+    NSIndexPath *selectedIndex = [self.tableView indexPathForRowAtPoint:touchLocation];
     NSLog(@"%ld",(long)selectedIndex.row);
     
     return selectedIndex;
@@ -328,8 +329,8 @@
             self.acceptBtnOutlet.hidden = YES;
             self.rejectBtnOutlet.hidden = YES;
             [self getRefreshedTapes];
-//            int badgeCount = [[NSUserDefaults standardUserDefaults]integerForKey:key_appBadgeCount];
-//            [UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount - 1;
+            //            int badgeCount = [[NSUserDefaults standardUserDefaults]integerForKey:key_appBadgeCount];
+            //            [UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount - 1;
         }
         
     }];
@@ -341,7 +342,7 @@
         NSLog(@"%@",callback);
         if ([[callback[@"data"]objectForKey:@"status"] isEqualToString:@"2"]) {
             [self getRefreshedTapes];
-           [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
         
     }];

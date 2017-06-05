@@ -13,6 +13,7 @@
 		451ECF971DF88BBD0026A8FF /* AboutUs.m in Sources */ = {isa = PBXBuildFile; fileRef = 451ECF961DF88BBD0026A8FF /* AboutUs.m */; };
 		45212F881E0FB93D00059D7E /* CreateStepThreeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45212F871E0FB93D00059D7E /* CreateStepThreeVC.m */; };
 		4521745F1E372DA900E6343C /* FetchTracksModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4521745E1E372DA900E6343C /* FetchTracksModel.m */; };
+		452D398F1EE55C48006780B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 452D398E1EE55C48006780B0 /* GoogleService-Info.plist */; };
 		453C50C51E461A350037376A /* FaqView.m in Sources */ = {isa = PBXBuildFile; fileRef = 453C50C41E461A350037376A /* FaqView.m */; };
 		45434E8D1E3E407B00997D8E /* TriLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45434E8C1E3E407B00997D8E /* TriLabelView.swift */; };
 		4543B8671E3B870E0061A798 /* ResetPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4543B8661E3B870E0061A798 /* ResetPasswordVC.m */; };
@@ -79,6 +80,7 @@
 		4521745A1E33DCBA00E6343C /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		4521745D1E372DA900E6343C /* FetchTracksModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchTracksModel.h; sourceTree = "<group>"; };
 		4521745E1E372DA900E6343C /* FetchTracksModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchTracksModel.m; sourceTree = "<group>"; };
+		452D398E1EE55C48006780B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		453C50C31E461A350037376A /* FaqView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaqView.h; sourceTree = "<group>"; };
 		453C50C41E461A350037376A /* FaqView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaqView.m; sourceTree = "<group>"; };
 		45434E8B1E3E407A00997D8E /* iMixedTape-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iMixedTape-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 		456882871DB5475600EAE837 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				452D398E1EE55C48006780B0 /* GoogleService-Info.plist */,
 				4547D1D91E5AC96500AC4A4F /* savedTapes.sqlite */,
 				45434E8C1E3E407B00997D8E /* TriLabelView.swift */,
 				45C22CF31E1D06B700A2A4E2 /* PrefixHeader */,
@@ -580,6 +583,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45D74B951E0AF52100F7775A /* HomeListCell.xib in Resources */,
+				452D398F1EE55C48006780B0 /* GoogleService-Info.plist in Resources */,
 				4547D1DA1E5AC96500AC4A4F /* savedTapes.sqlite in Resources */,
 				456882971DB5475600EAE837 /* LaunchScreen.storyboard in Resources */,
 				459D89D51DD1B1FE005B052B /* images (11).jpeg in Resources */,

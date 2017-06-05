@@ -76,6 +76,7 @@
     [GIDSignIn sharedInstance].delegate = self;
     
     
+    
     [self initialSettings];
     
     

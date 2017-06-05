@@ -46,6 +46,15 @@
 {
     [super viewWillAppear:animated];
     
+     MPMusicPlayerController *musicPlayer = [MPMusicPlayerController systemMusicPlayer];
+    
+    if (musicPlayer.playbackState == MPMusicPlaybackStatePlaying) {
+        PlayTapeVC *playVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PLAYTAPEVC"];
+        
+        
+        [self presentViewController:playVC animated:YES completion:nil];
+    }
+    
     UserModel *userModel = [[UserModel alloc]init];
     
     if (userModel.firstName != nil) {
