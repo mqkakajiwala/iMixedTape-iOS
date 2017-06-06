@@ -78,7 +78,7 @@
 -(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     searchActive = YES;
-
+    
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -91,8 +91,12 @@
     }
     else{
         searchActive = NO;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (searchResultsArray.count <= 0) {
+                searchResultsArray = mediaArray;
+                [self.tableView reloadData];
+            }
+            
         });
     }
     
@@ -104,63 +108,95 @@
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-    
-    
-    if (ifMusicLib) {
         
         
-        if (ifAlbums) {
-            for (MPMediaItem *rowItem  in mediaArray) {
-                NSComparisonResult result = [[rowItem valueForProperty:AVMetadataCommonKeyAlbumName] compare:self.searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [self.searchBar.text length])];
-                if (result == NSOrderedSame) {
-                    NSLog(@"%@",rowItem);
-                    if (![searchResultsArray containsObject:rowItem]) {
-                        [searchResultsArray addObject:rowItem];
-                    }
-                }
-            }
+        if (ifMusicLib) {
             
-        }else{
-            for (MPMediaItem *rowItem  in mediaArray) {
-                NSComparisonResult result = [[rowItem valueForProperty:MPMediaItemPropertyTitle] compare:self.searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [self.searchBar.text length])];
-                if (result == NSOrderedSame) {
-                    NSLog(@"%@",rowItem);
-                    if (![searchResultsArray containsObject:rowItem]) {
-                        [searchResultsArray addObject:rowItem];
+            
+            if (ifAlbums) {
+//                for (MPMediaItem *rowItem  in mediaArray) {
+//                    NSComparisonResult result = [[rowItem valueForProperty:AVMetadataCommonKeyAlbumName] compare:self.searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [self.searchBar.text length])];
+//                    if (result == NSOrderedSame) {
+//                        NSLog(@"%@",rowItem);
+//                        if (![searchResultsArray containsObject:rowItem]) {
+//                            [searchResultsArray addObject:rowItem];
+//                        }
+//                    }
+//                }
+                
+                MPMediaQuery *searchQuery = [[MPMediaQuery alloc] init];
+                NSPredicate *test = [NSPredicate predicateWithFormat:@"albumTitle contains[cd] %@",self.searchBar.text];
+                NSArray *filteredArray = [[searchQuery items] filteredArrayUsingPredicate:test];
+                
+                NSLog(@"%@",filteredArray);
+                for (MPMediaItem *song in filteredArray)
+                {
+                    if (![searchResultsArray containsObject:song]) {
+                        [searchResultsArray addObject:song];
+                        NSLog(@"%@",searchResultsArray);
                     }
-                    
-                }
-            }
-        }
-    }else {
-        
-        for (NSDictionary *dict  in mediaArray) {
-            NSComparisonResult result = [[dict valueForKey:@"message"] compare:self.searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [self.searchBar.text length])];
-            if (result == NSOrderedSame) {
-                NSLog(@"%@",dict);
-                if (![searchResultsArray containsObject:dict]) {
-                    [searchResultsArray addObject:dict];
                 }
                 
+                
+            }else{
+//                for (MPMediaItem *rowItem  in mediaArray) {
+                    //                NSComparisonResult result = [[rowItem valueForProperty:MPMediaItemPropertyTitle] compare:self.searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [self.searchBar.text length])];
+                    //                if (result == NSOrderedSame) {
+                    //                    NSLog(@"%@",rowItem);
+                    //                    if (![searchResultsArray containsObject:rowItem]) {
+                    //                        [searchResultsArray addObject:rowItem];
+                    //                    }
+                    //
+                    //                }
+                    
+                MPMediaQuery *searchQuery = [[MPMediaQuery alloc] init];
+                NSPredicate *test = [NSPredicate predicateWithFormat:@"title contains[cd] %@", self.searchBar.text];
+                NSArray *filteredArray = [[searchQuery items] filteredArrayUsingPredicate:test];
+                
+                NSLog(@"%@",filteredArray);
+                for (MPMediaItem *song in filteredArray)
+                {
+                    if (![searchResultsArray containsObject:song]) {
+                    [searchResultsArray addObject:song];
+                    NSLog(@"%@",searchResultsArray);
+                    }
+                }
+                
+//                }
             }
+        }else {
+//
+//            for (NSDictionary *dict  in mediaArray) {
+//                NSComparisonResult result = [[dict valueForKey:@"message"] compare:self.searchBar.text options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [self.searchBar.text length])];
+//                if (result == NSOrderedSame) {
+//                    NSLog(@"%@",dict);
+//                    if (![searchResultsArray containsObject:dict]) {
+//                        [searchResultsArray addObject:dict];
+//                    }
+//
+//                }
+//            }
+            
+            NSPredicate *test = [NSPredicate predicateWithFormat:@"message contains[cd] %@", self.searchBar.text];
+            
+             searchResultsArray = [mediaArray filteredArrayUsingPredicate:test].mutableCopy;
+            
+            
         }
         
-        
-        //            NSPredicate *resultPredicate = [NSPredicate
-        //                                            predicateWithFormat:@"SELF contains[cd] %@",
-        //                                            searchText];
-        //
-        //            mediaArray = [mediaArray filteredArrayUsingPredicate:resultPredicate].mutableCopy;
-    }
-    
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
         });
-        });
+    });
     
     
     
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -396,7 +432,7 @@
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-          [self.tableView reloadData];
+            [self.tableView reloadData];
         });
         
     }];
@@ -441,7 +477,7 @@
     if (mediaArray.count == 0) {
         [SharedHelper emptyTableScreenText:@"You have no songs to show." Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
     }else {
-         [SharedHelper emptyTableScreenText:@"" Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
+        [SharedHelper emptyTableScreenText:@"" Array:mediaArray.mutableCopy tableView:self.tableView view:self.myView];
     }
     
     
@@ -551,7 +587,7 @@
         
         [searchResultsArray removeObjectAtIndex:selectedIndex.row];
         [self.tableView deleteRowsAtIndexPaths:@[selectedIndex] withRowAnimation:UITableViewRowAnimationLeft];
-
+        
     }else {
         NSLog(@"%@",mediaArray[selectedIndex.row]);
         
@@ -617,7 +653,7 @@
         
         [mediaArray removeObjectAtIndex:selectedIndex.row];
         [self.tableView deleteRowsAtIndexPaths:@[selectedIndex] withRowAnimation:UITableViewRowAnimationLeft];
-
+        
     }
     
 }

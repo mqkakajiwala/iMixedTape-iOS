@@ -210,7 +210,7 @@
         [SharedHelper AlertControllerWithTitle:@"" message:@"Please add atleast 1 song to the mixedtape." viewController:self];
     }
     else if (!tapeModel.isEmail) {
-        NSLog(@"%d",tapeModel.emailOrMobile.length);
+        NSLog(@"%lu",(unsigned long)tapeModel.emailOrMobile.length);
         if (tapeModel.emailOrMobile.length < 10) {
             [SharedHelper AlertControllerWithTitle:@"" message:@"Phone number should contain atleast 10 digits." viewController:self];
         }else {

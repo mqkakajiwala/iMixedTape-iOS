@@ -35,6 +35,7 @@
 @property (strong,nonatomic) NSString *tapeTitleStr;
 @property (strong, nonatomic) IBOutlet GADBannerView *adBannerView;
 @property (strong,nonatomic) NSArray *queueSongArray;
+@property (strong,nonatomic) NSString *imgToken;
 
 
 

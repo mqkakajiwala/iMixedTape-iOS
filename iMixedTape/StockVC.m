@@ -41,7 +41,8 @@
     
     
     UIImageView *stockImages = (UIImageView *)[cell viewWithTag:1];
-    stockImages.image = [UIImage imageNamed:stockImagesArray[indexPath.row]];
+     stockImages.image = [UIImage imageNamed:stockImagesArray[indexPath.row]];
+    
     
     return cell;
 }

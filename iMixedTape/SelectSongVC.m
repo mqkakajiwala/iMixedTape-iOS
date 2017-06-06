@@ -234,16 +234,11 @@
     }];
 }
 
-//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+
 
 -(void)playClickedSong : (PlayTapeVC *)vc sender:(id)sender
 {
-    //if ([segue.identifier isEqualToString:@"segueToPlayTapeVC"]) {
     
-    
-    
-    // if ([segue.destinationViewController isKindOfClass:[PlayTapeVC class]]) {
-    //PlayTapeVC *vc = segue.destinationViewController;
     NSLog(@"%ld",(long)[self selectedIndexOfSender:sender].row);
     NSLog(@"%@",[songsArray valueForKey:@"title"]);
     vc.currentSongStr = [[songsArray valueForKey:@"title"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
@@ -251,7 +246,7 @@
     vc.artistStr = [[songsArray valueForKey:@"artist"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
     vc.songID = [[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
     vc.tapeTitleStr = self.tapeTitleString;
-    vc.albumArtImage = self.tapeImage.image;
+    vc.imgToken = self.imageToken;
     
     
     

@@ -49,7 +49,18 @@
                 [self.playButtonOutlet setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
             }
             
-            self.songAlbumArtImageView.image = self.albumArtImage;//[self getAlbumArtworkWithSize:self.songAlbumArtImageView.frame.size :self.currentSongStr];
+//            self.songAlbumArtImageView.image = self.albumArtImage;//[self getAlbumArtworkWithSize:self.songAlbumArtImageView.frame.size :self.currentSongStr];
+            if (![self.imgToken isKindOfClass:[NSNull class]]) {
+                
+                
+                [self.songAlbumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",self.imgToken,100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+                
+            }else{
+                self.songAlbumArtImageView.contentMode = UIViewContentModeScaleAspectFit;
+                self.songAlbumArtImageView.image = [UIImage imageNamed:@"logoIconFull"];
+            }
+
+            
             self.currentSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"%@-%@",self.artistStr,self.currentSongStr] charactersToLimit:30];
             self.tapeMessageLabel.text = self.tapeMessageStr;
             self.songTimerLabel.text = @"00:00/00:00";
@@ -199,11 +210,11 @@
         MPMediaItemArtwork *artwork = [currentItem valueForProperty: MPMediaItemPropertyArtwork];
         UIImage *artworkImage = [artwork imageWithSize: CGSizeMake (320, 320)];
         
-        if (!artworkImage) {
-            artworkImage = [UIImage imageNamed:@"logoIconFull"];
-        }
+//        if (!artworkImage) {
+//            artworkImage = [UIImage imageNamed:@"logoIconFull"];
+//        }
         
-        [self.songAlbumArtImageView setImage:artworkImage];
+//        [self.songAlbumArtImageView setImage:artworkImage];
         
         NSString *titleString = [currentItem valueForProperty:MPMediaItemPropertyTitle];
         if (titleString) {
