@@ -207,8 +207,8 @@
         MPMediaItem *currentItem = [musicPlayer nowPlayingItem];
         
         
-        MPMediaItemArtwork *artwork = [currentItem valueForProperty: MPMediaItemPropertyArtwork];
-        UIImage *artworkImage = [artwork imageWithSize: CGSizeMake (320, 320)];
+//        MPMediaItemArtwork *artwork = [currentItem valueForProperty: MPMediaItemPropertyArtwork];
+//        UIImage *artworkImage = [artwork imageWithSize: CGSizeMake (320, 320)];
         
 //        if (!artworkImage) {
 //            artworkImage = [UIImage imageNamed:@"logoIconFull"];

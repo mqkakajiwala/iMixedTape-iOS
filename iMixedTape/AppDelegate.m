@@ -13,7 +13,7 @@
 
 
 @interface AppDelegate (){
-    int badgeCount;
+//    int badgeCount;
 }
     
     @end
@@ -126,9 +126,9 @@
     //Do Your Code.................Enjoy!!!!
 }
     
--(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)(void))completionHandler{
-    NSLog(@"%@",response);
-}
+//-(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)(void))completionHandler{
+//    NSLog(@"%@",response);
+//}
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
         NSString *dToken = [NSString stringWithFormat:@"DEVICE TOKEN = %@",deviceToken];
@@ -145,12 +145,12 @@
 {
     NSLog(@"%@",userInfo);
 //    badgeCount++;
-    badgeCount = [[[userInfo objectForKey:@"aps"]objectForKey:@"badge"]intValue];
-    [[NSUserDefaults standardUserDefaults]setInteger:badgeCount forKey:key_appBadgeCount];
-    NSLog(@"%ld",(long)[[NSUserDefaults standardUserDefaults]integerForKey:@"test"]);
+//    badgeCount = [[[userInfo objectForKey:@"aps"]objectForKey:@"badge"]intValue];
+//    [[NSUserDefaults standardUserDefaults]setInteger:badgeCount forKey:key_appBadgeCount];
+//    NSLog(@"%ld",(long)[[NSUserDefaults standardUserDefaults]integerForKey:@"test"]);
     
     
-    [UIApplication sharedApplication].applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey: @"badgecount"] intValue] + 1;
+//    [UIApplication sharedApplication].applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey: @"badgecount"] intValue] + 1;
 }
     
 #pragma mark - Facebook SDK Method
@@ -196,6 +196,8 @@
     
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    application.applicationIconBadgeNumber = 0;
 }
     
     
