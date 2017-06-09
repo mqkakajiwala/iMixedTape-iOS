@@ -250,11 +250,12 @@
                                     if ([[callback valueForKey:@"error"]boolValue] == NO) {
                                         
                                         HomeGridVC *hg;
+                                        hg = self.tabBarController.viewControllers[0].childViewControllers[0];
+                                        
                                         if (tapeModel.selectedTapeIndex > 0) {
                                             
                                             [fetchTapeModel.myCretedTapesArray removeObjectAtIndex:tapeModel.selectedTapeIndex];
-                                            hg = self.tabBarController.viewControllers[0].childViewControllers[0];
-                                            
+                                           
                                             
                                             FMDatabase *database = [FMDatabase databaseWithPath:[SharedHelper databaseWithPath]];
                                             [database open];
@@ -262,9 +263,13 @@
                                             BOOL b = [database executeUpdate:@"delete from saved_tapes_table WHERE id=?",tapeModel.tapeID];
                                             NSLog(@"%d",b);
                                             
+                                            
+                                            
                                         }
-                                        
                                         [hg getWebserviceDataOnLoad];
+                                        
+                                        
+                                        
                                         
                                         
                                         tapeModel.albumImage = nil;
@@ -278,6 +283,7 @@
                                         [CreateTapeModel resetCreateTapeModel];
                                         
                                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                            
                                             self.tabBarController.selectedIndex = 0;
                                             vcIndexCount = 0;
                                             
@@ -437,5 +443,9 @@
     [alert addAction:registerAction];
     
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (IBAction)mixedTapeLogoBtn:(UIButton *)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://imixedtape.com"]];
 }
 @end

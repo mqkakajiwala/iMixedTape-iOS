@@ -57,6 +57,8 @@
         NSLog(@"%@",[FetchTapesModel sharedInstance].myCretedTapesArray);
         
         [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
+        
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.collectionView reloadData];
         });

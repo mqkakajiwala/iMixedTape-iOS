@@ -179,6 +179,10 @@
 - (IBAction)rateButton:(UIButton *)sender
 {
 }
+
+- (IBAction)mixedTapeLogoBtn:(UIButton *)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://imixedtape.com"]];
+}
     
     
 

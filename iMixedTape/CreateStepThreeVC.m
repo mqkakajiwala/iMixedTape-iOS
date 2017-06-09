@@ -44,7 +44,10 @@
     if (previewArray.count == 0) {
         [SharedHelper emptyTableScreenText:@"No songs added." Array:previewArray tableView:self.tableView view:self.view];
     }
-    [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+     [self.tableView reloadData];
+    });
+    
     
     if ([tapeModel.uploadImageAccessToken isKindOfClass:[NSString class]]) {
         if (![tapeModel.uploadImageAccessToken isEqualToString:@""]) {

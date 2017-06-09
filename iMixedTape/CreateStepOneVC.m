@@ -423,6 +423,8 @@
             imageUploadID = [[callback objectForKey:@"data"]objectForKey:@"id"];
             
             tapeModel.uploadImageID = imageUploadID;
+            
+           
             tapeModel.uploadImageAccessToken = [[callback objectForKey:@"data"]objectForKey:@"access_token"];
             
             tapeModel.albumImage = self.albumArtImage.image;

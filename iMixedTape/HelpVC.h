@@ -23,5 +23,6 @@
 - (IBAction)aboutUsButton:(UIButton *)sender;
 - (IBAction)faqButton:(UIButton *)sender;
 - (IBAction)socialButtonPressed:(UIButton *)sender;
+- (IBAction)mixedTapeLogoBtn:(UIButton *)sender;
 
 @end

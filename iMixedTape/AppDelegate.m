@@ -31,6 +31,8 @@
     //copy Database file
     [self copyDataBaseIfNeeded];
     
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    
     //integrate FABRIC.IO
     [Fabric with:@[[Crashlytics class]]];
     

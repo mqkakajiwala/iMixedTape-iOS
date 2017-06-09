@@ -28,7 +28,7 @@
 
 
 
-
+- (IBAction)mixedTapeLogoBtn:(UIButton *)sender;
 - (IBAction)rateStarsPressed:(UIButton *)sender;
 - (IBAction)noThanksButton:(UIButton *)sender;
 - (IBAction)rateButton:(UIButton *)sender;

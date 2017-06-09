@@ -27,6 +27,7 @@
 - (IBAction)step1MelodyButton:(UIButton *)sender;
 - (IBAction)step2MelodyButton:(UIButton *)sender;
 - (IBAction)step3MelodyButton:(UIButton *)sender;
+- (IBAction)mixedTapeLogoBtn:(UIButton *)sender;
 
 @end
 

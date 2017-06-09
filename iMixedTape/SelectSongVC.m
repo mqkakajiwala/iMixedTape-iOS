@@ -20,6 +20,7 @@
     NSMutableArray *localSongsArray;
     NSMutableArray *titleArr;
     AVPlayer *player;
+    BOOL isAccepted;
     
 }
 
@@ -35,12 +36,14 @@
         if ([self.sharedTapeStatus isEqual:@1]) {
             self.acceptBtnOutlet.hidden = YES;
             self.rejectBtnOutlet.hidden = YES;
-            
+            isAccepted = YES;
             
             
         }else{
             self.acceptBtnOutlet.hidden = NO;
             self.rejectBtnOutlet.hidden = NO;
+            isAccepted = NO;
+            
         }
         
         switch (self.sharedTapeStatus.intValue) {
@@ -60,6 +63,7 @@
     }else{
         self.acceptBtnOutlet.hidden = YES;
         self.rejectBtnOutlet.hidden = YES;
+        isAccepted = YES;
         
         switch (self.myTapeStatus.intValue) {
             case 0:
@@ -153,6 +157,7 @@
 {
     SelecSongCell *cell = (SelecSongCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.songTitleLabel.text = [[songsArray valueForKey:@"title"]objectAtIndex:indexPath.row];
     [cell.playButton addTarget:self action:@selector(playButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [cell.previewButton addTarget:self action:@selector(previewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -180,28 +185,25 @@
 #pragma mark - IBActions
 -(void)playButtonPressed :(UIButton *)sender
 {
-    //[self dismissViewControllerAnimated:YES completion:nil];
-    
-    
-    //Everything happens with unwind segue from storyboard ..
-    //   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    //     [self performSegueWithIdentifier:@"unwindToPlayTape" sender:sender];
-    //});
-    
-    PlayTapeVC *playVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PLAYTAPEVC"];
-    
-    
-    [self presentViewController:playVC animated:YES completion:nil];
-    [self playClickedSong:playVC sender:sender];
-    
-    
-    
+    if (!isAccepted) {
+        [SharedHelper AlertControllerWithTitle:@"" message:@"Please accept the tape to play songs." viewController:self];
+    }
+    else{
+        PlayTapeVC *playVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PLAYTAPEVC"];
+        
+        
+        [self presentViewController:playVC animated:YES completion:nil];
+        [self playClickedSong:playVC sender:sender];
+        
+        
+    }
     
     
 }
 
 -(void)previewButtonPressed :(UIButton *)sender
 {
+    
     [PreviewBuyModel iTunesAPiForPreviewBuyForSongID:[[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row] viewController:self callback:^(id responseObject) {
         
         NSLog(@"%@",[[[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject]);
@@ -215,6 +217,7 @@
             [SharedHelper AlertControllerWithTitle:@"" message:@"Preview for this song is unavailable" viewController:self];
         }
     }];
+    
     
 }
 
@@ -357,6 +360,10 @@
     for (int i = 0; i<songsArray.count; i++) {
         [SharedHelper iTunesSearchAPI:[[songsArray valueForKey:@"title"]objectAtIndex:i]];
     }
+}
+
+- (IBAction)mixedTapeLogoBtn:(UIButton *)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://imixedtape.com"]];
 }
 
 -(void)getRefreshedTapes

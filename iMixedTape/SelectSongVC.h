@@ -32,6 +32,7 @@
 - (IBAction)acceptTapeButton:(UIButton *)sender;
 - (IBAction)rejectTapeButton:(UIButton *)sender;
 - (IBAction)cloneTapeButton:(UIButton *)sender;
+- (IBAction)mixedTapeLogoBtn:(UIButton *)sender;
 
 
 @end

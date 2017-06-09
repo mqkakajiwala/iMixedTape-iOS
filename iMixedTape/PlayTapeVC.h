@@ -53,4 +53,6 @@
 - (IBAction)prevButton:(UIButton *)sender;
 
 - (IBAction)openSocialPageButton:(UIButton *)sender;
+- (IBAction)mixedTapeLogoBtn:(UIButton *)sender;
+
 @end
