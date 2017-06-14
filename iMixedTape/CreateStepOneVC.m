@@ -94,22 +94,27 @@
             
             [self.albumArtImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",tapeModel.uploadImageAccessToken,100,100]] placeholderImage:[UIImage imageNamed:@"imgicon"]];
                  });
+            
+//            [self sendResizedToServer:self.albumArtImage.image :nil];
         }
         else{
             if (imgData !=nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                  self.albumArtImage.image = [UIImage imageWithData:imgData];
+//                [self sendResizedToServer:self.albumArtImage.image :nil];
                 });
                 
             }else{
                 dispatch_async(dispatch_get_main_queue(), ^{
                 self.albumArtImage.image = [UIImage imageNamed:@"imgicon"] ;
+                
                     });
             }
         }
     }
     
     imageUploadID = tapeModel.uploadImageID;
+    
 }
 
 
