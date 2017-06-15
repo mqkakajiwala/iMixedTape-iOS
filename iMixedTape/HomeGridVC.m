@@ -48,17 +48,16 @@
         
         [FetchTapesModel sharedInstance].myCretedTapesArray = callback.mutableCopy;
         
+        [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
+        
         FMDatabase *database = [FMDatabase databaseWithPath:[SharedHelper databaseWithPath]];
         [database open];
         
-        NSLog(@"%@",[SharedHelper getSavedTaoesFromDB:database]);
+        
         [FetchTapesModel sharedInstance].myCretedTapesArray = [[FetchTapesModel sharedInstance].myCretedTapesArray arrayByAddingObjectsFromArray:[SharedHelper getSavedTaoesFromDB:database]].mutableCopy;
         
-        NSLog(@"%@",[FetchTapesModel sharedInstance].myCretedTapesArray);
         
-        [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].myCretedTapesArray.mutableCopy collectionView:self.collectionView view:self.view];
-        
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.collectionView reloadData];
         });
@@ -66,10 +65,10 @@
     
     [FetchTapesModel mySharedTapesWihPagination:200 userID:userID viewController:self :^(NSArray *callback) {
         [FetchTapesModel sharedInstance].sharedTapesArray = callback.mutableCopy;
+       
+         [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy collectionView:self.receivedTapesCollectionView view:self.view];
         
-        NSLog(@"%@",[FetchTapesModel sharedInstance].sharedTapesArray);
-        
-        [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy collectionView:self.receivedTapesCollectionView view:self.view];
+       
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.receivedTapesCollectionView reloadData];
         });
@@ -248,6 +247,7 @@
     vc.tapeTitleString = [[selectedTape valueForKey:@"title"]objectAtIndex:indexPath.row];
     vc.tapeMessageString = [[selectedTape valueForKey:@"message"]objectAtIndex:indexPath.row];
     vc.imageToken =  [[selectedTape valueForKey:@"image_token"]objectAtIndex:indexPath.row];
+    vc.imageUploadId =  [[selectedTape valueForKey:@"upload_id"]objectAtIndex:indexPath.row];
     vc.selectedTapeSharedID =[[selectedTape valueForKey:@"shared_id"]objectAtIndex:indexPath.row];
     
     NSLog(@"%@",vc.selectedTapeID);
@@ -312,12 +312,6 @@
     [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy collectionView:self.receivedTapesCollectionView view:self.view];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.receivedTapesCollectionView reloadData];
-    });
-    
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.collectionView reloadData];
         [self.receivedTapesCollectionView reloadData];
     });
     

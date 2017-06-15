@@ -326,6 +326,7 @@
         if ([[callback[@"data"]objectForKey:@"status"] isEqualToString:@"1"]) {
             self.acceptBtnOutlet.hidden = YES;
             self.rejectBtnOutlet.hidden = YES;
+            isAccepted = YES;
             [self getRefreshedTapes];
             //            int badgeCount = [[NSUserDefaults standardUserDefaults]integerForKey:key_appBadgeCount];
             //            [UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount - 1;
@@ -353,6 +354,7 @@
     
     tapeModel.title = self.tapeTitleString;
     tapeModel.uploadImageAccessToken = self.imageToken;
+    tapeModel.uploadImageID = self.imageUploadId;
     tapeModel.message = self.tapeMessageString;
     tapeModel.isCloned = YES;
     

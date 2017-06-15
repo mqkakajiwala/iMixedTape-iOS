@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *tapeMessage;
 @property (strong,nonatomic) NSString *tapeMessageString;
 @property (strong,nonatomic) NSString *imageToken;
+@property (strong,nonatomic) NSString *imageUploadId;
 @property (strong, nonatomic) IBOutlet UIImageView *tapeImage;
 @property (strong, nonatomic) IBOutlet UILabel *tapeOwnerNameLabel;
 @property (strong,nonatomic) NSString *tapeOwnerNameString;
