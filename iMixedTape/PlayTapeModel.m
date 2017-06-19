@@ -58,7 +58,10 @@ static PlayTapeModel *instance = nil;
 -(void)createSessionForKey :(NSString *)key value:(id)value {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    if (![value isKindOfClass:[NSNull class]]) {
     [defaults setObject:value forKey:key];
+    }
+    
 }
 
 -(id)getUserSessionForKey: (NSString *)key {

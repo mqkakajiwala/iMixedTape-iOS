@@ -311,13 +311,13 @@
     if (index < tapeSongsArr.count) {
         nextItem = [tapeSongsArr objectAtIndex:index];
 //        payTapeModel.nextSongMPMediaItem = nextItem;
-        [playModel createSessionForKey:@"nextSongMedia" value:nextItem];
+//        [playModel createSessionForKey:@"nextSongMedia" value:nextItem];
 //        payTapeModel.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
         [playModel createSessionForKey:@"nextSongString" value:[nextItem valueForProperty:MPMediaItemPropertyTitle]];
     }else{
         nextItem = [tapeSongsArr objectAtIndex:0];
 //        payTapeModel.nextSongMPMediaItem = nextItem;
-        [playModel createSessionForKey:@"nextSongMedia" value:[NSKeyedArchiver archivedDataWithRootObject:nextItem]];
+//        [playModel createSessionForKey:@"nextSongMedia" value:[NSKeyedArchiver archivedDataWithRootObject:nextItem]];
 //        payTapeModel.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
         [playModel createSessionForKey:@"nextSongString" value:[nextItem valueForProperty:MPMediaItemPropertyTitle]];
     }
