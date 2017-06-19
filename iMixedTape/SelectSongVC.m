@@ -14,6 +14,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "AcceptTapeModel.h"
 #import "HomeGridVC.h"
+#import "PlayTapeModel.h"
 
 @interface SelectSongVC (){
     NSMutableArray *songsArray;
@@ -21,6 +22,7 @@
     NSMutableArray *titleArr;
     AVPlayer *player;
     BOOL isAccepted;
+    PlayTapeModel *playModel;
     
 }
 
@@ -122,7 +124,7 @@
     NSLog(@"%@",titleArr);
     
     
-    
+    playModel = [PlayTapeModel sharedInstance];
     
     
     [self webServiceForTracksOfTapes];
@@ -242,14 +244,24 @@
 -(void)playClickedSong : (PlayTapeVC *)vc sender:(id)sender
 {
     
-    NSLog(@"%ld",(long)[self selectedIndexOfSender:sender].row);
-    NSLog(@"%@",[songsArray valueForKey:@"title"]);
-    vc.currentSongStr = [[songsArray valueForKey:@"title"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
-    vc.tapeMessageStr = self.tapeMessageString;
-    vc.artistStr = [[songsArray valueForKey:@"artist"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
-    vc.songID = [[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
-    vc.tapeTitleStr = self.tapeTitleString;
-    vc.imgToken = self.imageToken;
+//    payTapeModel.currentSongStr = [[songsArray valueForKey:@"title"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
+    
+    [playModel createSessionForKey:@"currentSong" value:[[songsArray valueForKey:@"title"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row]];
+    
+//    payTapeModel.tapeMessageStr = self.tapeMessageString;
+    [playModel createSessionForKey:@"tapeMessageString" value:self.tapeMessageString];
+    
+//    payTapeModel.artistStr = [[songsArray valueForKey:@"artist"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
+    [playModel createSessionForKey:@"artistString" value:[[songsArray valueForKey:@"artist"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row]];
+    
+//    payTapeModel.songID = [[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
+    [playModel createSessionForKey:@"songid" value:[[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row]];
+    
+//    payTapeModel.tapeTitleStr = self.tapeTitleString;
+    [playModel createSessionForKey:@"tapeTitleString" value:self.tapeTitleString];
+    
+//    payTapeModel.imgToken = self.imageToken;
+    [playModel createSessionForKey:@"imageToken" value:self.imageToken];
     
     
     
@@ -298,15 +310,23 @@
     MPMediaItem *nextItem;
     if (index < tapeSongsArr.count) {
         nextItem = [tapeSongsArr objectAtIndex:index];
-        vc.nextSongMPMediaItem = nextItem;
-        vc.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
+//        payTapeModel.nextSongMPMediaItem = nextItem;
+        [playModel createSessionForKey:@"nextSongMedia" value:nextItem];
+//        payTapeModel.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
+        [playModel createSessionForKey:@"nextSongString" value:[nextItem valueForProperty:MPMediaItemPropertyTitle]];
     }else{
         nextItem = [tapeSongsArr objectAtIndex:0];
-        vc.nextSongMPMediaItem = nextItem;
-        vc.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
+//        payTapeModel.nextSongMPMediaItem = nextItem;
+        [playModel createSessionForKey:@"nextSongMedia" value:[NSKeyedArchiver archivedDataWithRootObject:nextItem]];
+//        payTapeModel.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
+        [playModel createSessionForKey:@"nextSongString" value:[nextItem valueForProperty:MPMediaItemPropertyTitle]];
     }
     
-    vc.queueSongArray = tapeSongsArr;
+//    payTapeModel.queueSongArray = tapeSongsArr;
+    
+    
+    
+    [playModel createSessionForKey:@"queueSongsArray" value:[NSKeyedArchiver archivedDataWithRootObject:tapeSongsArr]];
     
     //}
 }

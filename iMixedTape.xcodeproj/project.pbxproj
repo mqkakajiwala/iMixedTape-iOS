@@ -43,6 +43,7 @@
 		45ABF8521E1EAF170067ACC7 /* SelectSongVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ABF8511E1EAF170067ACC7 /* SelectSongVC.m */; };
 		45ABF8571E1EBF740067ACC7 /* FetchTapesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ABF8561E1EBF740067ACC7 /* FetchTapesModel.m */; };
 		45AED7911E0FB61D00CB98CE /* CreateStepTwoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AED7901E0FB61D00CB98CE /* CreateStepTwoVC.m */; };
+		45B4BDFF1EF7CF3D00519C14 /* PlayTapeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B4BDFE1EF7CF3D00519C14 /* PlayTapeModel.m */; };
 		45BE97621E8AC50900CD6F5F /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE97611E8AC50900CD6F5F /* testViewController.swift */; };
 		45C22CFC1E1D0A7D00A2A4E2 /* SharedHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C22CFB1E1D0A7D00A2A4E2 /* SharedHelper.m */; };
 		45C3B28A1DFEF493008A9AD6 /* TabBarControllerSubClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C3B2891DFEF493008A9AD6 /* TabBarControllerSubClass.m */; };
@@ -137,6 +138,8 @@
 		45ABF8561E1EBF740067ACC7 /* FetchTapesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchTapesModel.m; sourceTree = "<group>"; };
 		45AED78F1E0FB61D00CB98CE /* CreateStepTwoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateStepTwoVC.h; sourceTree = "<group>"; };
 		45AED7901E0FB61D00CB98CE /* CreateStepTwoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateStepTwoVC.m; sourceTree = "<group>"; };
+		45B4BDFD1EF7CF3D00519C14 /* PlayTapeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayTapeModel.h; sourceTree = "<group>"; };
+		45B4BDFE1EF7CF3D00519C14 /* PlayTapeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayTapeModel.m; sourceTree = "<group>"; };
 		45BE97611E8AC50900CD6F5F /* testViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
 		45C22CFA1E1D0A7D00A2A4E2 /* SharedHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedHelper.h; sourceTree = "<group>"; };
 		45C22CFB1E1D0A7D00A2A4E2 /* SharedHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedHelper.m; sourceTree = "<group>"; };
@@ -304,6 +307,8 @@
 				45ABF8561E1EBF740067ACC7 /* FetchTapesModel.m */,
 				45825FAA1E2A917D0058E5DA /* CreateTapeModel.h */,
 				45825FAB1E2A917D0058E5DA /* CreateTapeModel.m */,
+				45B4BDFD1EF7CF3D00519C14 /* PlayTapeModel.h */,
+				45B4BDFE1EF7CF3D00519C14 /* PlayTapeModel.m */,
 				4521745D1E372DA900E6343C /* FetchTracksModel.h */,
 				4521745E1E372DA900E6343C /* FetchTracksModel.m */,
 				45EF728D1E37B767008DBEB0 /* PreviewBuyModel.h */,
@@ -608,7 +613,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		45E706711E533C99004281EB /* ShellScript */ = {
@@ -692,6 +697,7 @@
 				45C22CFC1E1D0A7D00A2A4E2 /* SharedHelper.m in Sources */,
 				4562FA551E23F52600BDCD86 /* UserModel.m in Sources */,
 				45ABF8521E1EAF170067ACC7 /* SelectSongVC.m in Sources */,
+				45B4BDFF1EF7CF3D00519C14 /* PlayTapeModel.m in Sources */,
 				45BE97621E8AC50900CD6F5F /* testViewController.swift in Sources */,
 				45212F881E0FB93D00059D7E /* CreateStepThreeVC.m in Sources */,
 				453C50C51E461A350037376A /* FaqView.m in Sources */,
