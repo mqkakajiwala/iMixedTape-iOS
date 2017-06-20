@@ -14,6 +14,5 @@ pod 'Firebase/AdMob'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'FMDB'
-pod "MWPhotoBrowser"
-
+pod 'MWPhotoBrowser'
 end

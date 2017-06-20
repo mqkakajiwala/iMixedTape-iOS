@@ -8,10 +8,11 @@
 
 #import "PlayTapeVC.h"
 #import "FetchTracksModel.h"
-
+#import "PlayTapeModel.h"
 @interface PlayTapeVC (){
     MPMusicPlayerController *musicPlayer;
     NSTimer *timer;
+    PlayTapeModel *playModel;
 }
 
 @end
@@ -22,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    playModel = [PlayTapeModel sharedInstance];
     
     musicPlayer = [MPMusicPlayerController systemMusicPlayer];
     [self registerMediaPlayerNotifications];
@@ -41,7 +44,7 @@
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (self.currentSongStr != nil) {
+        if (playModel != nil) {
             
             if (musicPlayer.playbackState == MPMusicPlaybackStatePlaying) {
                 [self.playButtonOutlet setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
@@ -50,22 +53,23 @@
             }
             
 //            self.songAlbumArtImageView.image = self.albumArtImage;//[self getAlbumArtworkWithSize:self.songAlbumArtImageView.frame.size :self.currentSongStr];
-            if (![self.imgToken isKindOfClass:[NSNull class]]) {
+            if (![[playModel getUserSessionForKey:@"imageToken"] isKindOfClass:[NSNull class]]) {
                 
                 
-                [self.songAlbumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",self.imgToken,100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+                [self.songAlbumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[playModel getUserSessionForKey:@"imageToken"],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
                 
             }else{
                 self.songAlbumArtImageView.contentMode = UIViewContentModeScaleAspectFit;
                 self.songAlbumArtImageView.image = [UIImage imageNamed:@"logoIconFull"];
             }
-
             
-            self.currentSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"%@-%@",self.artistStr,self.currentSongStr] charactersToLimit:30];
-            self.tapeMessageLabel.text = self.tapeMessageStr;
+            
+            
+            self.currentSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"%@-%@",[playModel getUserSessionForKey:@"artistString"],[playModel getUserSessionForKey:@"currentSong"]] charactersToLimit:30];
+            self.tapeMessageLabel.text = [playModel getUserSessionForKey:@"tapeMessageString"];
             self.songTimerLabel.text = @"00:00/00:00";
-            self.nextSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"Next Song - %@",self.nextSongStr] charactersToLimit:30];
-            self.triLabelView.labelText = self.tapeTitleStr.uppercaseString;
+            self.nextSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"Next Song - %@",[playModel getUserSessionForKey:@"nextSongString"]] charactersToLimit:30];
+            self.triLabelView.labelText = [playModel getUserSessionForKey:@"tapeTitleString"];
             
             timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(onTimer:) userInfo:nil repeats:YES];
             [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
@@ -231,11 +235,13 @@
         
         int index = (int)musicPlayer.indexOfNowPlayingItem+1;
         MPMediaItem *nextItem;
-        if (index < self.queueSongArray.count) {
-            nextItem = [self.queueSongArray objectAtIndex:index];
+        NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData: [playModel getUserSessionForKey:@"queueSongsArray"]];
+       
+        if (index < arr.count) {
+            nextItem = [arr objectAtIndex:index];
             self.nextSongLabel.text = [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"Next Song - %@",[nextItem valueForProperty:MPMediaItemPropertyTitle]]charactersToLimit:30];
         }else{
-            nextItem = [self.queueSongArray objectAtIndex:0];
+            nextItem = [arr objectAtIndex:0];
             self.nextSongLabel.text =  [SharedHelper truncatedLabelString:[NSString stringWithFormat:@"Next Song - %@",[nextItem valueForProperty:MPMediaItemPropertyTitle]] charactersToLimit:30];
         }
         
@@ -244,8 +250,8 @@
         int tHours = (int)(totalPlaybackTime / 3600);
         int tMins = (int)((totalPlaybackTime/60) - tHours*60);
         int tSecs = (totalPlaybackTime % 60 );
-        self.songDurationStr = [NSString stringWithFormat:@"%i:%02d:%02d", tHours, tMins, tSecs ];
-        NSLog(@"%@",self.songDurationStr);
+        playModel.songDurationStr = [NSString stringWithFormat:@"%i:%02d:%02d", tHours, tMins, tSecs ];
+        NSLog(@"%@",playModel.songDurationStr);
         
     }
 }
@@ -284,10 +290,10 @@
 #pragma mark - Like Button
 - (IBAction)likeButtonPressed:(UIButton *)sender
 {
-    if (self.songID != nil) {
+    if (playModel.songID != nil) {
         
         
-        [FetchTracksModel hitLikeOnTrackWithID:self.songID userID:[[NSUserDefaults standardUserDefaults]objectForKey:key_userID] viewController:self callback:^(id callback) {
+        [FetchTracksModel hitLikeOnTrackWithID:playModel.songID userID:[[NSUserDefaults standardUserDefaults]objectForKey:key_userID] viewController:self callback:^(id callback) {
             NSLog(@"%@",callback);
             if ([callback boolValue] == YES) {
                 NSLog(@"LIKED");

@@ -30,6 +30,18 @@
     
     
     
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    UIView *barView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 20)];
+    barView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:barView];
+    
+    [[UINavigationBar appearance]setTintColor:[UIColor blackColor]];
+
 }
 
 -(UIImage *)imageWithColor :(UIColor *)color size:(CGSize)size
@@ -50,6 +62,7 @@
     
     if ([item.title isEqualToString:@"Play Mixed Tape"]) {
         
+    
         if (musicPlayer.playbackState == MPMusicPlaybackStatePlaying) {
             PlayTapeVC *playVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PLAYTAPEVC"];
             

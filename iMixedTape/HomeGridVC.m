@@ -68,7 +68,20 @@
        
          [SharedHelper emptyCollectionViewScreenText:@"No Mixed Tapes to show." Array:[FetchTapesModel sharedInstance].sharedTapesArray.mutableCopy collectionView:self.receivedTapesCollectionView view:self.view];
         
-       
+        int badgeCount = 0;
+        
+        for (int i=0; i<[FetchTapesModel sharedInstance].sharedTapesArray.count; i++) {
+            if ([[[[FetchTapesModel sharedInstance].sharedTapesArray objectAtIndex:i] valueForKey:@"status"]intValue] == 0) {
+                badgeCount++;
+                NSLog(@"%d",badgeCount);
+                [UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount;
+            }
+        }
+        
+        
+        
+        
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.receivedTapesCollectionView reloadData];
         });
