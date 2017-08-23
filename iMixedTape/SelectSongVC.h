@@ -28,6 +28,7 @@
 @property(strong,nonatomic) NSString *selectedTapeSharedID;
 @property (strong, nonatomic) IBOutlet UIButton *acceptBtnOutlet;
 @property (strong, nonatomic) IBOutlet UIButton *rejectBtnOutlet;
+@property(strong,nonatomic) NSString *stockCover;
 
 
 - (IBAction)acceptTapeButton:(UIButton *)sender;

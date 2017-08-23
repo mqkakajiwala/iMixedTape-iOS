@@ -242,6 +242,7 @@
                              message:tapeModel.message
                               userID:userModel.userID
                        uploadImageID:tapeModel.uploadImageID
+                             stockid:tapeModel.stockImageString
                      savedSongsArray:tapeModel.songsAddedArray
                       viewController:self
                             callback:^(id callback) {

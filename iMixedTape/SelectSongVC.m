@@ -83,13 +83,12 @@
         
     }
     
+    self.tapeImage.contentMode = UIViewContentModeScaleAspectFill;
     
-    
-    if (![self.imageToken isKindOfClass:[NSNull class]]) {
-        
-        
+    if (![self.stockCover isKindOfClass:[NSNull class]] && ![self.stockCover isEqualToString:@""]) {
+        self.tapeImage.image = [UIImage imageNamed:self.stockCover];
+    }else if (![self.imageToken isKindOfClass:[NSNull class]]) {
         [self.tapeImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",self.imageToken,100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
-        
     }else{
         self.tapeImage.contentMode = UIViewContentModeScaleAspectFit;
         self.tapeImage.image = [UIImage imageNamed:@"logoIconFull"];
@@ -244,23 +243,23 @@
 -(void)playClickedSong : (PlayTapeVC *)vc sender:(id)sender
 {
     
-//    payTapeModel.currentSongStr = [[songsArray valueForKey:@"title"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
+    //    payTapeModel.currentSongStr = [[songsArray valueForKey:@"title"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
     
     [playModel createSessionForKey:@"currentSong" value:[[songsArray valueForKey:@"title"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row]];
     
-//    payTapeModel.tapeMessageStr = self.tapeMessageString;
+    //    payTapeModel.tapeMessageStr = self.tapeMessageString;
     [playModel createSessionForKey:@"tapeMessageString" value:self.tapeMessageString];
     
-//    payTapeModel.artistStr = [[songsArray valueForKey:@"artist"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
+    //    payTapeModel.artistStr = [[songsArray valueForKey:@"artist"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
     [playModel createSessionForKey:@"artistString" value:[[songsArray valueForKey:@"artist"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row]];
     
-//    payTapeModel.songID = [[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
+    //    payTapeModel.songID = [[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row];
     [playModel createSessionForKey:@"songid" value:[[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row]];
     
-//    payTapeModel.tapeTitleStr = self.tapeTitleString;
+    //    payTapeModel.tapeTitleStr = self.tapeTitleString;
     [playModel createSessionForKey:@"tapeTitleString" value:self.tapeTitleString];
     
-//    payTapeModel.imgToken = self.imageToken;
+    //    payTapeModel.imgToken = self.imageToken;
     [playModel createSessionForKey:@"imageToken" value:self.imageToken];
     
     
@@ -310,19 +309,19 @@
     MPMediaItem *nextItem;
     if (index < tapeSongsArr.count) {
         nextItem = [tapeSongsArr objectAtIndex:index];
-//        payTapeModel.nextSongMPMediaItem = nextItem;
-//        [playModel createSessionForKey:@"nextSongMedia" value:nextItem];
-//        payTapeModel.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
+        //        payTapeModel.nextSongMPMediaItem = nextItem;
+        //        [playModel createSessionForKey:@"nextSongMedia" value:nextItem];
+        //        payTapeModel.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
         [playModel createSessionForKey:@"nextSongString" value:[nextItem valueForProperty:MPMediaItemPropertyTitle]];
     }else{
         nextItem = [tapeSongsArr objectAtIndex:0];
-//        payTapeModel.nextSongMPMediaItem = nextItem;
-//        [playModel createSessionForKey:@"nextSongMedia" value:[NSKeyedArchiver archivedDataWithRootObject:nextItem]];
-//        payTapeModel.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
+        //        payTapeModel.nextSongMPMediaItem = nextItem;
+        //        [playModel createSessionForKey:@"nextSongMedia" value:[NSKeyedArchiver archivedDataWithRootObject:nextItem]];
+        //        payTapeModel.nextSongStr = [nextItem valueForProperty:MPMediaItemPropertyTitle];
         [playModel createSessionForKey:@"nextSongString" value:[nextItem valueForProperty:MPMediaItemPropertyTitle]];
     }
     
-//    payTapeModel.queueSongArray = tapeSongsArr;
+    //    payTapeModel.queueSongArray = tapeSongsArr;
     
     
     
@@ -348,8 +347,7 @@
             self.rejectBtnOutlet.hidden = YES;
             isAccepted = YES;
             [self getRefreshedTapes];
-            //            int badgeCount = [[NSUserDefaults standardUserDefaults]integerForKey:key_appBadgeCount];
-            //            [UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount - 1;
+            
         }
         
     }];

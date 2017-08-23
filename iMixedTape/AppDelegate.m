@@ -11,6 +11,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "TabBarControllerSubClass.h"
 #import "MeshVC.h"
+#import "HomeGridVC.h"
 
 
 @interface AppDelegate (){
@@ -25,9 +26,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    
-    
-    //    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     //copy Database file
     [self copyDataBaseIfNeeded];
@@ -144,9 +142,11 @@
 {
     NSLog(@"%@",userInfo);
     NSLog(@"%ld",(long)[[NSUserDefaults standardUserDefaults]integerForKey:@"test"]);
+    UITabBarController *tabBar = (UITabBarController *)self.window.rootViewController;
+    HomeGridVC *hg = tabBar.viewControllers[0].childViewControllers[0];
+    [hg getWebserviceDataOnLoad];
+
     
-    
-    //    [UIApplication sharedApplication].applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey: @"badgecount"] intValue] + 1;
 }
 
 #pragma mark - Facebook SDK Method
@@ -192,8 +192,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    
-    //    application.applicationIconBadgeNumber = 0;
+ 
     [self setStatusBarBackgroundColor:[UIColor blackColor]];
 }
 
@@ -236,4 +235,14 @@
         self.window.rootViewController = meshVc;
     }
 }
+
+-(BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler {
+    
+    NSLog(@"%@",userActivity);
+    
+    NSURL *webPageUrl = [NSURL URLWithString:@"http://staging.imixedtape.com"];
+    [[UIApplication sharedApplication]openURL:webPageUrl];
+    return NO;
+}
+
 @end

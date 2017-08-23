@@ -13,6 +13,7 @@
     MPMusicPlayerController *musicPlayer;
     NSTimer *timer;
     PlayTapeModel *playModel;
+    CreateTapeModel *tapeModel;
 }
 
 @end
@@ -25,6 +26,7 @@
     // Do any additional setup after loading the view.
     
     playModel = [PlayTapeModel sharedInstance];
+    tapeModel = [CreateTapeModel sharedInstance];
     
     musicPlayer = [MPMusicPlayerController systemMusicPlayer];
     [self registerMediaPlayerNotifications];
@@ -52,16 +54,18 @@
                 [self.playButtonOutlet setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
             }
             
-//            self.songAlbumArtImageView.image = self.albumArtImage;//[self getAlbumArtworkWithSize:self.songAlbumArtImageView.frame.size :self.currentSongStr];
-            if (![[playModel getUserSessionForKey:@"imageToken"] isKindOfClass:[NSNull class]]) {
-                
-                
+            
+            self.songAlbumArtImageView.contentMode = UIViewContentModeScaleAspectFill;
+            
+            if (![tapeModel.stockImageString isKindOfClass:[NSNull class]] && ![tapeModel.stockImageString isEqualToString:@""]) {
+                self.songAlbumArtImageView.image = [UIImage imageNamed:tapeModel.stockImageString];
+            }else if (![[playModel getUserSessionForKey:@"imageToken"] isKindOfClass:[NSNull class]]) {
                 [self.songAlbumArtImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[playModel getUserSessionForKey:@"imageToken"],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
-                
             }else{
                 self.songAlbumArtImageView.contentMode = UIViewContentModeScaleAspectFit;
                 self.songAlbumArtImageView.image = [UIImage imageNamed:@"logoIconFull"];
             }
+            
             
             
             
@@ -210,15 +214,6 @@
     if ([musicPlayer playbackState] != MPMusicPlaybackStateStopped) {
         MPMediaItem *currentItem = [musicPlayer nowPlayingItem];
         
-        
-//        MPMediaItemArtwork *artwork = [currentItem valueForProperty: MPMediaItemPropertyArtwork];
-//        UIImage *artworkImage = [artwork imageWithSize: CGSizeMake (320, 320)];
-        
-//        if (!artworkImage) {
-//            artworkImage = [UIImage imageNamed:@"logoIconFull"];
-//        }
-        
-//        [self.songAlbumArtImageView setImage:artworkImage];
         
         NSString *titleString = [currentItem valueForProperty:MPMediaItemPropertyTitle];
         if (titleString) {

@@ -69,7 +69,7 @@
     [self.preferencesBtnOutlet setEnabled:NO];
 
     [FBSDKAccessToken setCurrentAccessToken:nil];
-    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [CreateTapeModel resetCreateTapeModel];
     
 }

@@ -16,7 +16,9 @@
 #import "CreateTapeVC.h"
 
 
-@interface HomeGridVC ()
+@interface HomeGridVC (){
+    CreateTapeModel *tapeModel;
+}
 
 
 
@@ -31,11 +33,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    tapeModel = [CreateTapeModel sharedInstance];
     
     [self emptyCollectionViewScreen];
     
@@ -78,6 +84,10 @@
             }
         }
         
+        if (badgeCount == 0) {
+            [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+        }
+        
         
         
         
@@ -116,9 +126,18 @@
             
             if ([FetchTapesModel sharedInstance].myCretedTapesArray.count != 0) {
                 
-                albumArtworkImage.contentMode = UIViewContentModeScaleAspectFit;
+                albumArtworkImage.contentMode = UIViewContentModeScaleAspectFill;
+                
+                NSLog(@"%@",[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"stock_cover_id"]objectAtIndex:indexPath.row]);
+                
+                if (![[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"stock_cover_id"]objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]] && ![[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"stock_cover_id"]objectAtIndex:indexPath.row] isEqualToString:@""]) {
+                    albumArtworkImage.image = [UIImage imageNamed:[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"stock_cover_id"]objectAtIndex:indexPath.row]];
+                }else{
                 
                 [albumArtworkImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+                }
+                
+                
                 
                 if (![[[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row] isEqualToString:@"(null)"]) {
                     messageLabel.text = [[[FetchTapesModel sharedInstance].myCretedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
@@ -188,9 +207,20 @@
             
             if ([FetchTapesModel sharedInstance].sharedTapesArray.count !=0) {
                 
-                albumArtworkImage.contentMode = UIViewContentModeScaleAspectFit;
+                albumArtworkImage.contentMode = UIViewContentModeScaleAspectFill;
                 
-                [albumArtworkImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+                NSLog(@"%@",[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"stock_cover_id"]objectAtIndex:indexPath.row]);
+                
+                if (![[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"stock_cover_id"]objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]] && ![[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"stock_cover_id"]objectAtIndex:indexPath.row] isEqualToString:@""] ) {
+                    NSLog(@"%@",[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"stock_cover_id"]objectAtIndex:indexPath.row]);
+                    albumArtworkImage.image = [UIImage imageNamed:[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"stock_cover_id"]objectAtIndex:indexPath.row]];
+                }else{
+                    [albumArtworkImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",[[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"image_token"]objectAtIndex:indexPath.row],100,100]] placeholderImage:[UIImage imageNamed:@"logoIconFull"]];
+                }
+                
+                
+                
+               
                 
                 
                 messageLabel.text = [[[FetchTapesModel sharedInstance].sharedTapesArray valueForKey:@"message"]objectAtIndex:indexPath.row];
@@ -216,6 +246,8 @@
             }
             
         }
+        
+      
         
         
     } @catch (NSException *exception) {
@@ -260,6 +292,7 @@
     vc.tapeTitleString = [[selectedTape valueForKey:@"title"]objectAtIndex:indexPath.row];
     vc.tapeMessageString = [[selectedTape valueForKey:@"message"]objectAtIndex:indexPath.row];
     vc.imageToken =  [[selectedTape valueForKey:@"image_token"]objectAtIndex:indexPath.row];
+    vc.stockCover = [[selectedTape valueForKey:@"stock_cover_id"]objectAtIndex:indexPath.row];
     vc.imageUploadId =  [[selectedTape valueForKey:@"upload_id"]objectAtIndex:indexPath.row];
     vc.selectedTapeSharedID =[[selectedTape valueForKey:@"shared_id"]objectAtIndex:indexPath.row];
     
@@ -275,7 +308,7 @@
         
     }
     else{
-        CreateTapeModel *tapeModel = [CreateTapeModel sharedInstance];
+        
         
         NSLog(@"%@",[FetchTapesModel sharedInstance].myCretedTapesArray);
         

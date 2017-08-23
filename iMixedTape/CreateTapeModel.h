@@ -21,14 +21,18 @@
     NSString *from;
     UIImage *albumImage;
     NSData *imageData;
+    NSString *stockImageString;
     BOOL isEmail;
     BOOL isCloned;
     NSMutableArray *songsAddedArray;
+    NSArray *stockImagesArray;
+    
 }
 
 +(CreateTapeModel *)sharedInstance;
 
 @property (strong,nonatomic) NSString *tapeID;
+@property (strong,nonatomic) NSString *stockImageString;
 @property (nonatomic) NSInteger selectedTapeIndex;
 @property (strong,nonatomic) NSString *title;
 @property (strong,nonatomic) NSData *imageData;
@@ -42,9 +46,10 @@
 @property (nonatomic) BOOL isEmail;
 @property (nonatomic) BOOL isCloned;
 @property (strong,nonatomic) NSMutableArray *songsAddedArray;
+@property (strong,nonatomic) NSArray *stockImagesArray;
 
 
 +(void)resetCreateTapeModel;
 +(void)uploadFileWithAttachnment :(NSString *)base64String viewController:(UIViewController *)vc callback :(void (^)(id))callback;
--(void)postFinalTapeToServer :(NSString *)tapeTitle message:(NSString *)tapeMessage userID:(NSString *)userID uploadImageID:(NSString *)uploadID savedSongsArray:(NSMutableArray *)savedSongsArray viewController:(UIViewController *)vc callback:(void (^)(id))callback;
+-(void)postFinalTapeToServer :(NSString *)tapeTitle message:(NSString *)tapeMessage userID:(NSString *)userID uploadImageID:(NSString *)uploadID stockid:(NSString *)stockID savedSongsArray:(NSMutableArray *)savedSongsArray viewController:(UIViewController *)vc callback:(void (^)(id))callback;
 @end

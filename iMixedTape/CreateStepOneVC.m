@@ -451,8 +451,10 @@
 
 -(IBAction)unwindStockImage:(UIStoryboardSegue *)segue
 {
+    NSLog(@"%@",tapeModel.stockImageString);
     self.stockImage = [UIImage imageWithData:tapeModel.imageData];
-    [self sendResizedToServer:self.stockImage :nil];
+    
+//    [self sendResizedToServer:self.stockImage :nil];
     
 }
 

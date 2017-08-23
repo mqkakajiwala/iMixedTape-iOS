@@ -45,17 +45,27 @@
         [SharedHelper emptyTableScreenText:@"No songs added." Array:previewArray tableView:self.tableView view:self.view];
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-     [self.tableView reloadData];
+        [self.tableView reloadData];
     });
     
     
-    if ([tapeModel.uploadImageAccessToken isKindOfClass:[NSString class]]) {
+    self.tapeMainImage.contentMode = UIViewContentModeScaleAspectFill;
+    
+    if (![tapeModel.stockImageString isKindOfClass:[NSNull class]] && ![tapeModel.stockImageString isEqualToString:@""]) {
+        self.tapeMainImage.image = [UIImage imageNamed:tapeModel.stockImageString];
+    }else if ([tapeModel.uploadImageAccessToken isKindOfClass:[NSString class]]) {
         if (![tapeModel.uploadImageAccessToken isEqualToString:@""]) {
             [self.tapeMainImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",tapeModel.uploadImageAccessToken,100,100]] placeholderImage:[UIImage imageNamed:@"imgicon"]];
         }else{
             self.tapeMainImage.image = tapeModel.albumImage;
         }
     }
+    else{
+        self.tapeMainImage.contentMode = UIViewContentModeScaleAspectFit;
+        self.tapeMainImage.image = [UIImage imageNamed:@"logoIconFull"];
+    }
+    
+    
     
     
     
