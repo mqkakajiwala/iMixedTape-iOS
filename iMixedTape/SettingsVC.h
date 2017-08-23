@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *signInButtonOutlet;
 @property (strong, nonatomic) IBOutlet UIButton *preferencesBtnOutlet;
+- (IBAction)mixedTapeLogoBtn:(UIButton *)sender;
 
 
 @end

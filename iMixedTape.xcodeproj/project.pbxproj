@@ -13,11 +13,13 @@
 		451ECF971DF88BBD0026A8FF /* AboutUs.m in Sources */ = {isa = PBXBuildFile; fileRef = 451ECF961DF88BBD0026A8FF /* AboutUs.m */; };
 		45212F881E0FB93D00059D7E /* CreateStepThreeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45212F871E0FB93D00059D7E /* CreateStepThreeVC.m */; };
 		4521745F1E372DA900E6343C /* FetchTracksModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4521745E1E372DA900E6343C /* FetchTracksModel.m */; };
+		452D398F1EE55C48006780B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 452D398E1EE55C48006780B0 /* GoogleService-Info.plist */; };
 		453C50C51E461A350037376A /* FaqView.m in Sources */ = {isa = PBXBuildFile; fileRef = 453C50C41E461A350037376A /* FaqView.m */; };
 		45434E8D1E3E407B00997D8E /* TriLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45434E8C1E3E407B00997D8E /* TriLabelView.swift */; };
 		4543B8671E3B870E0061A798 /* ResetPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4543B8661E3B870E0061A798 /* ResetPasswordVC.m */; };
 		4547D1DA1E5AC96500AC4A4F /* savedTapes.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 4547D1D91E5AC96500AC4A4F /* savedTapes.sqlite */; };
 		4552A3141E4C51E8004CC14D /* AcceptTapeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4552A3131E4C51E8004CC14D /* AcceptTapeModel.m */; };
+		455980F01EF93F800058287D /* MeshVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 455980EF1EF93F800058287D /* MeshVC.m */; };
 		455CF7AB1DCCED5C00E2EE5A /* HelpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 455CF7AA1DCCED5C00E2EE5A /* HelpVC.m */; };
 		455CF7AD1DCCFB6000E2EE5A /* HelpScreenChildViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455CF7AC1DCCFB6000E2EE5A /* HelpScreenChildViews.xib */; };
 		4562FA551E23F52600BDCD86 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4562FA541E23F52600BDCD86 /* UserModel.m */; };
@@ -42,7 +44,7 @@
 		45ABF8521E1EAF170067ACC7 /* SelectSongVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ABF8511E1EAF170067ACC7 /* SelectSongVC.m */; };
 		45ABF8571E1EBF740067ACC7 /* FetchTapesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ABF8561E1EBF740067ACC7 /* FetchTapesModel.m */; };
 		45AED7911E0FB61D00CB98CE /* CreateStepTwoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AED7901E0FB61D00CB98CE /* CreateStepTwoVC.m */; };
-		45BE97621E8AC50900CD6F5F /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE97611E8AC50900CD6F5F /* testViewController.swift */; };
+		45B4BDFF1EF7CF3D00519C14 /* PlayTapeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B4BDFE1EF7CF3D00519C14 /* PlayTapeModel.m */; };
 		45C22CFC1E1D0A7D00A2A4E2 /* SharedHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C22CFB1E1D0A7D00A2A4E2 /* SharedHelper.m */; };
 		45C3B28A1DFEF493008A9AD6 /* TabBarControllerSubClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C3B2891DFEF493008A9AD6 /* TabBarControllerSubClass.m */; };
 		45C5BDD81DCECCC5005F3A77 /* HomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C5BDD71DCECCC5005F3A77 /* HomeVC.m */; };
@@ -79,6 +81,7 @@
 		4521745A1E33DCBA00E6343C /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		4521745D1E372DA900E6343C /* FetchTracksModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchTracksModel.h; sourceTree = "<group>"; };
 		4521745E1E372DA900E6343C /* FetchTracksModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchTracksModel.m; sourceTree = "<group>"; };
+		452D398E1EE55C48006780B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		453C50C31E461A350037376A /* FaqView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaqView.h; sourceTree = "<group>"; };
 		453C50C41E461A350037376A /* FaqView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaqView.m; sourceTree = "<group>"; };
 		45434E8B1E3E407A00997D8E /* iMixedTape-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iMixedTape-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -89,6 +92,8 @@
 		4547D1DB1E5ACB0B00AC4A4F /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4552A3121E4C51E8004CC14D /* AcceptTapeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcceptTapeModel.h; sourceTree = "<group>"; };
 		4552A3131E4C51E8004CC14D /* AcceptTapeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptTapeModel.m; sourceTree = "<group>"; };
+		455980EE1EF93F800058287D /* MeshVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshVC.h; sourceTree = "<group>"; };
+		455980EF1EF93F800058287D /* MeshVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeshVC.m; sourceTree = "<group>"; };
 		455CF7A91DCCED5C00E2EE5A /* HelpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpVC.h; sourceTree = "<group>"; };
 		455CF7AA1DCCED5C00E2EE5A /* HelpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpVC.m; sourceTree = "<group>"; };
 		455CF7AC1DCCFB6000E2EE5A /* HelpScreenChildViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpScreenChildViews.xib; sourceTree = "<group>"; };
@@ -135,7 +140,8 @@
 		45ABF8561E1EBF740067ACC7 /* FetchTapesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchTapesModel.m; sourceTree = "<group>"; };
 		45AED78F1E0FB61D00CB98CE /* CreateStepTwoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateStepTwoVC.h; sourceTree = "<group>"; };
 		45AED7901E0FB61D00CB98CE /* CreateStepTwoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateStepTwoVC.m; sourceTree = "<group>"; };
-		45BE97611E8AC50900CD6F5F /* testViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
+		45B4BDFD1EF7CF3D00519C14 /* PlayTapeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayTapeModel.h; sourceTree = "<group>"; };
+		45B4BDFE1EF7CF3D00519C14 /* PlayTapeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayTapeModel.m; sourceTree = "<group>"; };
 		45C22CFA1E1D0A7D00A2A4E2 /* SharedHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedHelper.h; sourceTree = "<group>"; };
 		45C22CFB1E1D0A7D00A2A4E2 /* SharedHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedHelper.m; sourceTree = "<group>"; };
 		45C3B2861DFE7C65008A9AD6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -248,7 +254,6 @@
 				45CDF3701E0F056A004B645F /* SignInVC */,
 				45C22CF81E1D06FC00A2A4E2 /* SocialVC */,
 				45ABF8531E1EAF250067ACC7 /* SelectSongVC */,
-				45BE97611E8AC50900CD6F5F /* testViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -302,6 +307,8 @@
 				45ABF8561E1EBF740067ACC7 /* FetchTapesModel.m */,
 				45825FAA1E2A917D0058E5DA /* CreateTapeModel.h */,
 				45825FAB1E2A917D0058E5DA /* CreateTapeModel.m */,
+				45B4BDFD1EF7CF3D00519C14 /* PlayTapeModel.h */,
+				45B4BDFE1EF7CF3D00519C14 /* PlayTapeModel.m */,
 				4521745D1E372DA900E6343C /* FetchTracksModel.h */,
 				4521745E1E372DA900E6343C /* FetchTracksModel.m */,
 				45EF728D1E37B767008DBEB0 /* PreviewBuyModel.h */,
@@ -349,6 +356,7 @@
 		456882871DB5475600EAE837 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				452D398E1EE55C48006780B0 /* GoogleService-Info.plist */,
 				4547D1D91E5AC96500AC4A4F /* savedTapes.sqlite */,
 				45434E8C1E3E407B00997D8E /* TriLabelView.swift */,
 				45C22CF31E1D06B700A2A4E2 /* PrefixHeader */,
@@ -359,6 +367,8 @@
 				45C22CFA1E1D0A7D00A2A4E2 /* SharedHelper.h */,
 				45C22CFB1E1D0A7D00A2A4E2 /* SharedHelper.m */,
 				45434E8B1E3E407A00997D8E /* iMixedTape-Bridging-Header.h */,
+				455980EE1EF93F800058287D /* MeshVC.h */,
+				455980EF1EF93F800058287D /* MeshVC.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -537,7 +547,7 @@
 		4568827C1DB5475600EAE837 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = LemondeIT;
 				TargetAttributes = {
 					456882831DB5475600EAE837 = {
@@ -547,7 +557,10 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
+							};
+							com.apple.SafariKeychain = {
+								enabled = 1;
 							};
 							com.apple.iCloud = {
 								enabled = 0;
@@ -580,6 +593,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45D74B951E0AF52100F7775A /* HomeListCell.xib in Resources */,
+				452D398F1EE55C48006780B0 /* GoogleService-Info.plist in Resources */,
 				4547D1DA1E5AC96500AC4A4F /* savedTapes.sqlite in Resources */,
 				456882971DB5475600EAE837 /* LaunchScreen.storyboard in Resources */,
 				459D89D51DD1B1FE005B052B /* images (11).jpeg in Resources */,
@@ -674,6 +688,7 @@
 				45D74B931E0AEEA000F7775A /* HomeListVC.m in Sources */,
 				459A86801E1BCEDF004C6C4B /* AFHTTPSessionManager.m in Sources */,
 				45434E8D1E3E407B00997D8E /* TriLabelView.swift in Sources */,
+				455980F01EF93F800058287D /* MeshVC.m in Sources */,
 				45AED7911E0FB61D00CB98CE /* CreateStepTwoVC.m in Sources */,
 				45F73FC71E1526E200AB9AAF /* CustomCell.m in Sources */,
 				459A86811E1BCEDF004C6C4B /* AFNetworkReachabilityManager.m in Sources */,
@@ -688,7 +703,7 @@
 				45C22CFC1E1D0A7D00A2A4E2 /* SharedHelper.m in Sources */,
 				4562FA551E23F52600BDCD86 /* UserModel.m in Sources */,
 				45ABF8521E1EAF170067ACC7 /* SelectSongVC.m in Sources */,
-				45BE97621E8AC50900CD6F5F /* testViewController.swift in Sources */,
+				45B4BDFF1EF7CF3D00519C14 /* PlayTapeModel.m in Sources */,
 				45212F881E0FB93D00059D7E /* CreateStepThreeVC.m in Sources */,
 				453C50C51E461A350037376A /* FaqView.m in Sources */,
 				45ABF84E1E1E97E20067ACC7 /* PlayTapeVC.m in Sources */,
@@ -734,7 +749,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -742,7 +759,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -784,7 +805,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -792,7 +815,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -827,6 +854,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = iMixedTape/iMixedTape.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ZVDN92A33X;
@@ -854,6 +882,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = iMixedTape/iMixedTape.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ZVDN92A33X;

@@ -69,7 +69,7 @@
     [self.preferencesBtnOutlet setEnabled:NO];
 
     [FBSDKAccessToken setCurrentAccessToken:nil];
-    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [CreateTapeModel resetCreateTapeModel];
     
 }
@@ -83,5 +83,9 @@
 {
     UIViewController *vcc = [self.storyboard instantiateViewControllerWithIdentifier:@"SOCIAL_VC"];
     [self presentViewController:vcc animated:YES completion:nil];
+}
+
+- (IBAction)mixedTapeLogoBtn:(UIButton *)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://imixedtape.com"]];
 }
 @end

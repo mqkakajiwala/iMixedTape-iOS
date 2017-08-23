@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet GADBannerView *adBannerView;
 
 
+- (IBAction)mixedTapeLogoButton:(UIButton *)sender;
 
 - (IBAction)gridButtonPressed:(UIButton *)sender;
 - (IBAction)listButtonPressed:(UIButton *)sender;

@@ -70,28 +70,28 @@
 
 - (IBAction)tellFriendsButton:(UIButton *)sender
 {
-    NSURL *instagramURL = [NSURL URLWithString:@"instagram://location?id=1"];
+    //NSURL *instagramURL = [NSURL URLWithString:@"instagram://location?id=1"];
     
     
-    switch (sender.tag) {
-        case 501:
+    //switch (sender.tag) {
+       // case 501:
             [self openActivityController];
-            break;
-        case 502:
+         //   break;
+       // case 502:
             
-            break;
-        case 503:
-            if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
-                [[UIApplication sharedApplication] openURL:instagramURL];
-            }
-            break;
-        case 504:
+        //    break;
+        //case 503:
+           // if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
+             //   [[UIApplication sharedApplication] openURL:instagramURL];
+         //   }
+      //      break;
+     //   case 504:
             
-            break;
+        //    break;
             
-        default:
-            break;
-    }
+      //  default:
+          //  break;
+  //  }
 
 }
 
@@ -178,6 +178,10 @@
 
 - (IBAction)rateButton:(UIButton *)sender
 {
+}
+
+- (IBAction)mixedTapeLogoBtn:(UIButton *)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://imixedtape.com"]];
 }
     
     

@@ -24,6 +24,8 @@
 @synthesize songsAddedArray;
 @synthesize imageData;
 @synthesize isCloned;
+@synthesize stockImageString;
+@synthesize stockImagesArray;
 
 static CreateTapeModel *instance = nil;
 
@@ -57,7 +59,8 @@ static CreateTapeModel *instance = nil;
         self.from = @"";
         self.isEmail = YES;
         self.isCloned = NO;
-        
+        self.stockImageString = @"";
+        stockImagesArray = @[@"stock1", @"stock2", @"stock3", @"stock4", @"stock5", @"stock6", @"stock7"];
         
 
     }
@@ -132,7 +135,7 @@ static CreateTapeModel *instance = nil;
 }
 
 
--(void)postFinalTapeToServer :(NSString *)tapeTitle message:(NSString *)tapeMessage userID:(NSString *)userID uploadImageID:(NSString *)uploadID savedSongsArray:(NSMutableArray *)savedSongsArray viewController:(UIViewController *)vc callback:(void (^)(id))callback
+-(void)postFinalTapeToServer :(NSString *)tapeTitle message:(NSString *)tapeMessage userID:(NSString *)userID uploadImageID:(NSString *)uploadID stockid:(NSString *)stockID savedSongsArray:(NSMutableArray *)savedSongsArray viewController:(UIViewController *)vc callback:(void (^)(id))callback
 {
     
     NSString *url = @"http://staging.imixedtape.com/api/tape/create";
@@ -162,7 +165,8 @@ static CreateTapeModel *instance = nil;
     NSDictionary *params = @{@"title" : tapeTitle,
                              @"message" : message,
                              @"user_id" : userID,
-                             @"upload_id" : uploadID
+                             @"upload_id" : uploadID,
+                             @"stock_cover_id" : stockID
                              };
     
     NSLog(@"%@",params);

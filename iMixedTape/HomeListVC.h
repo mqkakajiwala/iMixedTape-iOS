@@ -12,5 +12,6 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *myMixedTapeTableView;
 @property (strong, nonatomic) IBOutlet UITableView *receivedTapeTableView;
+@property (weak, nonatomic) IBOutlet UIView *splitterView;
 
 @end

@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *tapeMessage;
 @property (strong,nonatomic) NSString *tapeMessageString;
 @property (strong,nonatomic) NSString *imageToken;
+@property (strong,nonatomic) NSString *imageUploadId;
 @property (strong, nonatomic) IBOutlet UIImageView *tapeImage;
 @property (strong, nonatomic) IBOutlet UILabel *tapeOwnerNameLabel;
 @property (strong,nonatomic) NSString *tapeOwnerNameString;
@@ -27,11 +28,13 @@
 @property(strong,nonatomic) NSString *selectedTapeSharedID;
 @property (strong, nonatomic) IBOutlet UIButton *acceptBtnOutlet;
 @property (strong, nonatomic) IBOutlet UIButton *rejectBtnOutlet;
+@property(strong,nonatomic) NSString *stockCover;
 
 
 - (IBAction)acceptTapeButton:(UIButton *)sender;
 - (IBAction)rejectTapeButton:(UIButton *)sender;
 - (IBAction)cloneTapeButton:(UIButton *)sender;
+- (IBAction)mixedTapeLogoBtn:(UIButton *)sender;
 
 
 @end

@@ -46,6 +46,7 @@
 {
     [super viewWillAppear:animated];
     
+        
     UserModel *userModel = [[UserModel alloc]init];
     
     if (userModel.firstName != nil) {
@@ -56,6 +57,10 @@
 }
 
 #pragma mark - IBActions
+- (IBAction)mixedTapeLogoButton:(UIButton *)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://imixedtape.com"]];
+}
+
 - (IBAction)gridButtonPressed:(UIButton *)sender
 {
     
@@ -117,13 +122,6 @@
     });
     
 }
-
-//-(IBAction)unwindToPlayTape:(UIStoryboardSegue *)segue
-//{
-//    PlayTapeVC *playvc = [self.storyboard instantiateViewControllerWithIdentifier:@"PLAYTAPEVC"];
-//    
-//    [self presentViewController:playvc animated:YES completion:nil];
-//}
 
 
 @end

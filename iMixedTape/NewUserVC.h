@@ -10,6 +10,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <Google/SignIn.h>
+
 @interface NewUserVC : UIViewController<FBSDKLoginButtonDelegate,UITextFieldDelegate,GIDSignInUIDelegate,GIDSignInDelegate>
 
 

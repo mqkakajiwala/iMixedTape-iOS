@@ -29,7 +29,6 @@
         self.fbLoginButton.readPermissions = @[@"public_profile",@"email"];
     }
     
-    NSLog(@"MUSTAFA");
     
     [self setDelegateOfTextFields];
     

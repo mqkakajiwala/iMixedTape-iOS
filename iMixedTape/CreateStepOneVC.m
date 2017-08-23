@@ -94,22 +94,27 @@
             
             [self.albumArtImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://staging.imixedtape.com/image/%@/%dx%d",tapeModel.uploadImageAccessToken,100,100]] placeholderImage:[UIImage imageNamed:@"imgicon"]];
                  });
+            
+//            [self sendResizedToServer:self.albumArtImage.image :nil];
         }
         else{
             if (imgData !=nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                  self.albumArtImage.image = [UIImage imageWithData:imgData];
+//                [self sendResizedToServer:self.albumArtImage.image :nil];
                 });
                 
             }else{
                 dispatch_async(dispatch_get_main_queue(), ^{
                 self.albumArtImage.image = [UIImage imageNamed:@"imgicon"] ;
+                
                     });
             }
         }
     }
     
     imageUploadID = tapeModel.uploadImageID;
+    
 }
 
 
@@ -243,23 +248,23 @@
     
 }
 
-//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-//    
-//    if (textField == _titleTextField) {
-//        // Prevent crashing undo bug – see note below.
-//        if(range.length + range.location > textField.text.length)
-//        {
-//            return NO;
-//        }
-//        
-//        NSUInteger newLength = [textField.text length] + [string length] - range.length;
-//        return newLength <= 6;
-//    }
-//    else
-//    {
-//        return YES;
-//    }
-//}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if (textField == _titleTextField) {
+        // Prevent crashing undo bug – see note below.
+        if(range.length + range.location > textField.text.length)
+        {
+            return NO;
+        }
+        
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        return newLength <= 11;
+    }
+    else
+    {
+        return YES;
+    }
+}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -423,6 +428,8 @@
             imageUploadID = [[callback objectForKey:@"data"]objectForKey:@"id"];
             
             tapeModel.uploadImageID = imageUploadID;
+            
+           
             tapeModel.uploadImageAccessToken = [[callback objectForKey:@"data"]objectForKey:@"access_token"];
             
             tapeModel.albumImage = self.albumArtImage.image;
@@ -444,8 +451,10 @@
 
 -(IBAction)unwindStockImage:(UIStoryboardSegue *)segue
 {
+    NSLog(@"%@",tapeModel.stockImageString);
     self.stockImage = [UIImage imageWithData:tapeModel.imageData];
-    [self sendResizedToServer:self.stockImage :nil];
+    
+//    [self sendResizedToServer:self.stockImage :nil];
     
 }
 

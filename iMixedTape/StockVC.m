@@ -10,7 +10,6 @@
 #import "CreateStepOneVC.h"
 
 @interface StockVC (){
-    NSArray *stockImagesArray;
     CreateTapeModel *tapeModel;
 }
 
@@ -24,15 +23,14 @@
     
     tapeModel = [CreateTapeModel sharedInstance];
     
-    stockImagesArray = [[NSArray alloc]init];
-    stockImagesArray = @[@"stock1", @"stock2", @"stock3", @"stock4", @"stock5", @"stock6", @"stock7"];
+    
 }
 
 #pragma mark - Collection View Data Source
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return stockImagesArray.count;
+    return tapeModel.stockImagesArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -41,47 +39,39 @@
     
     
     UIImageView *stockImages = (UIImageView *)[cell viewWithTag:1];
-    stockImages.image = [UIImage imageNamed:stockImagesArray[indexPath.row]];
+    stockImages.image = [UIImage imageNamed:tapeModel.stockImagesArray[indexPath.row]];
+    
     
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIImage *choosenImage = [UIImage imageNamed:stockImagesArray[indexPath.row]];
+    tapeModel.stockImageString = tapeModel.stockImagesArray[indexPath.row];
+    UIImage *choosenImage = [UIImage imageNamed:tapeModel.stockImagesArray[indexPath.row]];
     tapeModel.imageData = UIImagePNGRepresentation(choosenImage);
     
     
-    NSString *base64str = [self encodeToBase64String:choosenImage];
-    [CreateTapeModel uploadFileWithAttachnment:base64str viewController:self callback:^(id callback) {
-        
-        if ([[callback objectForKey:@"error"]boolValue] == NO) {
-          NSString  *imageUploadID = [[callback objectForKey:@"data"]objectForKey:@"id"];
-            
-            tapeModel.uploadImageID = imageUploadID;
-            tapeModel.uploadImageAccessToken = [[callback objectForKey:@"data"]objectForKey:@"access_token"];
-            
-            tapeModel.albumImage = choosenImage;
-            NSLog(@"%@",tapeModel.albumImage);
-            NSLog(@"%@", base64str);
-            
-            
-            
-      [self performSegueWithIdentifier:@"segueStock" sender:indexPath];
-            
-        }
-        else{
-            [SharedHelper AlertControllerWithTitle:@"Error" message:@"Image cannot be uploaded" viewController:self];
-        }
-        
-    }];
-
+//    NSString *base64str = [self encodeToBase64String:choosenImage];
+//    [CreateTapeModel uploadFileWithAttachnment:base64str viewController:self callback:^(id callback) {
+//        
+//        if ([[callback objectForKey:@"error"]boolValue] == NO) {
+//            NSString  *imageUploadID = [[callback objectForKey:@"data"]objectForKey:@"id"];
+//            
+//            tapeModel.uploadImageID = imageUploadID;
+//            tapeModel.uploadImageAccessToken = [[callback objectForKey:@"data"]objectForKey:@"access_token"];
+//            
+//            tapeModel.albumImage = choosenImage;
+//            NSLog(@"%@",tapeModel.albumImage);
+//            NSLog(@"%@", base64str);
     
-
-      
-    
-    
-    
+            [self performSegueWithIdentifier:@"segueStock" sender:indexPath];        
+//        }
+//        else{
+//            [SharedHelper AlertControllerWithTitle:@"Error" message:@"Image cannot be uploaded" viewController:self];
+//        }
+//        
+//    }];
 }
 
 #pragma mark - Encode to base 64 string
@@ -96,8 +86,8 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-
     
-   
+    
+    
 }
 @end

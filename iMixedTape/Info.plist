@@ -37,7 +37,7 @@
 			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.59397128101-njiuvl79a1nh16tfvekm4i3gr9uf4bij</string>
+				<string>com.googleusercontent.apps.59397128101-ha1mf26u6bp1h668j6qek4dkebpr4o02</string>
 			</array>
 		</dict>
 		<dict>
@@ -45,12 +45,26 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.LemondeIT.iMixed</string>
+				<string>com.lemondeit.mixedtape</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>http://staging.imixedtape.com/accept_invite/</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.1</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>

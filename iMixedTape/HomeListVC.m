@@ -155,6 +155,10 @@
 
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return tableView.frame.size.height/4;
+}
 #pragma mark - Empty Table Screen
 -(void)emptyTableScreen
 {

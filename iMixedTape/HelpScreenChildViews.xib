@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -14,98 +14,84 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms of Use" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQ3-XI-0tB">
-                    <rect key="frame" x="8" y="8" width="89" height="17"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lby-6j-132">
-                    <rect key="frame" x="8" y="33" width="359" height="1"/>
-                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="T7m-16-YDP"/>
-                    </constraints>
-                </view>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AjI-mj-qKl">
-                    <rect key="frame" x="8" y="42" width="359" height="617"/>
+                    <rect key="frame" x="8" y="20" width="359" height="639"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <attributedString key="attributedText">
                         <fragment>
-                            <string key="content">The New Yorker is a weekly   magazine offering a signature mix of reporting and commentary on politics, International affairs, popular culture and arts, science and technology, and business along with fiction, poetry, humour and cartoons. The Magazine is available in print  at  newsstand by subscription. We also publish each week's full issue in an app for tablets and smartphones, available for download through the App Store, Google Play or Amazon
+                            <string key="content">iMixed Tape is a digital music sharing technology which includes patent-pending features that are sole property of iMixed Tape and Mobicado, Inc., a mobile app company. The design, functionality, behavior, and various components and elements of iMixed Tape mobile app are sole property of iMixed Tape and Mobicado, 
 
 </string>
                             <attributes>
-                                <color key="NSColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <font key="NSFont" size="13" name="Helvetica"/>
+                                <real key="NSKern" value="0.0"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                    <tabStops/>
+                                </paragraphStyle>
+                                <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </attributes>
+                        </fragment>
+                        <fragment content="Terms of Use">
+                            <attributes>
+                                <font key="NSFont" size="13" name="Helvetica-Bold"/>
+                                <real key="NSKern" value="0.0"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                    <tabStops/>
+                                </paragraphStyle>
+                                <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </attributes>
                         </fragment>
                         <fragment>
-                            <string key="content">1. Copyrights
+                            <string key="content"> 
+
+The iMixed Tape app does not alter, enhance, and sell the original creative work of the musicians and artists. iMixed Tape users simply share a digital playlist of songs with their friends. It is illegal and subject to fine to copy, duplicate, mimic, borrow, and reverse engineer any part of the iMixed Tape mobile app for the purpose of monetary gains by any party other than iMixed Tape and Mobicado, Inc.
 
 </string>
                             <attributes>
-                                <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <font key="NSFont" size="13" name="HelveticaNeue-Bold"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <font key="NSFont" size="13" name="Helvetica"/>
+                                <real key="NSKern" value="0.0"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                    <tabStops/>
+                                </paragraphStyle>
+                                <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </attributes>
                         </fragment>
                         <fragment>
-                            <string key="content">The New Yorker is a weekly   magazine offering a signature mix of reporting and commentary on politics, International affairs, popular culture and arts, science and technology, and business along with fiction, poetry, humour and cartoons. The Magazine is available in print  at  newsstand by subscription.
- 
+                            <string key="content">Trademark and Copyright
 
 </string>
                             <attributes>
-                                <color key="NSColor" white="0.72336999999999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                <font key="NSFont" size="13" name="Helvetica-Bold"/>
+                                <real key="NSKern" value="0.0"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                    <tabStops/>
+                                </paragraphStyle>
+                                <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </attributes>
                         </fragment>
                         <fragment>
-                            <string key="content">2. Trademarks
-
-</string>
+                            <string key="content"> All iMixed Tape-specific graphical elements, logo, designs, and marks part of the iMixed Tape app are owned iMixed Tape and Mobicado, Inc. All other marks and logos are owned by their respective brands. For more information about Terms of Use contact </string>
                             <attributes>
-                                <font key="NSFont" size="13" name="HelveticaNeue-Bold"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                <font key="NSFont" size="13" name="Helvetica"/>
+                                <real key="NSKern" value="0.0"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                    <tabStops/>
+                                </paragraphStyle>
+                                <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </attributes>
                         </fragment>
-                        <fragment>
-                            <string key="content">The New Yorker is a weekly   magazine offering a signature mix of reporting and commentary on politics, International affairs, popular culture and arts, science and technology, and business along with fiction, poetry, humour and cartoons. The Magazine is available in print  at  newsstand by subscription.</string>
+                        <fragment content="music@imixedtape.com">
                             <attributes>
-                                <color key="NSColor" white="0.72336999999999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                            </attributes>
-                        </fragment>
-                        <fragment>
-                            <string key="content">
-
-
-3. Use of App Content
-
-</string>
-                            <attributes>
-                                <font key="NSFont" size="13" name="HelveticaNeue-Bold"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                            </attributes>
-                        </fragment>
-                        <fragment>
-                            <string key="content">The New Yorker is a weekly   magazine offering a signature mix of reporting and commentary on politics, International affairs, popular culture and arts, science and technology, and business along with fiction, poetry, humour and cartoons. The Magazine is available in print  at  newsstand by subscription.</string>
-                            <attributes>
-                                <color key="NSColor" white="0.72336999999999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                            </attributes>
-                        </fragment>
-                        <fragment>
-                            <string key="content" base64-UTF8="YES">
-Cg
-</string>
-                            <attributes>
-                                <font key="NSFont" size="13" name="HelveticaNeue-Bold"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                <color key="NSColor" red="0.0" green="0.0" blue="0.93332999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <font key="NSFont" size="13" name="Helvetica"/>
+                                <real key="NSKern" value="0.0"/>
+                                <url key="NSLink" string="mailto:music@imixedtape.com"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                    <tabStops/>
+                                </paragraphStyle>
+                                <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.93332999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <integer key="NSUnderline" value="1"/>
+                                <color key="NSUnderlineColor" red="0.0" green="0.0" blue="0.93332999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </attributes>
                         </fragment>
                     </attributedString>
@@ -115,18 +101,13 @@ Cg
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="hQ3-XI-0tB" firstAttribute="leading" secondItem="l6j-t3-Mrv" secondAttribute="leading" constant="8" id="F0s-JY-AA9"/>
                 <constraint firstAttribute="bottom" secondItem="AjI-mj-qKl" secondAttribute="bottom" constant="8" id="FGL-AP-5na"/>
-                <constraint firstItem="hQ3-XI-0tB" firstAttribute="top" secondItem="l6j-t3-Mrv" secondAttribute="top" constant="8" id="RgD-GZ-bEY"/>
                 <constraint firstItem="AjI-mj-qKl" firstAttribute="leading" secondItem="l6j-t3-Mrv" secondAttribute="leading" constant="8" id="VFe-VD-4mA"/>
+                <constraint firstItem="AjI-mj-qKl" firstAttribute="top" secondItem="l6j-t3-Mrv" secondAttribute="top" constant="20" id="Ye0-nd-OtA"/>
                 <constraint firstAttribute="trailing" secondItem="AjI-mj-qKl" secondAttribute="trailing" constant="8" id="ZsK-p0-wuO"/>
-                <constraint firstItem="Lby-6j-132" firstAttribute="leading" secondItem="l6j-t3-Mrv" secondAttribute="leading" constant="8" id="a87-EX-0QZ"/>
-                <constraint firstAttribute="trailing" secondItem="Lby-6j-132" secondAttribute="trailing" constant="8" id="aHH-0w-nIr"/>
-                <constraint firstItem="Lby-6j-132" firstAttribute="top" secondItem="hQ3-XI-0tB" secondAttribute="bottom" constant="8" id="nGV-nt-Ezt"/>
-                <constraint firstItem="AjI-mj-qKl" firstAttribute="top" secondItem="Lby-6j-132" secondAttribute="bottom" constant="8" id="vnN-I9-0Ni"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <point key="canvasLocation" x="-503" y="21"/>
+            <point key="canvasLocation" x="-503.5" y="20.5"/>
         </view>
         <view contentMode="scaleToFill" id="gP2-CU-mox" userLabel="How It Works" customClass="HowItWorksView">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -154,56 +135,6 @@ Cg
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms of Use" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XkB-Ga-eH4">
-                    <rect key="frame" x="8" y="8" width="89" height="17"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z9M-LA-H7r">
-                    <rect key="frame" x="8" y="33" width="359" height="1"/>
-                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="0eV-z8-B7H"/>
-                    </constraints>
-                </view>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHP-z4-dVi">
-                    <rect key="frame" x="8" y="42" width="359" height="617"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <attributedString key="attributedText">
-                        <fragment>
-                            <string key="content">The New Yorker is a weekly   magazine offering a signature mix of reporting and commentary on politics, International affairs, popular culture and arts, science and technology, and business along with fiction, poetry, humour and cartoons. The Magazine is available in print  at  newsstand by subscription. We also publish each week's full issue in an app for tablets and smartphones, available for download through the App Store, Google Play or Amazon
-
-</string>
-                            <attributes>
-                                <color key="NSColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                            </attributes>
-                        </fragment>
-                        <fragment>
-                            <string key="content">In Addition, Digital subscribers have access to our complete archive, which includes a digital replica of every issue of the  print magazine, from 1925 to today. We also offer an E link edition for Kindle and  Nook, editions through Zinio and texture, and an audio edition of selected pieces from audible.com
-
-</string>
-                            <attributes>
-                                <color key="NSColor" white="0.72336999999999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                            </attributes>
-                        </fragment>
-                        <fragment>
-                            <string key="content" base64-UTF8="YES">
-Cg
-</string>
-                            <attributes>
-                                <font key="NSFont" size="13" name="HelveticaNeue-Bold"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                            </attributes>
-                        </fragment>
-                    </attributedString>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                </textView>
                 <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vDg-DP-kEp">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -211,28 +142,12 @@ Cg
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="XkB-Ga-eH4" firstAttribute="top" secondItem="EwC-Vp-BHf" secondAttribute="top" constant="8" id="Id4-o9-sS4"/>
                 <constraint firstAttribute="bottom" secondItem="vDg-DP-kEp" secondAttribute="bottom" id="Lj8-tX-Whw"/>
-                <constraint firstItem="XkB-Ga-eH4" firstAttribute="leading" secondItem="EwC-Vp-BHf" secondAttribute="leading" constant="8" id="TOb-yI-Y9j"/>
-                <constraint firstItem="z9M-LA-H7r" firstAttribute="leading" secondItem="EwC-Vp-BHf" secondAttribute="leading" constant="8" id="XUA-ZJ-cnz"/>
                 <constraint firstAttribute="trailing" secondItem="vDg-DP-kEp" secondAttribute="trailing" id="ZIm-EF-TCx"/>
-                <constraint firstAttribute="trailing" secondItem="XHP-z4-dVi" secondAttribute="trailing" constant="8" id="b7F-jr-vzm"/>
-                <constraint firstItem="XHP-z4-dVi" firstAttribute="top" secondItem="z9M-LA-H7r" secondAttribute="bottom" constant="8" id="bDd-tB-OCb"/>
-                <constraint firstAttribute="bottom" secondItem="XHP-z4-dVi" secondAttribute="bottom" constant="8" id="erq-Ex-RzI"/>
-                <constraint firstItem="z9M-LA-H7r" firstAttribute="top" secondItem="XkB-Ga-eH4" secondAttribute="bottom" constant="8" id="fOv-90-g6V"/>
                 <constraint firstItem="vDg-DP-kEp" firstAttribute="leading" secondItem="EwC-Vp-BHf" secondAttribute="leading" id="m3o-eN-34T"/>
                 <constraint firstItem="vDg-DP-kEp" firstAttribute="top" secondItem="EwC-Vp-BHf" secondAttribute="top" id="tz3-da-hX8"/>
-                <constraint firstAttribute="trailing" secondItem="z9M-LA-H7r" secondAttribute="trailing" constant="8" id="xD0-hg-P7z"/>
-                <constraint firstItem="XHP-z4-dVi" firstAttribute="leading" secondItem="EwC-Vp-BHf" secondAttribute="leading" constant="8" id="yz9-R7-C45"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="XkB-Ga-eH4"/>
-                    <exclude reference="z9M-LA-H7r"/>
-                    <exclude reference="XHP-z4-dVi"/>
-                </mask>
-            </variation>
             <connections>
                 <outlet property="webView" destination="vDg-DP-kEp" id="vPc-P6-uCD"/>
             </connections>
