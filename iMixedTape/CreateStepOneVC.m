@@ -381,8 +381,6 @@
 
 -(void)contactPicker:(CNContactPickerViewController *)picker didSelectContact:(CNContact *)contact
 {
-    
-    
     if (!tapeModel.isEmail) {
         if (contact.phoneNumbers > 0) {
             
@@ -404,7 +402,9 @@
                 
             }
         }else{
-            self.emailORmobileTextField.placeholder = @"Email not available for this contact.";
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [SharedHelper AlertControllerWithTitle:@"" message:@"Email of the recipient doest not exist." viewController:self];
+            });
             
         }
         

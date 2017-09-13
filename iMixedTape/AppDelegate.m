@@ -164,6 +164,9 @@
                                                           sourceApplication:sourceApplication
                                                                  annotation:annotation
                       ];
+    
+    
+    
     // Add any custom logic here.
     
     
@@ -237,12 +240,14 @@
 }
 
 -(BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler {
-    
     NSLog(@"%@",userActivity);
+    if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+        NSURL *url = userActivity.webpageURL;
+        
+        NSLog(@"%@",url);
+    }
     
-    NSURL *webPageUrl = [NSURL URLWithString:@"http://staging.imixedtape.com"];
-    [[UIApplication sharedApplication]openURL:webPageUrl];
-    return NO;
+    return YES;
 }
 
 @end

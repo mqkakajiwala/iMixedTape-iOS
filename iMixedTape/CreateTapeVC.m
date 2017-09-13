@@ -66,13 +66,9 @@
     [self addChildViewController:vc];
     
     [self.parentView addSubview:vc.view];
-    
-    
     vc.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                                 UIViewAutoresizingFlexibleHeight);
     vc.view.frame = self.parentView.bounds;
-    
-    
 }
 
 #pragma mark - TextView and TextField Delegate Method

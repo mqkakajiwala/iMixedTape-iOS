@@ -208,7 +208,7 @@
     [PreviewBuyModel iTunesAPiForPreviewBuyForSongID:[[songsArray valueForKey:@"song_id"]objectAtIndex:(long)[self selectedIndexOfSender:sender].row] viewController:self callback:^(id responseObject) {
         
         NSLog(@"%@",[[[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject]);
-        NSLog(@"%u",[[responseObject objectForKey:@"results"]count]);
+        NSLog(@"%lu",[[responseObject objectForKey:@"results"]count]);
         
         if ([ [[responseObject objectForKey:@"results"]valueForKey:@"previewUrl"]firstObject] != nil) {
             
